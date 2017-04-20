@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10339,6 +10339,8 @@ return jQuery;
 
 __webpack_require__(3);
 
+__webpack_require__(6);
+
 __webpack_require__(5);
 
 __webpack_require__(4);
@@ -10354,7 +10356,7 @@ __webpack_require__(4);
 /***/ (function(module, exports, __webpack_require__) {
 
 
-window._ = __webpack_require__(7);
+window._ = __webpack_require__(8);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -10364,7 +10366,7 @@ window._ = __webpack_require__(7);
 
 window.$ = window.jQuery = __webpack_require__(0);
 
-__webpack_require__(6);
+__webpack_require__(7);
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
@@ -10669,6 +10671,43 @@ window.onload = new Slider().startSliding('1', '0');
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports) {
+
+document.body.addEventListener('click', function (e) {
+
+    //vertical menu slideUp/Down
+    if (e.target.closest('.left-menu')) {
+        {
+            if (!e.target.classList.contains('left-menu__contains-subcatetegories-sign')) return;
+
+            var currentMenuItemId = e.target.closest('li').dataset.categoryId;
+            var currentMenuItemParentId = e.target.closest('li').dataset.parentId;
+            var parentUl = e.target.closest('ul');
+            var childrenLi = parentUl.querySelectorAll('[data-parent-id="' + currentMenuItemParentId + '"]');
+
+            if (!childrenLi) return;
+            for (var i = 0; i < childrenLi.length; i++) {
+                var ul = childrenLi[i].querySelector('ul');
+                if (childrenLi[i].dataset.categoryId != currentMenuItemId) {
+                    if (ul) {
+                        ul.classList.add('hidden');
+                        var sign = ul.closest('li').querySelector('.left-menu__contains-subcatetegories-sign');
+                        sign.classList.remove('hidden');
+                    }
+                } else {
+                    if (ul) {
+                        ul.classList.remove('hidden');
+                        var _sign = ul.closest('li').querySelector('.left-menu__contains-subcatetegories-sign');
+                        _sign.classList.add('hidden');
+                    }
+                }
+            }
+        }
+    }
+});
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/*!
@@ -13052,7 +13091,7 @@ if (typeof jQuery === 'undefined') {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -30141,10 +30180,10 @@ if (typeof jQuery === 'undefined') {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(9)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(10)(module)))
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports) {
 
 var g;
@@ -30171,7 +30210,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -30199,7 +30238,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1);

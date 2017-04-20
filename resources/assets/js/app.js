@@ -7,7 +7,9 @@
 
 require('./bootstrap');
 
+require('./components/leftMenu');
 
 require ('./components/jqueryFreeSlider');
 
 require ('./components/jqueryFreeCarousel');
+

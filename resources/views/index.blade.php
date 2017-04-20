@@ -2,17 +2,20 @@
 
 @section('content')
 
+    <ol class="breadcrumb">
 
-    <section class="breadcrumbs">
+        <li class="active">Main</li>
+    </ol>
 
-        <span class="breadcrumb__item--current">Головна Сторінка</span>
+<div class="row">
 
-    </section>
+    <div class="col-sm-2">
+        <ul class='left-menu'>
+         {!! $categoriesVertMenu !!}
+        </ul>
+    </div>
 
-
-
-
-    <section class="content__slider">
+    <section class="content__slider col-sm-10">
 
 
         <?php $num=1; if(!empty($sliders)): ?>
@@ -35,6 +38,8 @@
 
 
     </section>
+</div>
+
 
 
 

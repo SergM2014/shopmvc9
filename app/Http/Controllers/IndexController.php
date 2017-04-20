@@ -17,9 +17,9 @@ public function index()
 
         $carousels = Carousel::all();
 
-       // $categoriesVertMenu = Category::getVerticalMenu();
+        $categoriesVertMenu = Category::getVerticalMenu();
 
-        return view('index', compact('sliders', 'carousels'/*, 'categoriesVertMenu'*/) );
+        return view('index', compact('sliders', 'carousels', 'categoriesVertMenu') );
     }
 
     }

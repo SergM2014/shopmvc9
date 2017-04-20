@@ -11,3 +11,52 @@
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+
+.small-busket__img{
+  max-width:70px;
+  max-height:70px;
+  float:right;
+}
+
+.small-busket__info{
+  display:inline-block;
+  float:right;
+}
+
+.left-menu {
+  padding-left:5px;
+  list-style: none;
+}
+.left-menu ul {
+  width: 100%;
+  list-style:none;
+  padding-left:10px;
+}
+
+.left-menu__item {
+  border: 1px solid black;
+  padding: 3px;
+  border-radius: 5px;
+  margin-top: 5px;
+  text-align: center;
+  position: relative;
+  border-bottom: 2px solid #000000; }
+
+.left-menu__link {
+  text-decoration: none;
+  color: #2348df; }
+
+.left-menu__link:hover {
+  color: #df1522;
+  font-size: 120%; }
+
+.left-menu__contains-subcatetegories-sign {
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+  height: 25px; }
+
+.left-menu__contains-subcatetegories-sign:hover {
+  background-color: #df3825; }
