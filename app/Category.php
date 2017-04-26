@@ -32,7 +32,7 @@ class Category extends Model
 
                 $print.='<li class="left-menu_li" data-category-id ='.$category->id.' data-parent-id='.$category->parent_id.'>
                  <div class="left-menu__item  nested-'.$suffix.'"  >
-                 <a href="/catalog?category='.$category->eng_translit_title.'" class="left-menu__link">'. $category->title .'</a>' ;
+                 <a href="/category/'.$category->eng_translit_title.'" class="left-menu__link">'. $category->title .'</a>' ;
 
                 foreach(self::$categories as $sub_cat){
                     if($sub_cat->parent_id == $category->id){ $flag = TRUE; break; }
@@ -53,4 +53,18 @@ class Category extends Model
         }
         return $print;
     }
+
+
+    public static function getLeftCatalogMenu()
+    {
+
+    }
+
+
+    public function product()
+    {
+        return $this->hasMany('App\Product');
+    }
+
+
 }

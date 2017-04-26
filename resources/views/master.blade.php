@@ -13,7 +13,7 @@
     <body>
         <div class="container">
 
-            @include('partials.bootstrapHeader')
+            @include('custom.partials.header')
 
             <div class="content">
                 @yield('content')
@@ -23,7 +23,7 @@
 
         </div>
 
-        @include('partials.bootstrapFooter')
+        @include('custom.partials.footer')
 
         <script src="{{ mix('/js/app.js') }}"></script>
     </body>

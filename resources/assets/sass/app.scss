@@ -12,7 +12,9 @@
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
-
+.main-header__admin{
+  margin-right: 10px;
+}
 .small-busket__img{
   max-width:70px;
   max-height:70px;
@@ -22,6 +24,10 @@
 .small-busket__info{
   display:inline-block;
   float:right;
+}
+
+.small-busket__container{
+  margin-right:32px;
 }
 
 .left-menu {

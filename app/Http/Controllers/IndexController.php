@@ -19,7 +19,7 @@ public function index()
 
         $categoriesVertMenu = Category::getVerticalMenu();
 
-        return view('index', compact('sliders', 'carousels', 'categoriesVertMenu') );
+        return view('custom.index', compact('sliders', 'carousels', 'categoriesVertMenu') );
     }
 
     }
