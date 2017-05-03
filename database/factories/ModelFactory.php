@@ -23,6 +23,21 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Product::class, function (Faker\Generator $faker) {
+
+    $faker = Faker\Factory::create('uk_UA');
+
+    return [
+        'author' => $faker->name,
+        'title' => $faker->sentence,
+        'description' => $faker->paragraph,
+        'body' => $faker->text,
+        'price' => $faker->numberBetween($min = 1000, $max = 90000),
+        'manufacturer_id' =>$faker->numberBetween($min = 1, $max = 3)
+
+    ];
+});
+
 
 
 

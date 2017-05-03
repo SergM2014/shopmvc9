@@ -83,16 +83,16 @@ class Product extends Model
 
     public function manufacturer()
     {
-        return $this->hasOne('App\Manufacturer', 'manufacturer_id');
+        return $this->belongsTo('App\Manufacturer');
     }
 
-    public function image(){
+    public function images(){
 
         return $this->hasMany('App\Image');
     }
 
-    public function category()
+    public function categories()
     {
-        return $this->hasMany('App\Category');
+        return $this->belongsToMany('App\Category');
     }
 }

@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->text('body');
             $table->integer('price');
-            $table->integer('manf_id')->index();
+            $table->integer('manufacturer_id')->index();
             $table->timestamps();
         });
 
