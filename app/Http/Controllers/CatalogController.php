@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use App\Product;
 
 class CatalogController extends Controller
 {
@@ -11,14 +12,9 @@ class CatalogController extends Controller
     {
         $leftCatalogMenu = Category::getLeftCatalogMenu();
 
-        $catalogModel= new DB_Catalog();
-        $catalogResults = $catalogModel->getCatalog();
-        $manufacturersList = $catalogModel->getManufacturers();
-        $pages = $catalogModel->countPages();
+        $catalogResults = Product::paginate(10);
 
-
-
-        return view('custom.catalog', compact('leftCatalogMenu', 'catalogResults', 'manufacturersList', 'pages' ) );
+        return view('custom.catalog', compact('leftCatalogMenu', 'catalogResults' ) );
 
     }
 }
