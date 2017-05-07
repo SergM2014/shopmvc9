@@ -55,15 +55,50 @@ class Category extends Model
     }
 
 
-    public static function getLeftCatalogMenu()
-    {
 
-    }
 
 
     public function products()
     {
         return $this->belongsToMany('App\Product');
+    }
+
+
+    public static function getLeftCatalogMenu()
+    {
+        self::$categories = self::all();
+
+
+        $leftMenu = self::printOutlLeftCatalogMenu();
+
+        return $leftMenu;
+    }
+
+
+    protected static function printOutlLeftCatalogMenu(  $parent = 0)
+    {
+        if(!isset($print)){$print='';}
+        foreach(self::$categories as $category){
+            if($category->parent_id ==$parent ){
+
+                $print.='<li  class="left-catalog-menu__item"><a href="/category/'. $category->eng_translit_title .'" class="left-catalog-menu__link">'.$category->title.'</a>' ;
+                foreach(self::$categories as $sub_cat){
+                    if($sub_cat->parent_id == $category->id){
+                        $flag = TRUE; break;
+                    }
+                }
+
+                if(isset($flag)){
+                    $print.= "<ul>";
+                    $print.= self::printOutlLeftCatalogMenu( $category->id);
+                    $print.= "</ul>";
+                    $print.= "</li>";
+                } else{
+                    $print.="</li>";
+                }
+            }
+        }
+        return $print;
     }
 
 
