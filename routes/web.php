@@ -17,3 +17,4 @@
 
 Route::get('/', 'IndexController@index');
 Route::get('/catalog', 'CatalogController@index');
+

@@ -8,11 +8,14 @@ class Category extends Model
 {
     private static $categories;
 
-
+    private static function getCategories()
+    {
+        self::$categories = self::all();
+    }
 
     public static function getVerticalMenu()
     {
-        self::$categories = self::all();
+        self::getCategories();
 
 
         return self::printOutLeftMenu();
@@ -21,7 +24,7 @@ class Category extends Model
     }
 
 
-//для выпадающего меню
+//для выпадающего меню в index
     private static function printOutLeftMenu($parent = 0)
     {
         static $suffix = 1;
@@ -66,7 +69,7 @@ class Category extends Model
 
     public static function getLeftCatalogMenu()
     {
-        self::$categories = self::all();
+        self::getCategories();
 
 
         $leftMenu = self::printOutlLeftCatalogMenu();
@@ -74,7 +77,7 @@ class Category extends Model
         return $leftMenu;
     }
 
-
+// left category menu for catalog page
     protected static function printOutlLeftCatalogMenu(  $parent = 0)
     {
         if(!isset($print)){$print='';}
