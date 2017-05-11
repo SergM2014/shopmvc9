@@ -17,4 +17,6 @@
 
 Route::get('/', 'IndexController@index');
 Route::get('/catalog', 'CatalogController@index');
+Route::get('/catalog/category/{category}', 'CatalogController@showCategories');
+Route::get('/catalog/manufacturer/{manufacturer}', 'CatalogController@showManufacturers');
 

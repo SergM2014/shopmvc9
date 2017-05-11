@@ -24,7 +24,7 @@
             <ul class="left-menu">
                 @foreach( $manufacturers as $manufacturer)
 
-                    <li><a href="/manufacturer/{{ $manufacturer->eng_translit_title }}">{{ $manufacturer->title }}</a></li>
+                    <li><a href="/catalog/manufacturer/{{ $manufacturer->eng_translit_title }}">{{ $manufacturer->title }}</a></li>
 
                 @endforeach
             </ul>

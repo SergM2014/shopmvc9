@@ -84,7 +84,7 @@ class Category extends Model
         foreach(self::$categories as $category){
             if($category->parent_id ==$parent ){
 
-                $print.='<li  class="left-catalog-menu__item"><a href="/category/'. $category->eng_translit_title .'" class="left-catalog-menu__link">'.$category->title.'</a>' ;
+                $print.='<li  class="left-catalog-menu__item"><a href="/catalog/category/'. $category->eng_translit_title .'" class="left-catalog-menu__link">'.$category->title.'</a>' ;
                 foreach(self::$categories as $sub_cat){
                     if($sub_cat->parent_id == $category->id){
                         $flag = TRUE; break;
