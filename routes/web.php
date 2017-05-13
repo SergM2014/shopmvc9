@@ -16,7 +16,7 @@
 });*/
 
 Route::get('/', 'IndexController@index');
-Route::get('/catalog', 'CatalogController@index');
-Route::get('/catalog/category/{category}', 'CatalogController@showCategories');
-Route::get('/catalog/manufacturer/{manufacturer}', 'CatalogController@showManufacturers');
+Route::get('/catalog/{order?}', 'CatalogController@index')->name('catalog');
+Route::get('/catalog/category/{category}/{order?}', 'CatalogController@showCategories')->name('catalogCategories');
+Route::get('/catalog/manufacturer/{manufacturer}/{order?}', 'CatalogController@showManufacturers')->name('catalogManufacturers');
 
