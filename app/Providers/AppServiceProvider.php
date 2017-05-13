@@ -13,7 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+       view()->composer('custom.partials.catalogDropdownMenu', function($view){
+            $view->with('currentRoute', \Route::currentRouteName());
+       });
     }
 
     /**

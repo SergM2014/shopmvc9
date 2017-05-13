@@ -46,11 +46,7 @@ class CatalogController extends Controller
 
         $manufacturers = Manufacturer::all();
 
-        $currentRoute = \Route::currentRouteName();
-
-
-        return view('custom.catalog', compact('leftCatalogMenu', 'catalogResults', 'manufacturers', 'currentRoute' ) );
-
+        return view('custom.catalog', compact('leftCatalogMenu', 'catalogResults', 'manufacturers'));
     }
 
     public function showCategories($category, $order = 'default' )
@@ -64,11 +60,9 @@ class CatalogController extends Controller
 
         $manufacturers = Manufacturer::all();
 
-        $currentRoute = \Route::currentRouteName();
         $linkParametr = compact('category');
 
-
-        return view('custom.catalog', compact('leftCatalogMenu', 'catalogResults', 'manufacturers', 'currentRoute', 'linkParametr' ) );
+        return view('custom.catalog', compact('leftCatalogMenu', 'catalogResults', 'manufacturers', 'linkParametr' ) );
     }
 
     public function showManufacturers($manufacturer, $order = null )
@@ -82,11 +76,9 @@ class CatalogController extends Controller
 
         $manufacturers = Manufacturer::all();
 
-        $currentRoute = \Route::currentRouteName();
         $linkParametr = compact('manufacturer');
 
-
-        return view('custom.catalog', compact('leftCatalogMenu', 'catalogResults', 'manufacturers',  'currentRoute', 'linkParametr' ) );
+        return view('custom.catalog', compact('leftCatalogMenu', 'catalogResults', 'manufacturers', 'linkParametr' ) );
     }
 
 }

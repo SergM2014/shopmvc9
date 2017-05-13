@@ -44,11 +44,13 @@
 
                 <div class="row">
                     <div class="col-sm-3">
+
                         @if($item->images->isNotEmpty())
 
                             <img src="/uploads/productsImages/tn_{{ $item->images->first()['path'] }}" alt="" class="catalog-item-image left" >
 
                         @endif
+
                     </div>
 
                     <div class="col-sm-8 col-sm-offset-1">
@@ -58,10 +60,10 @@
                         <p class="text-warning"><span class="bg-danger">Title: </span> {{ $item->title }}</p>
 
                     </div>
+
                 </div>
+
                 <p class="text-info"><span class="bg-danger">Description: </span>{{ $item->description }}</p>
-
-
 
                 <p class="text-info"><span class="bg-danger">Manufacturer: </span>{{ $item->manufacturer->title }}</p>
 
@@ -82,7 +84,6 @@
 
             </article>
             <?php endforeach; ?>
-
 
                 <div class="text-center"> {{ $catalogResults->links() }}</div>
 
