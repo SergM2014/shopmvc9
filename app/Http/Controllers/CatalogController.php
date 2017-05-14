@@ -9,6 +9,7 @@ use App\Manufacturer;
 
 class CatalogController extends Controller
 {
+
     private function findOutOrder($order)
     {
         switch ($order){
@@ -51,6 +52,7 @@ class CatalogController extends Controller
 
     public function showCategories($category, $order = 'default' )
     {
+
         $leftCatalogMenu = Category::getLeftCatalogMenu();
         $orderVariables = $this->findOutOrder($order);
 
@@ -60,9 +62,9 @@ class CatalogController extends Controller
 
         $manufacturers = Manufacturer::all();
 
-        $linkParametr = compact('category');
 
-        return view('custom.catalog', compact('leftCatalogMenu', 'catalogResults', 'manufacturers', 'linkParametr' ) );
+
+        return view('custom.catalog', compact('leftCatalogMenu', 'catalogResults', 'manufacturers' ) );
     }
 
     public function showManufacturers($manufacturer, $order = null )
@@ -76,9 +78,8 @@ class CatalogController extends Controller
 
         $manufacturers = Manufacturer::all();
 
-        $linkParametr = compact('manufacturer');
 
-        return view('custom.catalog', compact('leftCatalogMenu', 'catalogResults', 'manufacturers', 'linkParametr' ) );
+        return view('custom.catalog', compact('leftCatalogMenu', 'catalogResults', 'manufacturers') );
     }
 
 }

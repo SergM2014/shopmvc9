@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Route;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,8 +14,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
        view()->composer('custom.partials.catalogDropdownMenu', function($view){
-            $view->with('currentRoute', \Route::currentRouteName());
+            $view->with('currentRoute', Route::currentRouteName());
+            $view->with('linkParametr',array_first(\Route::current()->parameters()));
        });
     }
 
