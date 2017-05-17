@@ -47,12 +47,12 @@ class CatalogController extends Controller
 
         $manufacturers = Manufacturer::all();
 
-        return view('custom.catalog', compact('leftCatalogMenu', 'catalogResults', 'manufacturers'));
+        return view('custom.catalog.index', compact('leftCatalogMenu', 'catalogResults', 'manufacturers'));
     }
+
 
     public function showCategories($category, $order = 'default' )
     {
-
         $leftCatalogMenu = Category::getLeftCatalogMenu();
         $orderVariables = $this->findOutOrder($order);
 
@@ -62,10 +62,9 @@ class CatalogController extends Controller
 
         $manufacturers = Manufacturer::all();
 
-
-
-        return view('custom.catalog', compact('leftCatalogMenu', 'catalogResults', 'manufacturers' ) );
+        return view('custom.catalog.categories', compact('leftCatalogMenu', 'catalogResults', 'manufacturers' ) );
     }
+
 
     public function showManufacturers($manufacturer, $order = null )
     {
@@ -78,8 +77,7 @@ class CatalogController extends Controller
 
         $manufacturers = Manufacturer::all();
 
-
-        return view('custom.catalog', compact('leftCatalogMenu', 'catalogResults', 'manufacturers') );
+        return view('custom.catalog.manufacturers', compact('leftCatalogMenu', 'catalogResults', 'manufacturers') );
     }
 
 }
