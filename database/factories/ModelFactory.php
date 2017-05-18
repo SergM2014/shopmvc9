@@ -38,6 +38,16 @@ $factory->define(App\Product::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Background::class, function (Faker\Generator $faker) {
+    $faker = Faker\Factory::create('uk_UA');
+
+    return [
+        'aboutUs' => $faker->text,
+        'downloads' => $faker->text,
+        'contacts' => $faker->text
+    ];
+});
+
 
 
 
