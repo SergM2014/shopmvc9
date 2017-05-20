@@ -10,4 +10,14 @@ class Background extends Model
     {
         return $query->value('aboutUs');
     }
+
+    public function scopeDownloads($query)
+    {
+        return $query->value('downloads');
+    }
+
+    public function scopeContacts($query)
+    {
+        return $query->value('contacts');
+    }
 }

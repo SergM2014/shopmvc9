@@ -15,8 +15,8 @@
                 <li class="{{ $currentRoute == 'index'? 'active':'' }}"><a href="/">Main</a></li>
                 <li class="{{ preg_match('/^catalog/', $currentRoute )? 'active':'' }}"><a href="{{ route('catalog') }}">Catalog</a></li>
                 <li class="{{ $currentRoute == 'aboutus'? 'active':'' }}"><a href="{{ route('aboutus') }}">About Us</a></li>
-                <li><a href="/downloads">Downloads</a></li>
-                <li><a href="/contacts">Contacts</a></li>
+                <li class="{{ $currentRoute == 'downloads'? 'active':'' }}"><a href="/downloads">Downloads</a></li>
+                <li class="{{ $currentRoute == 'contacts'? 'active':'' }}"><a href="/contacts">Contacts</a></li>
 
 
             </ul>
