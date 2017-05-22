@@ -41,43 +41,37 @@ class CatalogController extends Controller
     {
         $orderVariables = $this->findOutOrder($order);
 
-        $leftCatalogMenu = Category::getLeftCatalogMenu();
-
         $catalogResults = Product::orderBy(...$orderVariables)->paginate(10);
 
-        $manufacturers = Manufacturer::all();
 
-        return view('custom.catalog.index', compact('leftCatalogMenu', 'catalogResults', 'manufacturers'));
+        return view('custom.catalog.index', compact( 'catalogResults'));
     }
 
 
     public function showCategories($category, $order = 'default' )
     {
-        $leftCatalogMenu = Category::getLeftCatalogMenu();
+
         $orderVariables = $this->findOutOrder($order);
 
         $catalogResults = Product::orderBy(...$orderVariables)->whereHas('categories', function($query)use($category){
                      $query->where('title', $category);
               })->paginate(10);
 
-        $manufacturers = Manufacturer::all();
 
-        return view('custom.catalog.categories', compact('leftCatalogMenu', 'catalogResults', 'manufacturers' ) );
+        return view('custom.catalog.categories', compact( 'catalogResults') );
     }
 
 
     public function showManufacturers($manufacturer, $order = null )
     {
-        $leftCatalogMenu = Category::getLeftCatalogMenu();
+
         $orderVariables = $this->findOutOrder($order);
 
         $catalogResults = Product::orderBy(...$orderVariables)->whereHas('manufacturer', function($query) use ($manufacturer){
                           $query->where('title', $manufacturer);
                      })->paginate(10);
 
-        $manufacturers = Manufacturer::all();
-
-        return view('custom.catalog.manufacturers', compact('leftCatalogMenu', 'catalogResults', 'manufacturers') );
+        return view('custom.catalog.manufacturers', compact('catalogResults') );
     }
 
 }

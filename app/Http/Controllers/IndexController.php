@@ -26,30 +26,24 @@ class IndexController extends Controller
 
     public function aboutus()
     {
-        $leftCatalogMenu = Category::getLeftCatalogMenu();
-        $manufacturers = Manufacturer::all();
         $aboutUs = Background::first()->aboutUs();
 
-        return view('custom.aboutUs', compact('leftCatalogMenu', 'manufacturers', 'aboutUs') );
+        return view('custom.aboutUs', compact( 'aboutUs') );
     }
 
     public function downloads()
     {
-        $leftCatalogMenu = Category::getLeftCatalogMenu();
-        $manufacturers = Manufacturer::all();
         $downloads = Background::first()->downloads();
 
-        return view('custom.downloads', compact('leftCatalogMenu', 'manufacturers', 'downloads') );
+        return view('custom.downloads', compact( 'downloads') );
     }
 
 
     public function contacts()
     {
-        $leftCatalogMenu = Category::getLeftCatalogMenu();
-        $manufacturers = Manufacturer::all();
         $contacts = Background::first()->contacts();
 
-        return view('custom.contacts', compact('leftCatalogMenu', 'manufacturers', 'contacts') );
+        return view('custom.contacts', compact('contacts') );
     }
 
 

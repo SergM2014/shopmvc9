@@ -11,8 +11,7 @@ class ProductController extends Controller
 {
     public function show(Product $product)
     {
-        $leftCatalogMenu = Category::getLeftCatalogMenu();
-        $manufacturers = Manufacturer::all();
-        return view('custom.product.show', compact('product', 'leftCatalogMenu', 'manufacturers'));
+
+        return view('custom.product.show', compact('product'));
     }
 }
