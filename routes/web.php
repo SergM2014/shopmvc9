@@ -7,4 +7,5 @@
     Route::get('/aboutus', 'IndexController@aboutus')->name('aboutus');
     Route::get('/downloads', 'IndexController@downloads')->name('downloads');
     Route::get('/contacts', 'IndexController@contacts')->name('contacts');
+    Route::get('/product/{product}', 'ProductController@show')->name('catalogShowProduct');
 
