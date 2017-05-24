@@ -29923,6 +29923,28 @@ $(document).on('click', '[data-toggle="lightbox"]', function (event) {
     event.preventDefault();
     $(this).ekkoLightbox();
 });
+
+document.body.addEventListener('click', function (e) {
+
+    if (e.target.id === "purchase") {
+
+        e.preventDefault();
+
+        var form = new FormData(document.getElementById('purchaseForm'));
+
+        fetch('/busket/add', {
+            method: 'POST',
+            credentials: 'same-origin',
+            body: form
+        }).then(function (response) {
+            return response.json();
+        }).then(function (json) {
+            if (!json.success) return;
+            document.getElementById('totalAmount').innerText = json.totalAmount;
+            document.getElementById('totalSumma').innerText = json.totalSumma;
+        });
+    }
+}); //this is end of the body
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),

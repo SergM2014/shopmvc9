@@ -52,7 +52,13 @@
 
                  @endforeach
             </div>
-            <button class="btn btn-danger pull-right">Purchase</button>
+                <form id="purchaseForm">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="id" value = "{{ $product->id }}">
+                    <input type="hidden" name="price" value="{{ $product->price }}">
+                    <button id="purchase" class="btn btn-danger pull-right">Purchase</button>
+                </form>
+
 
         </section>
     </div>

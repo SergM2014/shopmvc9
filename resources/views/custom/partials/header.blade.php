@@ -41,8 +41,8 @@
             <div class="small-busket__container" id="busket-container">
                 <img src="/img/busket.jpg" class="small-busket__img" alt="the busket">
                 <div class="small-busket__info" id="smallBusketInfo">
-                    <p class="busket__info-item text-danger" >Amount : <?= session('totalAmount')?? 0 ?> psc  </p>
-                    <p class="busket__info-item text-danger" >Summa :  <?= session('totalItem')?? 0 ?> hrn </p>
+                    <p class="busket__info-item text-danger" >Amount : <span id="totalAmount"><?= session('totalAmount')?? 0 ?></span> psc  </p>
+                    <p class="busket__info-item text-danger" >Summa :  <span id="totalSumma"><?= session('totalSumma')?? 0 ?> </span> hrn </p>
                 </div>
             </div>
         </div>
