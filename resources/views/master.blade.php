@@ -11,6 +11,9 @@
 
     </head>
     <body>
+
+        @include('custom.modalWindow.bigBusketDecorator')
+
         <div class="container">
 
             @include('custom.partials.header')

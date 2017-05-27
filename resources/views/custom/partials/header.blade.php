@@ -38,7 +38,7 @@
 
 
         <div class="row">
-            <div class="small-busket__container" id="busket-container">
+            <div class="small-busket__container" id="busket-container" data-toggle="modal" data-target=".bs-example-modal-lg">
                 <img src="/img/busket.jpg" class="small-busket__img" alt="the busket">
                 <div class="small-busket__info" id="smallBusketInfo">
                     <p class="busket__info-item text-danger" >Amount : <span id="totalAmount"><?= session('totalAmount')?? 0 ?></span> psc  </p>

@@ -9,3 +9,6 @@
     Route::get('/contacts', 'IndexController@contacts')->name('contacts');
     Route::get('/product/{product}', 'ProductController@show')->name('catalogShowProduct');
     Route::post('/busket/add', 'BusketController@add');
+    Route::post('/busket/show', 'BusketController@show');
+    Route::post('/busket/update', 'BusketController@update');
+    Route::post('/updateSmallBusket', 'BusketController@updateHeader');
