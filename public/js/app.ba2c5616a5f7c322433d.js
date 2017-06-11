@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 13);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10381,6 +10381,28 @@ document.body.addEventListener('click', function (e) {
             document.getElementById('totalSumma').innerText = json.totalSumma;
         });
     }
+
+    if (e.target.id === "makeOrder") {
+
+        var _form = new FormData(document.getElementById('bigBusketContent'));
+
+        fetch('/showOrderForm', {
+            method: 'POST',
+            credentials: 'same-origin',
+            body: _form
+
+        }).then(function (response) {
+            return response.text();
+        }).then(function (html) {
+            document.getElementById('bigBusketContent').insertAdjacentHTML('beforeEnd', html);
+            document.getElementById('bigBusketFooter').classList.add('hidden');
+        });
+    }
+
+    if (e.target.id === "canselOrder") {
+        document.getElementById('orderForm').remove();
+        document.getElementById('bigBusketFooter').classList.remove('hidden');
+    }
 });
 
 /***/ }),
@@ -12768,8 +12790,7 @@ if (typeof jQuery === 'undefined') {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 4 */,
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -12781,329 +12802,20 @@ if (typeof jQuery === 'undefined') {
 
 __webpack_require__(1);
 
-__webpack_require__(11);
-
-__webpack_require__(10);
-
-__webpack_require__(9);
+//continue further with ussual js
 
 /***/ }),
+/* 5 */,
 /* 6 */,
-/* 7 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
+/* 7 */,
 /* 8 */,
-/* 9 */
-/***/ (function(module, exports) {
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var intervalFlow = void 0;
-var scrollingSpeed = 200; /*10,*. скорость, чем больше значние, тем медленнее движение*/
-var scrollingDirect = -1;
-var scrollPosition = 0;
-var container = document.getElementById('scroller_container');
-
-var Scroller = function () {
-    function Scroller() {
-        _classCallCheck(this, Scroller);
-    }
-
-    _createClass(Scroller, null, [{
-        key: 'wheel',
-        value: function wheel(e) {
-            e.stopPropagation();
-            e.preventDefault();
-            Scroller.stop();
-
-            var wheelData = e.detail ? e.detail * -1 : e.wheelDelta / 40;
-
-            // В движке WebKit возвращается значение в 100 раз больше
-            if (Math.abs(wheelData) > 100) {
-                wheelData = Math.round(wheelData / 100);
-            }
-
-            scrollingDirect = wheelData > 0 ? 1 : -1;
-            Scroller.scroll(scrollingDirect);
-        }
-
-        // движение карусели вправо влево
-
-    }, {
-        key: 'scroll',
-        value: function scroll(wheel) {
-
-            var div = container.firstElementChild;
-            var the_first = void 0,
-                the_last = void 0,
-                width = void 0;
-            scrollPosition += wheel; //add1 point causes gradual moovement to the right or to the left
-
-            scrollPosition += wheel;
-
-            if (wheel > 0) {
-                if (scrollPosition >= 0) {
-                    // берем последнюю картинку и вставляем ёё в начало
-
-                    // В этот момент можно подгружать более левую картинку и удалить последнюю
-                    the_first = div; //.firstElementChild; // контейнер с картинками
-                    the_last = the_first.lastElementChild; // последняя картинка вместе с анкором
-                    width = the_last.firstElementChild.clientWidth; // размер картинки
-                    the_first.insertBefore(the_last, the_first.firstElementChild);
-                    scrollPosition -= width;
-                }
-            } else {
-                //console.log('wheel is < 0');
-                the_first = div; //.firstElementChild; // контейнер с картинками
-
-                the_last = the_first.firstElementChild; // первая картинка вместе с анкором
-                width = the_last.firstElementChild.clientWidth; // размер картинки
-                if (scrollPosition < -width) {
-                    // если картинка ушла влево из зоны видимости переношу её в конец списка
-
-                    // В этот момент можно подгружать следующую картинку и удалить первую
-                    the_first.appendChild(the_last);
-
-                    scrollPosition += width; //пысля того як первый рисунок переставленный назад обнуяеться
-
-                    //тобто зменшуеться до  -1
-                }
-            }
-            div.style.left = scrollPosition + 'px';
-        }
-
-        // Остановка скроллера
-
-    }, {
-        key: 'stop',
-        value: function stop() {
-
-            if (intervalFlow != null) {
-                clearInterval(intervalFlow);
-                intervalFlow = null;
-            }
-        }
-    }, {
-        key: 'init',
-        value: function init() {
-
-            intervalFlow = setInterval(Scroller.scroll.bind(Scroller, scrollingDirect), scrollingSpeed);
-        }
-    }]);
-
-    return Scroller;
-}(); //end of the lass
-
-
-//setTimeout(scroller.init(), 100);
-
-
-container.addEventListener('mousewheel', Scroller.wheel);
-Scroller.stop();
-
-Scroller.init();
-
-container.addEventListener('mousemove', Scroller.stop.bind(Scroller));
-
-container.addEventListener('mouseout', Scroller.init.bind(Scroller));
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Slider = function () {
-    function Slider() {
-        _classCallCheck(this, Slider);
-
-        //get amount of slider
-
-        this.slider_number = document.getElementById('slider').querySelectorAll('.slider_image').length;
-    }
-
-    _createClass(Slider, [{
-        key: 'startSliding',
-        value: function startSliding(now, last) {
-            var newnow = void 0;
-            //if thelast slider than reset nex slider to number 1
-            if (now == this.slider_number) {
-                newnow = 1;
-            } else {
-                newnow = Number(now) + 1;
-            }
-
-            //if the only one slider exists than always 1
-            if (this.slider_number == 1) newnow = 1;
-
-            //hidr(slideup) the last active slider
-            if (last != 0) {
-                Slider.toggleImage(last);
-            }
-
-            setTimeout(function () {
-                Slider.toggleImage(now);
-            }, 1000); //запустыть функцию через промежуток
-
-            setTimeout(function () {
-                new Slider().startSliding(newnow, now);
-            }, 6000);
-        }
-    }], [{
-        key: 'toggleImage',
-        value: function toggleImage(id) //спочатку получаемо цифру 1
-        {
-            var currentElem = document.getElementById(id);
-            var currentElemHeight = Slider.getElemHeight(currentElem); //получаем высоту элемента
-            var titleElems = currentElem.getElementsByTagName('*'); //елкмкнты що маються в теге содержащиго картинку
-
-
-            if (currentElem.classList.contains('notdisplayed')) {
-                //hide bottom title
-                for (var i = 0; i < titleElems.length; i++) {
-                    titleElems[i].classList.add('unvisible');
-                }
-                //для visibility
-                currentElem.style.height = "1px";
-                currentElem.classList.remove('notdisplayed');
-
-                //image will be larging(sliding down)
-
-                var _loop = function _loop(_i) {
-                    (function () {
-                        var pos = _i;
-                        setTimeout(function () {
-                            currentElem.style.height = pos / 100 * currentElemHeight + 1 + "px";
-                        }, pos * 5);
-                    })();
-                };
-
-                for (var _i = 0; _i <= 100; _i += 5) {
-                    _loop(_i);
-                }
-
-                //botom titel elems are shown
-
-                setTimeout(function () {
-                    for (var _i2 = 0; _i2 < titleElems.length; _i2++) {
-                        titleElems[_i2].classList.remove('unvisible');
-                    }
-                }, 500);
-            } else {
-                (function () {
-                    //reduce slider image(sliding up)
-
-                    var theHeight = currentElemHeight - 1 + "px";
-
-                    for (var _i3 = 0; _i3 < titleElems.length; _i3++) {
-                        titleElems[_i3].classList.add('unvisible');
-                    }
-
-                    var _loop2 = function _loop2(_i4) {
-                        (function () {
-                            var pos = _i4;
-                            setTimeout(function () {
-                                currentElem.style.height = pos / 100 * currentElemHeight + "px";
-                                if (pos <= 0) {
-                                    currentElem.classList.add('notdisplayed');
-                                    currentElem.style.height = theHeight;
-                                }
-                            }, 1000 - pos * 5);
-                        })();
-                    };
-
-                    for (var _i4 = 100; _i4 >= 0; _i4 -= 5) {
-                        _loop2(_i4);
-                    }
-
-                    // currentElem.classList.add('notdisplayed');
-                })();
-            }
-        }
-    }, {
-        key: 'getElemHeight',
-        value: function getElemHeight(slider) {
-
-            var elemHeight = void 0;
-
-            //let currentElem = document.getElementById(id);
-
-            if (slider.classList.contains('notdisplayed')) {
-
-                slider.classList.add('unvisible');
-
-                slider.classList.remove('notdisplayed');
-
-                elemHeight = slider.clientHeight || slider.offsetHeight + 5; // Высота
-
-                slider.classList.add('notdisplayed');
-
-                slider.classList.remove('unvisible');
-            } else {
-
-                elemHeight = slider.clientHeight || slider.offsetHeight + 5; // Высота
-            }
-
-            return elemHeight;
-        }
-    }]);
-
-    return Slider;
-}();
-
-window.onload = new Slider().startSliding('1', '0');
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports) {
-
-document.body.addEventListener('click', function (e) {
-
-    //vertical menu slideUp/Down
-    if (e.target.closest('.left-menu')) {
-        {
-            if (!e.target.classList.contains('left-menu__contains-subcatetegories-sign')) return;
-
-            var currentMenuItemId = e.target.closest('li').dataset.categoryId;
-            var currentMenuItemParentId = e.target.closest('li').dataset.parentId;
-            var parentUl = e.target.closest('ul');
-            var childrenLi = parentUl.querySelectorAll('[data-parent-id="' + currentMenuItemParentId + '"]');
-
-            if (!childrenLi) return;
-            for (var i = 0; i < childrenLi.length; i++) {
-                var ul = childrenLi[i].querySelector('ul');
-                if (childrenLi[i].dataset.categoryId != currentMenuItemId) {
-                    if (ul) {
-                        ul.classList.add('hidden');
-                        var sign = ul.closest('li').querySelector('.left-menu__contains-subcatetegories-sign');
-                        sign.classList.remove('hidden');
-                    }
-                } else {
-                    if (ul) {
-                        ul.classList.remove('hidden');
-                        var _sign = ul.closest('li').querySelector('.left-menu__contains-subcatetegories-sign');
-                        _sign.classList.add('hidden');
-                    }
-                }
-            }
-        }
-    }
-});
-
-/***/ }),
-/* 12 */,
-/* 13 */
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(5);
-module.exports = __webpack_require__(7);
+module.exports = __webpack_require__(4);
 
 
 /***/ })

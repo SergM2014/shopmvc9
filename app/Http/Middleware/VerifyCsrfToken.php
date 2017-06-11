@@ -13,6 +13,9 @@ class VerifyCsrfToken extends BaseVerifier
      */
     protected $except = [
        '/busket/show',
-        '/updateSmallBusket'
+        '/updateSmallBusket',
+        '/showOrderForm',
+        '/validateBusket',
+        '/busket/makeOrder'
     ];
 }

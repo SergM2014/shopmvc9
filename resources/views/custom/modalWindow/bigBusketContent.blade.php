@@ -5,7 +5,7 @@
 
 @if($content)
 
-    <div class="modal-body">
+    <div class="modal-body" >
 
         {{ csrf_field() }}
 
@@ -21,7 +21,7 @@
                 <tr>
                     <td><?=  $tableCounter++  ?></td>
                     <td>{{$product->title}}</td>
-                    <td><input type="text" name="{{ $product->id }}" value ="{{ session('busketContent')[$product->id ] }}" ></td>
+                    <td class="form-group"><div  class=""><input type="text" id="id_{{ $product->id }}" class="form-control" name="{{ $product->id }}" value ="{{ session('busketContent')[$product->id ] }}" ></div></td>
                     <td>{{ $product->price }}</td>
                 </tr>
 
@@ -36,14 +36,14 @@
 
 
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer" id="bigBusketFooter">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" id="updateBusketBtn">Update</button>
-        <button type="button" class="btn btn-danger">Make Order</button>
+        <button type="button" class="btn btn-danger" id="makeOrder">Make Order</button>
     </div>
 
 @else
 
-    Nothing is found
+    <h2 class="text-center text-danger"> Nothing is found</h2>
 </div>
 @endif

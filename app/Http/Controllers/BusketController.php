@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+
+use Validator;
 use Illuminate\Http\Request;
 use App\Product;
+
 
 class BusketController extends Controller
 {
@@ -85,5 +88,51 @@ class BusketController extends Controller
             "success"=> true,
             "busket" =>session('busketContent')
         ]);
+    }
+
+    public function showOrderForm()
+    {
+        return view('custom.modalWindow.orderForm');
+    }
+
+
+    public function validateBusketContent()
+    {
+
+        $busketContent = request()->all();
+
+        $errors =[];
+
+        foreach ($busketContent as $key => $value){
+            if( is_numeric($key) AND ($value<1 OR !is_numeric($value))){
+                $errors[] = $key;
+            }
+        }
+
+        if(!empty($errors)) {
+            return response()->json([
+                "fail" => true,
+                "errors"=>$errors
+            ]);
+        }
+
+        return response()->json([
+
+            "success"=> true,
+
+        ]);
+    }
+
+
+    public function makeOrder(Request $request)
+    {
+        $this->validate($request, [
+            'name'  => 'required|min:6',
+            'email' => 'required|email'
+        ]);
+
+
+
+
     }
 }

@@ -12,3 +12,6 @@
     Route::post('/busket/show', 'BusketController@show');
     Route::post('/busket/update', 'BusketController@update');
     Route::post('/updateSmallBusket', 'BusketController@updateHeader');
+    Route::post('/showOrderForm', 'BusketController@showOrderForm');
+    Route::post('/validateBusket', 'BusketController@validateBusketContent');
+    Route::post('/busket/makeOrder', 'BusketController@makeOrder');
