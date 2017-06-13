@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 
-use Validator;
+
 use Illuminate\Http\Request;
 use App\Product;
 
@@ -124,11 +124,17 @@ class BusketController extends Controller
     }
 
 
-    public function makeOrder(Request $request)
+    public function makeOrder()
     {
-        $this->validate($request, [
-            'name'  => 'required|min:6',
-            'email' => 'required|email'
+        $this->validate(request(), [
+            'name'  => 'min:6',
+            'email' => 'email'
+        ]);
+
+        return response()->json([
+
+            "success"=> true,
+
         ]);
 
 

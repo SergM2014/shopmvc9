@@ -12168,10 +12168,18 @@ document.body.addEventListener('click', function (e) {
     if (e.target.id === "submitOrder") {
 
         var _form2 = new FormData(document.getElementById('orderForm'));
+        //console.log(form);
+
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+
+        //console.log(name+'  '+ email)
 
         axios.post('/busket/makeOrder', {
-            credentials: 'same-origin',
-            body: _form2
+            email: email,
+            name: name,
+            withCredentials: true
+
         }).then(function (response) {
             console.log(response.data);
         }).catch(function (error) {
@@ -12194,7 +12202,7 @@ document.body.addEventListener('keyup', function (e) {
 
         var parentForm = e.target.closest('.form-group');
         parentForm.classList.remove('has-error');
-        if (parentForm.querySelector('.help-block')) parentForm.innerText = '';
+        if (parentForm.querySelector('.help-block')) parentForm.querySelector('.help-block').innerText = '';
     }
 });
 

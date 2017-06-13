@@ -115,12 +115,23 @@ document.body.addEventListener('click', function(e){
 
     if(e.target.id === "submitOrder") {
 
-        let form = new FormData(document.getElementById('orderForm'))
+        // let form = new FormData(document.getElementById('orderForm'))
 
-        axios.post('/busket/makeOrder',  {
-            credentials: 'same-origin',
-            body: form
-            })
+
+        let name= document.getElementById('name').value;
+        let email = document.getElementById('email').value;
+
+
+        axios.post('/busket/makeOrder',{
+           email,
+           name,
+           withCredentials: true
+
+    })
+
+
+
+
             .then(function(response) {
                 console.log(response.data);
 
@@ -150,7 +161,7 @@ document.body.addEventListener('keyup', function(e){
 
        let parentForm = e.target.closest('.form-group');
        parentForm.classList.remove('has-error');
-      if( parentForm.querySelector('.help-block')) parentForm.innerText ='';
+      if( parentForm.querySelector('.help-block')) parentForm.querySelector('.help-block').innerText ='';
 
     }
 
