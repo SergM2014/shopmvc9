@@ -12167,13 +12167,11 @@ document.body.addEventListener('click', function (e) {
 
     if (e.target.id === "submitOrder") {
 
-        var _form2 = new FormData(document.getElementById('orderForm'));
-        //console.log(form);
+        // let form = new FormData(document.getElementById('orderForm'))
+
 
         var name = document.getElementById('name').value;
         var email = document.getElementById('email').value;
-
-        //console.log(name+'  '+ email)
 
         axios.post('/busket/makeOrder', {
             email: email,
@@ -12181,8 +12179,39 @@ document.body.addEventListener('click', function (e) {
             withCredentials: true
 
         }).then(function (response) {
-            console.log(response.data);
+            //console.log(response.data);
+            var response1 = response.data;
+
+            if (response1.success) {
+                document.body.classList.remove('modal-open');
+                document.getElementById('bigModal').classList.remove('in');
+                document.getElementById('bigModal').style.display = 'none';
+                document.querySelector('.modal-backdrop').remove();
+
+                fetch('/updateSmallBusket', {
+                    method: 'POST',
+                    credentials: 'same-origin'
+                }).then(function (response) {
+                    return response.json();
+                }).then(function (json) {
+                    if (!json.success) return;
+                    document.getElementById('totalAmount').innerText = json.totalAmount;
+                    document.getElementById('totalSumma').innerText = json.totalSumma;
+
+                    // output success message
+
+                    return fetch('/succeededOrder', {
+                        method: 'POST',
+                        credentials: 'same-origin'
+                    }).then(function (response) {
+                        return response.text();
+                    }).then(function (html) {
+                        document.querySelector('.content').insertAdjacentHTML('afterBegin', html);
+                    });
+                });
+            }
         }).catch(function (error) {
+
             var errors = error.response.data;
 
             for (var _i3 in errors) {

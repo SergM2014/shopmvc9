@@ -15,3 +15,4 @@
     Route::post('/showOrderForm', 'BusketController@showOrderForm');
     Route::post('/validateBusket', 'BusketController@validateBusketContent');
     Route::post('/busket/makeOrder', 'BusketController@makeOrder');
+    Route::post('/succeededOrder', 'BusketController@succeededOrder');

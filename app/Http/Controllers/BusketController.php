@@ -127,18 +127,32 @@ class BusketController extends Controller
     public function makeOrder()
     {
         $this->validate(request(), [
-            'name'  => 'min:6',
+            'name' => 'min:6',
             'email' => 'email'
         ]);
 
-        return response()->json([
+//hide modal previous modal window with busket+
+        //to zeroise the small busket vriables and refresh them in view+
+        //show modal window description of success
+        //send a letter
 
-            "success"=> true,
+        $busketContent = session('busketContent');
+        $totalAmount = session()->get('totalAmount');
+        $totalSumma = session()->get('totalSumma');
 
-        ]);
-
-
-
+        session()->put('totalAmount', 0);
+        session()->put('totalSumma', 0);
+        session()->put('busketContent', 0);
+        return $this->updateHeader();
 
     }
+
+    public function succeededOrder()
+    {
+        return view('custom.partials.succeededOrder');
+    }
+
+
+
+
 }

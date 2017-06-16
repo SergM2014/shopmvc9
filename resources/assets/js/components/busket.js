@@ -128,24 +128,54 @@ document.body.addEventListener('click', function(e){
            withCredentials: true
 
     })
+        .then(function(response) {
+//console.log(response.data);
+        let response1 = response.data;
+
+        if (response1.success) {
+            document.body.classList.remove('modal-open');
+            document.getElementById('bigModal').classList.remove('in');
+            document.getElementById('bigModal').style.display = 'none';
+            document.querySelector('.modal-backdrop').remove();
 
 
-
-
-            .then(function(response) {
-                console.log(response.data);
-
+            fetch('/updateSmallBusket', {
+                method: 'POST',
+                credentials: 'same-origin'
             })
-            .catch((error) => {
-                let errors = error.response.data;
 
-                for(let i in errors){
-//errors[i] returns name of the property
-//errors[i][0] returns value of thre property
-                    document.getElementById(i).closest('.form-group').classList.add('has-error');
-                    document.getElementById(i+'HelpBlock').innerText = errors[i][0];
-                }
-            })
+                .then(response => response.json())
+                .then(json => {
+                    if (!json.success) return;
+                    document.getElementById('totalAmount').innerText = json.totalAmount;
+                    document.getElementById('totalSumma').innerText = json.totalSumma;
+
+// output success message
+
+                    return  fetch('/succeededOrder', {
+                        method: 'POST',
+                        credentials: 'same-origin'
+                    })
+
+                        .then(response => response.text())
+                        .then(html => { document.querySelector('.content').insertAdjacentHTML('afterBegin', html)})
+
+                })
+
+            }
+        })
+        .catch((error) => {
+
+         let errors = error.response.data;
+
+
+        for(let i in errors){
+        //errors[i] returns name of the property
+        //errors[i][0] returns value of thre property
+        document.getElementById(i).closest('.form-group').classList.add('has-error');
+        document.getElementById(i+'HelpBlock').innerText = errors[i][0];
+        }
+        })
 
     }
 
