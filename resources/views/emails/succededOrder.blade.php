@@ -1,2 +1,13 @@
-Hallo this is email about succeded order!!!
-Join your self!!
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+</head>
+
+<body>
+    <h1>Order succeded! Greetings!!!</h1>
+
+{{ var_dump($order) }}
+</body>
+</html>
