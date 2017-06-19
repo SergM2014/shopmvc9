@@ -137,9 +137,16 @@ class BusketController extends Controller
         //show modal window description of success+
         //send a letter
 
-        $order['busketContent'] = session('busketContent');
+      //  $order['busketContent'] = session('busketContent');
         $order['totalAmount'] = session()->get('totalAmount');
         $order['totalSumma'] = session()->get('totalSumma');
+        $order['busketContent'] =[];
+        foreach (session('busketContent') as $key => $value) {
+
+            $product = Product::find($key);
+
+            $order['busketContent'][$product->title] = $value;
+        }
 
         session()->put('totalAmount', 0);
         session()->put('totalSumma', 0);
@@ -154,6 +161,8 @@ class BusketController extends Controller
     {
         return view('custom.partials.succeededOrder');
     }
+
+
 
 
 

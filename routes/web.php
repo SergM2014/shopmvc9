@@ -16,3 +16,4 @@
     Route::post('/validateBusket', 'BusketController@validateBusketContent');
     Route::post('/busket/makeOrder', 'BusketController@makeOrder');
     Route::post('/succeededOrder', 'BusketController@succeededOrder');
+    Route::post('/sendSuccessEmail', 'BusketController@sendSuccessEmail');

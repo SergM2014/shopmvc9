@@ -156,10 +156,8 @@ document.body.addEventListener('click', function(e){
                         method: 'POST',
                         credentials: 'same-origin'
                     })
-
                         .then(response => response.text())
-                        .then(html => { document.querySelector('.content').insertAdjacentHTML('afterBegin', html)})
-
+                        .then(html => { document.querySelector('.content').insertAdjacentHTML('afterBegin', html); })
                 })
 
             }

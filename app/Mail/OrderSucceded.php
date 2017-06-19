@@ -20,7 +20,7 @@ class OrderSucceded extends Mailable implements ShouldQueue
      */
     public function __construct($order)
     {
-        $this->order = $order;
+        $this->order = (object)$order;
     }
 
     /**
