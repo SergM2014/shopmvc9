@@ -12172,9 +12172,11 @@ document.body.addEventListener('click', function (e) {
 
         var name = document.getElementById('name').value;
         var email = document.getElementById('email').value;
+        var phone = document.getElementById('phone').value;
 
         axios.post('/busket/makeOrder', {
             email: email,
+            phone: phone,
             name: name,
             withCredentials: true
 

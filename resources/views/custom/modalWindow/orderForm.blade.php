@@ -10,7 +10,8 @@
 
         <div class="form-group">
             <label for="phone">Your Phone: </label>
-            <input type="text1" class="form-control" id="phone" placeholder="phone">
+            <input type="text" class="form-control" id="phone" name="phone" placeholder="phone">
+            <span id="phoneHelpBlock" class="help-block"></span>
         </div>
 
         <div class="form-group">

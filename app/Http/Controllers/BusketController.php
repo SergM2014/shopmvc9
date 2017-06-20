@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Mail\OrderSucceded;
+use App\Order;
 
 
 class BusketController extends Controller
@@ -129,15 +130,12 @@ class BusketController extends Controller
     {
         $this->validate(request(), [
             'name' => 'min:6',
+           // 'phone'=>'required',
             'email' => 'email'
         ]);
 
-//hide modal previous modal window with busket+
-        //to zeroise the small busket vriables and refresh them in view+
-        //show modal window description of success+
-        //send a letter
 
-      //  $order['busketContent'] = session('busketContent');
+
         $order['totalAmount'] = session()->get('totalAmount');
         $order['totalSumma'] = session()->get('totalSumma');
         $order['busketContent'] =[];
@@ -151,6 +149,16 @@ class BusketController extends Controller
         session()->put('totalAmount', 0);
         session()->put('totalSumma', 0);
         session()->put('busketContent', []);
+
+        $saveOrder = new Order;
+
+        $saveOrder->name = request('name');
+        $saveOrder->phone = request('phone');
+        $saveOrder->email = request('email');
+        $saveOrder->order = json_encode($order);
+        $saveOrder->delivered = "0";
+
+        $saveOrder->save();
 
         \Mail::to(request()->email)->send(new OrderSucceded($order));
         return $this->updateHeader();

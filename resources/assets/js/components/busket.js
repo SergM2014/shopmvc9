@@ -120,10 +120,12 @@ document.body.addEventListener('click', function(e){
 
         let name= document.getElementById('name').value;
         let email = document.getElementById('email').value;
+        let phone = document.getElementById('phone').value;
 
 
         axios.post('/busket/makeOrder',{
            email,
+           phone,
            name,
            withCredentials: true
 
