@@ -84,4 +84,17 @@
   margin-top:20px;
 }
 
+.waiting-block{
+  width:100%;
+  height:100%;
+  position:fixed;
+  display:flex;
+  z-index: 1000000000;
+  background: rgba(63, 63, 55, 0.74);
+
+}
+.waiting-img{
+  margin:auto;
+}
+
 

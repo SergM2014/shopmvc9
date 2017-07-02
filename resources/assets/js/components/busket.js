@@ -8,6 +8,23 @@ function removeBusketContentErrors(){
     }
 }
 
+function drawWaitingScreen(){
+    let waitingBlock = `
+                    <div class="waiting-block" id="waitingBlock">
+                    
+                        <img class="waiting-img" src="/img/loading.gif" alt="">
+                    
+                    </div>
+                `;
+    document.body.insertAdjacentHTML('afterBegin', waitingBlock )
+
+}
+
+function removeWaitingscreen()
+{
+    if(document.getElementById('waitingBlock')) document.getElementById('waitingBlock').remove();
+}
+
 
 document.getElementById('busket-container').addEventListener('click', function(e){
 
@@ -60,6 +77,10 @@ document.body.addEventListener('click', function(e){
         })
             .then( response => response.json())
             .then( json => {
+
+
+
+
 
                 let formerErrors = document.getElementById('bigBusketContent').querySelectorAll('td.has-error');
                 for (let i=0; i<formerErrors.length; i++){
@@ -115,8 +136,8 @@ document.body.addEventListener('click', function(e){
 
     if(e.target.id === "submitOrder") {
 
-        // let form = new FormData(document.getElementById('orderForm'))
 
+        drawWaitingScreen();
 
         let name= document.getElementById('name').value;
         let email = document.getElementById('email').value;
@@ -131,7 +152,9 @@ document.body.addEventListener('click', function(e){
 
     })
         .then(function(response) {
-//console.log(response.data);
+
+
+
         let response1 = response.data;
 
         if (response1.success) {
@@ -159,13 +182,20 @@ document.body.addEventListener('click', function(e){
                         credentials: 'same-origin'
                     })
                         .then(response => response.text())
-                        .then(html => { document.querySelector('.content').insertAdjacentHTML('afterBegin', html); })
+                        .then(html => {
+
+//remove waiting screen
+removeWaitingscreen();
+                            document.querySelector('.content').insertAdjacentHTML('afterBegin', html);
+                        })
                 })
+// here sending email
+
 
             }
         })
         .catch((error) => {
-
+removeWaitingscreen();
          let errors = error.response.data;
 
 

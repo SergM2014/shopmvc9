@@ -18,6 +18,6 @@ class VerifyCsrfToken extends BaseVerifier
         '/validateBusket',
         '/busket/makeOrder',
         '/succeededOrder',
-        '/sendSuccessEmail'
+        '/sendSuccessMail'
     ];
 }

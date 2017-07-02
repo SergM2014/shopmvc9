@@ -61,9 +61,6 @@ class BusketController extends Controller
        session()->put('busketContent', $busketContent);
 
 
-        $keys = @array_keys(session('busketContent'));
-
-        $content = Product::find($keys);
 
         //get totalAmount and totalSumma
         session()->put('totalAmount', array_sum($busketContent));
@@ -160,8 +157,16 @@ class BusketController extends Controller
 
         $saveOrder->save();
 
-        \Mail::to(request()->email)->send(new OrderSucceded($order));
-        return $this->updateHeader();
+              \Mail::to(request()->email)->send(new OrderSucceded($order));
+
+        return response()->json([
+            "totalAmount" => session('totalAmount'),
+            "totalSumma" => session('totalSumma'),
+            "success" => true,
+            "busket" => session('busketContent'),
+            "email" => request()->email,
+            "order" => $order
+        ]);
 
     }
 
@@ -169,6 +174,7 @@ class BusketController extends Controller
     {
         return view('custom.partials.succeededOrder');
     }
+
 
 
 

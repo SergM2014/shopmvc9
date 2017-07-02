@@ -11179,6 +11179,10 @@ process.off = noop;
 process.removeListener = noop;
 process.removeAllListeners = noop;
 process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
 
 process.binding = function (name) {
     throw new Error('process.binding is not supported');
@@ -12061,6 +12065,15 @@ function removeBusketContentErrors() {
     }
 }
 
+function drawWaitingScreen() {
+    var waitingBlock = '\n                    <div class="waiting-block" id="waitingBlock">\n                    \n                        <img class="waiting-img" src="/img/loading.gif" alt="">\n                    \n                    </div>\n                ';
+    document.body.insertAdjacentHTML('afterBegin', waitingBlock);
+}
+
+function removeWaitingscreen() {
+    if (document.getElementById('waitingBlock')) document.getElementById('waitingBlock').remove();
+}
+
 document.getElementById('busket-container').addEventListener('click', function (e) {
 
     fetch('/busket/show', {
@@ -12167,8 +12180,7 @@ document.body.addEventListener('click', function (e) {
 
     if (e.target.id === "submitOrder") {
 
-        // let form = new FormData(document.getElementById('orderForm'))
-
+        drawWaitingScreen();
 
         var name = document.getElementById('name').value;
         var email = document.getElementById('email').value;
@@ -12181,7 +12193,7 @@ document.body.addEventListener('click', function (e) {
             withCredentials: true
 
         }).then(function (response) {
-            //console.log(response.data);
+
             var response1 = response.data;
 
             if (response1.success) {
@@ -12208,12 +12220,17 @@ document.body.addEventListener('click', function (e) {
                     }).then(function (response) {
                         return response.text();
                     }).then(function (html) {
+
+                        //remove waiting screen
+                        removeWaitingscreen();
                         document.querySelector('.content').insertAdjacentHTML('afterBegin', html);
                     });
                 });
+                // here sending email
+
             }
         }).catch(function (error) {
-
+            removeWaitingscreen();
             var errors = error.response.data;
 
             for (var _i3 in errors) {
