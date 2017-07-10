@@ -49,6 +49,20 @@ $factory->define(App\Background::class, function (Faker\Generator $faker) {
 });
 
 
+$factory->define(App\Comment::class, function (Faker\Generator $faker) {
+
+    $faker = Faker\Factory::create('uk_UA');
+
+    return [
+        'product_id' => $faker->numberBetween($min = 1, $max = 50),
+        'comment' => $faker->text,
+        'published' => '1',
+        'changed' =>'0'
+
+    ];
+});
+
+
 
 
 
