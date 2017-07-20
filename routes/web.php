@@ -17,3 +17,6 @@
     Route::post('/busket/makeOrder', 'BusketController@makeOrder');
     Route::post('/succeededOrder', 'BusketController@succeededOrder');
     Route::post('/sendSuccessMail', 'BusketController@sendSuccessEmail');
+    Route::post('/images/uploadAvatar', 'ImagesController@uploadAvatar');
+    Route::post('/images/deleteAvatar', 'ImagesController@deleteAvatar');
+    Route::post('/comment/add', 'CommentController@add');

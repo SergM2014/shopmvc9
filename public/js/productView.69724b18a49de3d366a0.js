@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 41);
+/******/ 	return __webpack_require__(__webpack_require__.s = 42);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -14699,7 +14699,38 @@ document.body.addEventListener('click', function (e) {
             document.getElementById('totalSumma').innerText = json.totalSumma;
         });
     }
+
+    if (e.target.id === "productCommentSubmit") {
+
+        var product_id = document.getElementById('productId').value;
+        var parent_id = document.getElementById('parentId').value;
+        var avatar = document.getElementById('image').value;
+        var email = document.getElementById('email').value;
+        var name = document.getElementById('name').value;
+        var comment = document.getElementById('comment').value;
+        var captcha = document.getElementById('captcha').value;
+
+        axios.post('/comment/add', {
+            product_id: product_id, parent_id: parent_id, avatar: avatar, email: email, name: name, comment: comment, captcha: captcha
+        }).then(function (response) {
+            console.log(response.data);
+            document.getElementById('addCommentBlock').innerHTML = '<div class="alert alert-success" role="alert">' + response.data.message + '</div>';
+        }).catch(function (error) {
+
+            var errors = error.response.data;
+
+            for (var i in errors) {
+                //errors[i] returns name of the property
+                //errors[i][0] returns value of thre property
+
+                document.getElementById(i).closest('.form-group').classList.add('has-error');
+                document.getElementById(i + 'HelpBlock').innerText = errors[i][0];
+            }
+        });
+    }
 }); //this is end of the body
+
+__webpack_require__(39);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
@@ -15342,9 +15373,165 @@ document.body.addEventListener('click', function (e) {
 /* 36 */,
 /* 37 */,
 /* 38 */,
-/* 39 */,
+/* 39 */
+/***/ (function(module, exports) {
+
+
+// find repeated values in two arrays
+Array.prototype.intersect = function (a) {
+    return this.filter(function (i) {
+        return a.indexOf(i) > -1;
+    });
+};
+
+var progress = document.getElementById('imageDownloadProgress'),
+    output = document.getElementById('imageDownloadOutput'),
+    submit_btn = document.getElementById('downloadImageBtn'),
+    reset_btn = document.getElementById('resetImageBtn'),
+    delete_img_sign = document.getElementById('deleteImagePreview'),
+    imageField = document.getElementById('file');
+
+// this background is for imageupload
+
+function progressHandler(event) {
+
+    var percent = Math.round(event.loaded / event.total * 100);
+
+    progress.value = percent;
+    // progress.innerText= percent+"%";
+}
+
+function completeHandler(event) {
+    //тут ивент переобразуется в XMLHttpRequestProgressEvent {}
+
+    var response = JSON.parse(event.target.responseText);
+    output.innerHTML = response.message;
+
+    progress.value = 0;
+    output.classList.remove('hidden');
+
+    progress.classList.add('hidden');
+    reset_btn.removeAttribute('disabled');
+
+    //further work with many images;
+
+    //let imageName = (document.getElementById("file").files[0].name).toLocaleLowerCase();
+    var filename = response.filename;
+    document.getElementById('image').value = filename;
+
+    //document.getElementById('downloadImagePreview').setAttribute('src', '/img/nophoto.jpg');
+    // let imagesList = document.getElementById('imageData').value+','+imageName;
+
+    // document.getElementById('imageData').value = imagesList;
+}
+
+function errorHandler(event) {
+
+    output.innerHTML = 'Upload failed';
+}
+
+function abortHandler(event) {
+
+    output.innerHTML = 'Upload aborted';
+}
+
+//to make previe image using file API
+
+
+if (document.getElementById('file')) {
+    document.getElementById('file').onchange = function () {
+
+        if (delete_img_sign) delete_img_sign.className = 'hidden';
+
+        var input = this;
+
+        if (input.files && input.files[0]) {
+            if (input.files[0].type.match('image.*')) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    document.getElementById('downloadImagePreview').setAttribute('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+
+                document.getElementById('file').classList.add('hidden');
+
+                output.classList.add('hidden');
+
+                reset_btn.classList.remove('hidden');
+
+                submit_btn.classList.remove('hidden');
+            } // else console.log('is not image mime type');
+        } // else console.log('not isset files data or files API not supordet');
+    }; //end of function
+
+}
+
+if (submit_btn) {
+    submit_btn.onclick = function (e) {
+
+        e.preventDefault();
+        progress.classList.remove('hidden');
+
+        var file = document.getElementById("file").files[0];
+
+        var formdata = new FormData();
+
+        formdata.append("file", file);
+
+        formdata.append("ajax", true);
+
+        var uploadUrl = "/images/uploadAvatar";
+
+        var send_image = new XMLHttpRequest();
+        send_image.upload.addEventListener("progress", progressHandler, false);
+        send_image.addEventListener("load", completeHandler, false);
+        send_image.addEventListener("error", errorHandler, false);
+        send_image.addEventListener("abort", abortHandler, false);
+        send_image.open("POST", uploadUrl);
+        send_image.send(formdata);
+
+        reset_btn.setAttribute('disabled', 'disabled');
+    }; // end of submit button
+}
+
+if (reset_btn) {
+    reset_btn.onclick = function (e) {
+        e.preventDefault();
+
+        document.getElementById('downloadImagePreview').setAttribute('src', '/img/nophoto.jpg');
+        document.getElementById('file').classList.remove('hidden');
+        var formData = new FormData();
+
+        formData.append('ajax', true);
+
+        if (document.getElementById('image')) formData.append('image', document.getElementById('image').value);
+
+        fetch('/images/deleteAvatar', {
+            method: "POST",
+            credentials: "same-origin",
+            body: formData
+        }).then(function (responce) {
+            return responce.json();
+        }).then(function (j) {
+            output.innerHTML = j.message;
+            if (output.classList.contains('hidden')) {
+                output.classList.remove('hidden');
+            }
+            imageField.value = '';
+        });
+
+        submit_btn.classList.add('hidden');
+        reset_btn.classList.add('hidden');
+        if (document.getElementById('image')) document.getElementById('image').value = '';
+    };
+}
+//end of image reset
+
+/***/ }),
 /* 40 */,
-/* 41 */
+/* 41 */,
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(33);

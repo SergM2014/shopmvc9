@@ -55,6 +55,7 @@ $factory->define(App\Comment::class, function (Faker\Generator $faker) {
 
     return [
         'product_id' => $faker->numberBetween($min = 1, $max = 50),
+        'parent_id' => $faker->numberBetween($min = 1, $max = 50),
         'comment' => $faker->text,
         'published' => '1',
         'changed' =>'0'

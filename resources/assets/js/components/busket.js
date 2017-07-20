@@ -195,7 +195,7 @@ removeWaitingscreen();
             }
         })
         .catch((error) => {
-removeWaitingscreen();
+            removeWaitingscreen();
          let errors = error.response.data;
 
 

@@ -15,6 +15,8 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('avatar')->nullable();
+            $table->integer('parent_id')->index();
             $table->integer('product_id')->index();
             $table->text('comment');
             $table->enum('published', ['0', '1']);

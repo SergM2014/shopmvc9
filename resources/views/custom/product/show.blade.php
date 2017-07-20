@@ -52,12 +52,74 @@
 
                  @endforeach
             </div>
-                <form id="purchaseForm">
+                <form id="purchaseForm" class="clearfix">
                     {{ csrf_field() }}
                     <input type="hidden" name="id" value = "{{ $product->id }}">
                     <input type="hidden" name="price" value="{{ $product->price }}">
                     <button id="purchase" class="btn btn-danger pull-right">Purchase</button>
                 </form>
+
+                <div class="clearfix">
+                    <h2 class="text-center">Comments</h2>
+                    <ul class="list-group">
+
+                        <?= $treeComments ?>
+
+                    </ul>
+
+                </div>
+
+                <div class="clearfix" id="addCommentBlock">
+                    <h4 class="text-center alert-danger">Add Comment</h4>
+
+                    @include('custom.partials.addImage')
+
+                    <form id="productComment">
+
+                        <input type="hidden" name="productId" id="productId" value="{{ $product->id }}">
+                        <input type="hidden" name="parentId" id="parentId" value="0" >
+                        <input type="hidden" name="image" id="image" >
+
+                        <div class="form-group">
+                            <label for="email">Email address</label>
+                            <input type="email" class="form-control" id="email" placeholder="Email">
+                            <span id="emailHelpBlock" class="help-block"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="Name">
+                            <span id="nameHelpBlock" class="help-block"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="comment">Comment</label>
+                            <textarea class="form-control" id="comment" placeholder="comment" rows="5"></textarea>
+                            <span id="commentHelpBlock" class="help-block"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <p id="captchaImg" class="captcha_image"><?=  \Captcha::img() ?></p>
+                            <label for="name">enter captcha</label>
+                            <input type="text" class="form-control" id="captcha" name="captcha" placeholder="enter captcha">
+                            <span id="captchaHelpBlock" class="help-block"></span>
+                        </div>
+
+
+                        <button type="button" id="productCommentSubmit" class="btn btn-default">Submit</button>
+                    </form>
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                </div>
 
 
         </section>
