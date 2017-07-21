@@ -14728,6 +14728,16 @@ document.body.addEventListener('click', function (e) {
             }
         });
     }
+
+    if (e.target.closest('#captchaImg')) {
+        fetch('/refreshCaptcha', { method: 'POST' }).then(function (response) {
+            return response.text();
+        }).then(function (html) {
+            return document.getElementById('captchaImg').innerHTML = html;
+        }).catch(function (error) {
+            return console.log(error);
+        });
+    }
 }); //this is end of the body
 
 __webpack_require__(39);

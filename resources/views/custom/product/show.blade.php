@@ -99,7 +99,9 @@
                         </div>
 
                         <div class="form-group">
-                            <p id="captchaImg" class="captcha_image"><?=  \Captcha::img() ?></p>
+                            <p id="captchaImg" class="captcha_image">
+                            @include('custom.partials.captcha')
+                            </p>
                             <label for="name">enter captcha</label>
                             <input type="text" class="form-control" id="captcha" name="captcha" placeholder="enter captcha">
                             <span id="captchaHelpBlock" class="help-block"></span>

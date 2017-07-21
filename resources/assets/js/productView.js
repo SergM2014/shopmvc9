@@ -64,6 +64,14 @@ document.body.addEventListener('click', function(e){
             })
     }
 
+
+    if(e.target.closest('#captchaImg')){
+        fetch('/refreshCaptcha',{ method: 'POST' })
+            .then(response => response.text())
+            .then(html => document.getElementById('captchaImg').innerHTML= html )
+            .catch(error => console.log(error))
+    }
+
 });//this is end of the body
 
 require('./components/uploadImage');

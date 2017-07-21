@@ -24,7 +24,8 @@ class Comment extends Model
 
            if($comment->parent_id == $parent){
 
-               $print.= "<li class='list-group-item'><span>{$comment->comment}</span>";
+               $print.= "<li class='list-group-item'><span>{$comment->comment}</span>
+                        <button type='button' class='btn-xs pull-right give_response-btn' data-parent-id='{$comment->parent_id}'>Give Response</button> ";
 
                foreach ($comments as $subcomment){
                    if($subcomment->parent_id == $comment->id) { $flag = true;}
