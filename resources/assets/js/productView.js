@@ -34,7 +34,9 @@ document.body.addEventListener('click', function(e){
     if(e.target.id === "productCommentSubmit") {
 
         let product_id= document.getElementById('productId').value;
+
         let parent_id = document.getElementById('parentId').value;
+
         let avatar = document.getElementById('image').value;
         let email = document.getElementById('email').value;
         let name = document.getElementById('name').value;
@@ -64,12 +66,42 @@ document.body.addEventListener('click', function(e){
             })
     }
 
-
+//refresh captcha by clicking
     if(e.target.closest('#captchaImg')){
         fetch('/refreshCaptcha',{ method: 'POST' })
             .then(response => response.text())
             .then(html => document.getElementById('captchaImg').innerHTML= html )
             .catch(error => console.log(error))
+    }
+
+
+    if(e.target.classList.contains('give_response-btn')){
+        let parentId = e.target.dataset.parentId;
+        let productId = document.getElementById('productId').value;
+        let commentId = e.target.dataset.commentId;
+//populate hiden parentId field
+        //document.getElementById('parentId').value = parentId;
+        document.getElementById('parentId').value = commentId;
+
+
+
+        let form = new FormData;
+        form.append('productId', productId);
+        form.append('parentId', parentId);
+        form.append('commentId', commentId);
+        fetch('/getCommentForResponse', {
+            method: 'POST',
+            body:form,
+            credentials:'same-origin'
+        })
+            .then(response => response.text())
+            .then(html => document.getElementById('parentCommentBlock').innerHTML = html)
+
+    }
+
+    if(e.target.id === "closeParentComment"){
+        document.getElementById('parentCommentBlock').innerHTML = '';
+        document.getElementById('parentId').value = 0;
     }
 
 });//this is end of the body

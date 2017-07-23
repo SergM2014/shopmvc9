@@ -21,3 +21,4 @@
     Route::post('/images/deleteAvatar', 'ImagesController@deleteAvatar');
     Route::post('/comment/add', 'CommentController@add');
     Route::post('/refreshCaptcha', function(){ return view('custom.partials.captcha'); });
+    Route::post('/getCommentForResponse', 'CommentController@getCommentForResponse');

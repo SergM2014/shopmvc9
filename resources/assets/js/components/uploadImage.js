@@ -131,7 +131,7 @@ if(submit_btn){
         send_image.send(formdata);
 
         reset_btn.setAttribute('disabled', 'disabled');
-
+        submit_btn.classList.add('hidden');
 
     };// end of submit button
 }

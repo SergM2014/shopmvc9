@@ -9,6 +9,7 @@ class Comment extends Model
     protected $fillable = [
         'product_id',
         'parent_id',
+        'name',
         'avatar',
         'comment',
         'published',
@@ -24,8 +25,31 @@ class Comment extends Model
 
            if($comment->parent_id == $parent){
 
-               $print.= "<li class='list-group-item'><span>{$comment->comment}</span>
-                        <button type='button' class='btn-xs pull-right give_response-btn' data-parent-id='{$comment->parent_id}'>Give Response</button> ";
+               $print.= "<div class='parent_comment-block'>
+                           <span class='text-warning'> Name:</span>  $comment->name 
+                            <br>
+                           <span class='text-warning'> Added at: </span> $comment->created_at ";
+
+            if($comment->avatar){
+
+                $print.= " <img src='/uploads/avatars/$comment->avatar' alt=''>";
+
+            }
+
+            $print.="</div>
+    
+    
+    
+            <div class='parent_comment-block'>
+                 $comment->comment 
+            </div>
+            <div class='clearfix'>
+                 <button type='button' class='btn-xs pull-right give_response-btn'
+                 data-parent-id='{$comment->parent_id}' data-comment-id='{$comment->id}'>Give Response</button>
+            
+            </div>
+                        
+                          ";
 
                foreach ($comments as $subcomment){
                    if($subcomment->parent_id == $comment->id) { $flag = true;}

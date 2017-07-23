@@ -134,3 +134,18 @@
 .captcha_image{
   cursor:pointer;
 }
+.close_parent_comment{
+  cursor:pointer;
+  float:right;
+}
+.close_parent_comment-container{
+  height:20px;
+}
+.parent_comment{
+  border: 1px solid black;
+  padding: 4px 4px 30px;
+  border-radius: 7px
+}
+.parent_comment-block{
+  display:inline-block;
+}

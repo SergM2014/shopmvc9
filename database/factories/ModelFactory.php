@@ -54,6 +54,7 @@ $factory->define(App\Comment::class, function (Faker\Generator $faker) {
     $faker = Faker\Factory::create('uk_UA');
 
     return [
+        'name' => $faker->firstName,
         'product_id' => $faker->numberBetween($min = 1, $max = 50),
         'parent_id' => $faker->numberBetween($min = 1, $max = 50),
         'comment' => $faker->text,

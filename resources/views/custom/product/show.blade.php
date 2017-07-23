@@ -71,6 +71,9 @@
 
                 <div class="clearfix" id="addCommentBlock">
                     <h4 class="text-center alert-danger">Add Comment</h4>
+                    <div id="parentCommentBlock" class="parent_comment_block">
+
+                    </div>
 
                     @include('custom.partials.addImage')
 

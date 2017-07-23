@@ -14703,7 +14703,9 @@ document.body.addEventListener('click', function (e) {
     if (e.target.id === "productCommentSubmit") {
 
         var product_id = document.getElementById('productId').value;
+
         var parent_id = document.getElementById('parentId').value;
+
         var avatar = document.getElementById('image').value;
         var email = document.getElementById('email').value;
         var name = document.getElementById('name').value;
@@ -14729,6 +14731,7 @@ document.body.addEventListener('click', function (e) {
         });
     }
 
+    //refresh captcha by clicking
     if (e.target.closest('#captchaImg')) {
         fetch('/refreshCaptcha', { method: 'POST' }).then(function (response) {
             return response.text();
@@ -14737,6 +14740,34 @@ document.body.addEventListener('click', function (e) {
         }).catch(function (error) {
             return console.log(error);
         });
+    }
+
+    if (e.target.classList.contains('give_response-btn')) {
+        var parentId = e.target.dataset.parentId;
+        var productId = document.getElementById('productId').value;
+        var commentId = e.target.dataset.commentId;
+        //populate hiden parentId field
+        //document.getElementById('parentId').value = parentId;
+        document.getElementById('parentId').value = commentId;
+
+        var _form = new FormData();
+        _form.append('productId', productId);
+        _form.append('parentId', parentId);
+        _form.append('commentId', commentId);
+        fetch('/getCommentForResponse', {
+            method: 'POST',
+            body: _form,
+            credentials: 'same-origin'
+        }).then(function (response) {
+            return response.text();
+        }).then(function (html) {
+            return document.getElementById('parentCommentBlock').innerHTML = html;
+        });
+    }
+
+    if (e.target.id === "closeParentComment") {
+        document.getElementById('parentCommentBlock').innerHTML = '';
+        document.getElementById('parentId').value = 0;
     }
 }); //this is end of the body
 
@@ -15502,6 +15533,7 @@ if (submit_btn) {
         send_image.send(formdata);
 
         reset_btn.setAttribute('disabled', 'disabled');
+        submit_btn.classList.add('hidden');
     }; // end of submit button
 }
 

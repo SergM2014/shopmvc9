@@ -23,7 +23,7 @@ class CommentController extends Controller
             );
 
 
-        Comment::create(['product_id'=> $request->product_id, 'avatar' =>$request->avatar, 'parent_id'=>$request->parent_id, 'email'=>$request->email,
+        Comment::create(['product_id'=> $request->product_id, 'name'=> $request->name, 'parent_id'=>$request->parent_id, 'email'=>$request->email,
              'comment'=>$request->comment, 'published'=>'0', 'changed' =>'0']);
 
         return response()->json([
@@ -32,5 +32,13 @@ class CommentController extends Controller
 
 
         ]);
+    }
+
+
+    public function getCommentForResponse()
+    {
+      $commentId = \request('commentId');
+        $comment= Comment::find($commentId);
+        return view('custom.partials.showParentComment', compact('comment'));
     }
 }
