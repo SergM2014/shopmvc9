@@ -146,6 +146,25 @@
   padding: 4px 4px 30px;
   border-radius: 7px
 }
-.parent_comment-block{
+.parent_comment_block{
+  margin-bottom:20px;
+}
+.avatar_comment-block{
   display:inline-block;
+  float:left;
+}
+.text_comment-block{
+  padding-left:20px;
+}
+.response_btn-container{
+  height:25px;
+}
+.comment_avatar{
+  border-radius:7px;
+}
+.comment_item{
+  border-bottom:1px solid black;
+}
+.comment_list, .comment_list ul{
+  list-style-type:none;
 }

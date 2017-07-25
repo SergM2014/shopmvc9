@@ -80,7 +80,7 @@ document.body.addEventListener('click', function(e){
         let productId = document.getElementById('productId').value;
         let commentId = e.target.dataset.commentId;
 //populate hiden parentId field
-        //document.getElementById('parentId').value = parentId;
+       // document.getElementById('parentId').value = parentId;
         document.getElementById('parentId').value = commentId;
 
 

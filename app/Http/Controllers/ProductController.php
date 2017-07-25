@@ -11,13 +11,11 @@ class ProductController extends Controller
 {
     public function show(Product $product)
     {
-
         $id = $product->id;
+        $comments = Comment::where('product_id', $id)->get();
+        $parentId = $comments->min('parent_id');
 
-        $comments = comment::all();
-
-        $treeComments = Comment::getCommentsTreeStructure($id, $comments);
-
+        $treeComments = Comment::getCommentsTreeStructure($parentId, $comments);
 
         return view('custom.product.show', compact('product', 'treeComments'));
     }

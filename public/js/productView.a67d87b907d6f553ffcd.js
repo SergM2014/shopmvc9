@@ -14747,7 +14747,7 @@ document.body.addEventListener('click', function (e) {
         var productId = document.getElementById('productId').value;
         var commentId = e.target.dataset.commentId;
         //populate hiden parentId field
-        //document.getElementById('parentId').value = parentId;
+        // document.getElementById('parentId').value = parentId;
         document.getElementById('parentId').value = commentId;
 
         var _form = new FormData();

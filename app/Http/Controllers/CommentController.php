@@ -13,8 +13,8 @@ class CommentController extends Controller
             'name'=>'required',
             'email'=>'required|email',
             'comment'=>'required',
-            //'captcha' => 'required|captcha'
-            'captcha' => 'required'
+            'captcha' => 'required|captcha'
+            //'captcha' => 'required'
         ],
         //this is custom error message
         [
@@ -23,8 +23,9 @@ class CommentController extends Controller
             );
 
 
-        Comment::create(['product_id'=> $request->product_id, 'name'=> $request->name, 'parent_id'=>$request->parent_id, 'email'=>$request->email,
-             'comment'=>$request->comment, 'published'=>'0', 'changed' =>'0']);
+        Comment::create(['product_id'=> $request->product_id, 'avatar'=>$request->avatar, 'name'=> $request->name,
+            'parent_id'=>$request->parent_id, 'email'=>$request->email, 'comment'=>$request->comment, 'published'=>'0',
+            'changed' =>'0']);
 
         return response()->json([
             'message' => 'comment is added successfully',

@@ -25,31 +25,32 @@ class Comment extends Model
 
            if($comment->parent_id == $parent){
 
-               $print.= "<div class='parent_comment-block'>
-                           <span class='text-warning'> Name:</span>  $comment->name 
+               $print.= "<li>
+                            <div class='comment_item'>
+                            <div class='avatar_comment-block'>
+                           <span class='text-warning'> Name:</span>  $comment->name <br>";
+
+                            $avatarImage = $comment->avatar? "/uploads/avatars/$comment->avatar" : "/img/noavatar.jpg";
+
+                              $print.= " <img src= $avatarImage alt='' class='comment_avatar'>
                             <br>
+                            
                            <span class='text-warning'> Added at: </span> $comment->created_at ";
 
-            if($comment->avatar){
-
-                $print.= " <img src='/uploads/avatars/$comment->avatar' alt=''>";
-
-            }
-
             $print.="</div>
+                    
     
     
     
-            <div class='parent_comment-block'>
+            <div class='text_comment-block'>
                  $comment->comment 
             </div>
-            <div class='clearfix'>
-                 <button type='button' class='btn-xs pull-right give_response-btn'
-                 data-parent-id='{$comment->parent_id}' data-comment-id='{$comment->id}'>Give Response</button>
-            
-            </div>
-                        
-                          ";
+            <div class='clearfix'></div>
+                 <div class='response_btn-container'>
+                    <button type='button' class='btn-xs pull-right give_response-btn'
+                     data-parent-id='{$comment->parent_id}' data-comment-id='{$comment->id}'>Give Response</button>
+                </div>
+            </div>      ";
 
                foreach ($comments as $subcomment){
                    if($subcomment->parent_id == $comment->id) { $flag = true;}

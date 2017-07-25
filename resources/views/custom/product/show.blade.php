@@ -61,7 +61,7 @@
 
                 <div class="clearfix">
                     <h2 class="text-center">Comments</h2>
-                    <ul class="list-group">
+                    <ul class="list-group comment_list">
 
                         <?= $treeComments ?>
 
