@@ -22,3 +22,5 @@
     Route::post('/comment/add', 'CommentController@add');
     Route::post('/refreshCaptcha', function(){ return view('custom.partials.captcha'); });
     Route::post('/getCommentForResponse', 'CommentController@getCommentForResponse');
+    Route::post('/createSearchResultBlock', function(){ return view('custom.partials.searchResultsBlock');});
+    Route::post('/searchResults', 'SearchController@findResults');

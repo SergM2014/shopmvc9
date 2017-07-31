@@ -10,7 +10,7 @@
             </button>
             <a class="navbar-brand" href="#">Project name</a>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
+        <div id="navbar" class="collapse navbar-collapse" id="navbar">
             <ul class="nav navbar-nav">
                 <li class="{{ $currentRoute == 'index'? 'active':'' }}"><a href="/">Main</a></li>
                 <li class="{{ preg_match('/^catalog/', $currentRoute )? 'active':'' }}"><a href="{{ route('catalog') }}">Catalog</a></li>
@@ -23,8 +23,8 @@
 
 
             <div class="navbar-form navbar-right">
-                <div class="form-group">
-                    <input type="text" placeholder="Search" class="form-control">
+                <div class="form-group search-field__container" id="search-field__container">
+                    <input type="text" placeholder="Search" class="form-control" id="search-field">
                 </div>
 
                 <a class="main-header__admin" href="/admin"><?php if(isset($_SESSION['login'])){echo "Admin Zone";}else {echo "Admin enter";};  ?></a>

@@ -23,6 +23,8 @@ class VerifyCsrfToken extends BaseVerifier
         '/images/deleteAvatar',
         '/comment/add',
         '/refreshCaptcha',
-        '/getCommentForResponse'
+        '/getCommentForResponse',
+        '/createSearchResultBlock',
+        '/searchResults'
     ];
 }

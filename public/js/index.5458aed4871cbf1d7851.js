@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 41);
+/******/ 	return __webpack_require__(__webpack_require__.s = 42);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -14685,6 +14685,8 @@ __webpack_require__(37);
 
 __webpack_require__(36);
 
+__webpack_require__(39);
+
 /***/ }),
 /* 33 */,
 /* 34 */
@@ -14996,9 +14998,59 @@ document.body.addEventListener('click', function (e) {
 });
 
 /***/ }),
-/* 39 */,
+/* 39 */
+/***/ (function(module, exports) {
+
+document.getElementById('search-field').addEventListener('keydown', function () {
+    //alert('cklick happende in deed!')
+
+    var form = new FormData();
+
+    var search = document.getElementById('search-field').value;
+    form.append('search', search);
+
+    fetch('/createSearchResultBlock', {
+        method: 'POST',
+        credentials: 'same-origin'
+
+    }).then(function (response) {
+        return response.text();
+    }).then(function (html) {
+        if (document.getElementById('searchResultsBlock')) {
+            document.getElementById('searchResultsBlock').innerHTML = '';
+            document.getElementById('searchResultsBlock').innerHTML = 'some dummy already repeated text';
+        } else {
+            document.getElementById('search-field__container').insertAdjacentHTML('afterBegin', html);
+        }
+        return fetch('/searchResults', {
+            method: 'POST',
+            credentials: 'same-origin'
+        });
+    }).then(function (response) {
+        return response.text();
+    }).then(function (html) {
+        if (document.getElementById('searchResultsBlock').classList.contains('hidden-outside')) {
+            document.getElementById('searchResultsBlock').classList.remove('hidden-outside');
+        }
+        document.getElementById('searchResultsBlock').innerHTML = html;
+    });
+});
+
+document.body.addEventListener('click', function (e) {
+    if (!e.target.closest('#search-field__container')) {
+        if (document.getElementById('searchResultsBlock')) {
+            document.getElementById('searchResultsBlock').classList.add('hidden-outside');
+            setTimeout(function () {
+                document.getElementById('searchResultsBlock').remove();
+            }, 500);
+        }
+    }
+});
+
+/***/ }),
 /* 40 */,
-/* 41 */
+/* 41 */,
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(32);

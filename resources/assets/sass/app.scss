@@ -17,6 +17,10 @@
 .main-header__admin{
   margin-right: 10px;
 }
+
+body{
+  overflow:hidden;
+}
 .small-busket__img{
   max-width:70px;
   max-height:70px;
@@ -167,4 +171,24 @@
 }
 .comment_list, .comment_list ul{
   list-style-type:none;
+}
+
+.search-results__block{
+  min-width: 200px;
+  min-height: 100px;
+  border: 1px solid black;
+  border-radius: 5px;
+  background: #2b542c;
+  position: absolute;
+  top: 42px;
+  padding:2px;
+  transition: 1s;
+  left:0;
+}
+.search-field__container{
+  position:relative;
+  //overflow-x:hidden;
+}
+.hidden-outside{
+  left:1200px;
 }
