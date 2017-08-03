@@ -174,16 +174,17 @@ body{
 }
 
 .search-results__block{
-  min-width: 200px;
+  min-width: 250px;
   min-height: 100px;
   border: 1px solid black;
   border-radius: 5px;
-  background: #2b542c;
+  background: rgba(225, 116, 167, 0.91);
   position: absolute;
   top: 42px;
   padding:2px;
   transition: 1s;
   left:0;
+  z-index: 1500;
 }
 .search-field__container{
   position:relative;
@@ -191,4 +192,10 @@ body{
 }
 .hidden-outside{
   left:1200px;
+}
+.search-results-item{
+  cursor:pointer;
+}
+.search-results-item:hover{
+  background-color: #2ca02c;
 }

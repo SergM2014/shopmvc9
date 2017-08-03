@@ -1,5 +1,5 @@
-window.axios = require('axios');
-
+import axios from 'axios';
+window.axios = axios;
 
 function removeBusketContentErrors(){
     let formerErrors = document.getElementById('bigBusketContent').querySelectorAll('td.has-error');

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 42);
+/******/ 	return __webpack_require__(__webpack_require__.s = 43);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -12054,9 +12054,14 @@ __webpack_require__(28);
 
 /***/ }),
 /* 28 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-window.axios = __webpack_require__(9);
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+
+window.axios = __WEBPACK_IMPORTED_MODULE_0_axios___default.a;
 
 function removeBusketContentErrors() {
     var formerErrors = document.getElementById('bigBusketContent').querySelectorAll('td.has-error');
@@ -12186,7 +12191,7 @@ document.body.addEventListener('click', function (e) {
         var email = document.getElementById('email').value;
         var phone = document.getElementById('phone').value;
 
-        axios.post('/busket/makeOrder', {
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/busket/makeOrder', {
             email: email,
             phone: phone,
             name: name,
@@ -14699,9 +14704,79 @@ document.body.addEventListener('click', function (e) {
             document.getElementById('totalSumma').innerText = json.totalSumma;
         });
     }
+
+    if (e.target.id === "productCommentSubmit") {
+
+        var product_id = document.getElementById('productId').value;
+
+        var parent_id = document.getElementById('parentId').value;
+
+        var avatar = document.getElementById('image').value;
+        var email = document.getElementById('email').value;
+        var name = document.getElementById('name').value;
+        var comment = document.getElementById('comment').value;
+        var captcha = document.getElementById('captcha').value;
+
+        axios.post('/comment/add', {
+            product_id: product_id, parent_id: parent_id, avatar: avatar, email: email, name: name, comment: comment, captcha: captcha
+        }).then(function (response) {
+            console.log(response.data);
+            document.getElementById('addCommentBlock').innerHTML = '<div class="alert alert-success" role="alert">' + response.data.message + '</div>';
+        }).catch(function (error) {
+
+            var errors = error.response.data;
+
+            for (var i in errors) {
+                //errors[i] returns name of the property
+                //errors[i][0] returns value of thre property
+
+                document.getElementById(i).closest('.form-group').classList.add('has-error');
+                document.getElementById(i + 'HelpBlock').innerText = errors[i][0];
+            }
+        });
+    }
+
+    //refresh captcha by clicking
+    if (e.target.closest('#captchaImg')) {
+        fetch('/refreshCaptcha', { method: 'POST' }).then(function (response) {
+            return response.text();
+        }).then(function (html) {
+            return document.getElementById('captchaImg').innerHTML = html;
+        }).catch(function (error) {
+            return console.log(error);
+        });
+    }
+
+    if (e.target.classList.contains('give_response-btn')) {
+        var parentId = e.target.dataset.parentId;
+        var productId = document.getElementById('productId').value;
+        var commentId = e.target.dataset.commentId;
+        //populate hiden parentId field
+        // document.getElementById('parentId').value = parentId;
+        document.getElementById('parentId').value = commentId;
+
+        var _form = new FormData();
+        _form.append('productId', productId);
+        _form.append('parentId', parentId);
+        _form.append('commentId', commentId);
+        fetch('/getCommentForResponse', {
+            method: 'POST',
+            body: _form,
+            credentials: 'same-origin'
+        }).then(function (response) {
+            return response.text();
+        }).then(function (html) {
+            return document.getElementById('parentCommentBlock').innerHTML = html;
+        });
+    }
+
+    if (e.target.id === "closeParentComment") {
+        document.getElementById('parentCommentBlock').innerHTML = '';
+        document.getElementById('parentId').value = 0;
+    }
 }); //this is end of the body
 
-__webpack_require__(39);
+__webpack_require__(40);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
@@ -15344,12 +15419,10 @@ __webpack_require__(39);
 /* 36 */,
 /* 37 */,
 /* 38 */,
-/* 39 */
+/* 39 */,
+/* 40 */
 /***/ (function(module, exports) {
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 // find repeated values in two arrays
 Array.prototype.intersect = function (a) {
@@ -15364,37 +15437,6 @@ var progress = document.getElementById('imageDownloadProgress'),
     reset_btn = document.getElementById('resetImageBtn'),
     delete_img_sign = document.getElementById('deleteImagePreview'),
     imageField = document.getElementById('file');
-
-var Helper = function () {
-    function Helper() {
-        _classCallCheck(this, Helper);
-    }
-
-    _createClass(Helper, null, [{
-        key: 'getCurrentLang',
-        value: function getCurrentLang(j) {
-
-            var url = window.location.href;
-            var urlArray = url.split('/');
-            var intersection = urlArray.intersect(j.languagesArray);
-
-            var lang = intersection.shift();
-            lang = lang ? lang : j.defaultLanguage;
-
-            return lang;
-        }
-    }, {
-        key: 'ucFirst',
-        value: function ucFirst(str) {
-            // только пустая строка в логическом контексте даст false
-            if (!str) return str;
-
-            return str[0].toUpperCase() + str.slice(1);
-        }
-    }]);
-
-    return Helper;
-}();
 
 // this background is for imageupload
 
@@ -15418,31 +15460,16 @@ function completeHandler(event) {
     progress.classList.add('hidden');
     reset_btn.removeAttribute('disabled');
 
-    if (!document.getElementById('manyImagesContainer')) {
-        submit_btn.classList.add('hidden');
-        document.getElementById('imageData').value = response.image;
-
-        return;
-    }
-
     //further work with many images;
 
-    var imageName = document.getElementById("file").files[0].name.toLocaleLowerCase();
+    //let imageName = (document.getElementById("file").files[0].name).toLocaleLowerCase();
+    var filename = response.filename;
+    document.getElementById('image').value = filename;
 
-    var html = '<div class="image-item"><img class="image" src="/uploads/manyItems/' + imageName + '" alt=""></div>';
-    document.getElementById('manyImagesContainer').insertAdjacentHTML('beforeEnd', html);
-    reset_btn.classList.add('hidden');
-    submit_btn.classList.add('hidden');
-    imageField.classList.remove('hidden');
-    imageField.value = '';
+    //document.getElementById('downloadImagePreview').setAttribute('src', '/img/nophoto.jpg');
+    // let imagesList = document.getElementById('imageData').value+','+imageName;
 
-    var imageCustomType = document.getElementById('imageCustomType').value;
-    var noPhoto = imageCustomType == 'avatar' ? 'noavatar' : 'nophoto';
-
-    document.getElementById('downloadImagePreview').setAttribute('src', '/img/' + noPhoto + '.jpg');
-    var imagesList = document.getElementById('imageData').value + ',' + imageName;
-
-    document.getElementById('imageData').value = imagesList;
+    // document.getElementById('imageData').value = imagesList;
 }
 
 function errorHandler(event) {
@@ -15484,6 +15511,7 @@ if (document.getElementById('file')) {
             } // else console.log('is not image mime type');
         } // else console.log('not isset files data or files API not supordet');
     }; //end of function
+
 }
 
 if (submit_btn) {
@@ -15495,33 +15523,23 @@ if (submit_btn) {
         var file = document.getElementById("file").files[0];
 
         var formdata = new FormData();
-        var _token = document.getElementById('prozessImageToken').value;
-        var imageCustomType = document.getElementById('imageCustomType').value;
 
         formdata.append("file", file);
-        formdata.append("_token", _token);
+
         formdata.append("ajax", true);
-        formdata.append("imageCustomType", imageCustomType);
 
-        fetch('/index/getLanguageComponents', {
-            'method': 'POST',
-            'credentials': 'same-origin'
-        }).then(function (response) {
-            return response.json();
-        }).then(function (j) {
+        var uploadUrl = "/images/uploadAvatar";
 
-            var uploadUrl = "/" + Helper.getCurrentLang(j) + "/images/upload" + Helper.ucFirst(imageCustomType);
+        var send_image = new XMLHttpRequest();
+        send_image.upload.addEventListener("progress", progressHandler, false);
+        send_image.addEventListener("load", completeHandler, false);
+        send_image.addEventListener("error", errorHandler, false);
+        send_image.addEventListener("abort", abortHandler, false);
+        send_image.open("POST", uploadUrl);
+        send_image.send(formdata);
 
-            var send_image = new XMLHttpRequest();
-            send_image.upload.addEventListener("progress", progressHandler, false);
-            send_image.addEventListener("load", completeHandler, false);
-            send_image.addEventListener("error", errorHandler, false);
-            send_image.addEventListener("abort", abortHandler, false);
-            send_image.open("POST", uploadUrl);
-            send_image.send(formdata);
-
-            reset_btn.setAttribute('disabled', 'disabled');
-        });
+        reset_btn.setAttribute('disabled', 'disabled');
+        submit_btn.classList.add('hidden');
     }; // end of submit button
 }
 
@@ -15529,33 +15547,18 @@ if (reset_btn) {
     reset_btn.onclick = function (e) {
         e.preventDefault();
 
-        var _token = document.getElementById('prozessImageToken').value;
-
-        var imageCustomType = document.getElementById('imageCustomType').value;
-        var noPhoto = imageCustomType == 'avatar' ? 'noavatar' : 'nophoto';
-
-        document.getElementById('downloadImagePreview').setAttribute('src', '/img/' + noPhoto + '.jpg');
+        document.getElementById('downloadImagePreview').setAttribute('src', '/img/nophoto.jpg');
         document.getElementById('file').classList.remove('hidden');
         var formData = new FormData();
-        formData.append('_token', _token);
+
         formData.append('ajax', true);
-        formData.append("imageCustomType", imageCustomType);
 
         if (document.getElementById('image')) formData.append('image', document.getElementById('image').value);
 
-        fetch('/index/getLanguageComponents', {
-            'method': 'POST',
-            'credentials': 'same-origin'
-        }).then(function (response) {
-            return response.json();
-        }).then(function (j) {
-            return "/" + Helper.getCurrentLang(j) + "/images/delete" + Helper.ucFirst(imageCustomType);
-        }).then(function (deleteUrl) {
-            return fetch(deleteUrl, {
-                method: "POST",
-                credentials: "same-origin",
-                body: formData
-            });
+        fetch('/images/deleteAvatar', {
+            method: "POST",
+            credentials: "same-origin",
+            body: formData
         }).then(function (responce) {
             return responce.json();
         }).then(function (j) {
@@ -15568,44 +15571,15 @@ if (reset_btn) {
 
         submit_btn.classList.add('hidden');
         reset_btn.classList.add('hidden');
-        if (document.getElementById('imageData')) document.getElementById('imageData').value = '';
+        if (document.getElementById('image')) document.getElementById('image').value = '';
     };
 }
 //end of image reset
 
-
-if (delete_img_sign) {
-
-    document.getElementById('deleteImagePreview').addEventListener('click', function () {
-
-        var _token = document.getElementById('prozessImageToken').value;
-        var imageCustomType = document.getElementById('imageCustomType').value;
-        var noPhoto = imageCustomType == 'avatar' ? 'noavatar' : 'nophoto';
-        document.getElementById('downloadImagePreview').setAttribute('src', '/img/' + noPhoto + '.jpg');
-
-        var formData = new FormData();
-        formData.append('deleteAvatarInSession', true);
-        formData.append('_token', _token);
-        formData.append('ajax', true);
-
-        this.className = 'hidden';
-
-        var deleteUrl = "/images/delete" + Helper.ucFirst(imageCustomType);
-
-        fetch(deleteUrl, {
-            method: "POST",
-            credentials: "same-origin",
-            body: formData
-        });
-
-        imageField.value = '';
-    });
-}
-
 /***/ }),
-/* 40 */,
 /* 41 */,
-/* 42 */
+/* 42 */,
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(33);

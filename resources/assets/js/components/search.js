@@ -1,5 +1,5 @@
 document.getElementById('search-field').addEventListener('keydown', function(){
-   //alert('cklick happende in deed!')
+
 
     let form = new FormData;
 
@@ -14,14 +14,15 @@ document.getElementById('search-field').addEventListener('keydown', function(){
         .then(response => response.text())
         .then(html =>{
            if(document.getElementById('searchResultsBlock')){ document.getElementById('searchResultsBlock').innerHTML = '';
-                document.getElementById('searchResultsBlock').innerHTML = 'some dummy already repeated text'
+
            }
            else {
                document.getElementById('search-field__container').insertAdjacentHTML('afterBegin', html)
            }
            return fetch('/searchResults',{
               method:'POST',
-              credentials:'same-origin'
+              credentials:'same-origin',
+               body:form
            })
         })
         .then(response =>response.text())
