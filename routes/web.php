@@ -24,3 +24,4 @@
     Route::post('/getCommentForResponse', 'CommentController@getCommentForResponse');
     Route::post('/createSearchResultBlock', function(){ return view('custom.partials.searchResultsBlock');});
     Route::post('/searchResults', 'SearchController@findResults');
+    Route::post('/showProductPreview', 'ProductController@showPreview');

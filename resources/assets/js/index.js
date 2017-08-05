@@ -13,5 +13,4 @@ require ('./components/jqueryFreeSlider');
 
 require ('./components/jqueryFreeCarousel');
 
-require ('./components/search');
 

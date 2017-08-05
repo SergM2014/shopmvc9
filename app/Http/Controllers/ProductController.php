@@ -19,4 +19,12 @@ class ProductController extends Controller
 
         return view('custom.product.show', compact('product', 'treeComments'));
     }
+
+    public function showPreview()
+    {
+        $product = Product::find($_POST['id']);
+
+        return view('custom.partials.productPreview', compact('product'));
+
+    }
 }
