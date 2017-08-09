@@ -24,7 +24,7 @@
 
             <div class="navbar-form navbar-right">
                 <div class="form-group search-field__container" id="search-field__container">
-                    <input type="text" placeholder="Search" class="form-control" id="search-field">
+                    <input type="text" placeholder="Search" class="form-control" id="search-field" v-model="search" @keyup="findResults">
                 </div>
 
                 <a class="main-header__admin" href="/admin"><?php if(isset($_SESSION['login'])){echo "Admin Zone";}else {echo "Admin enter";};  ?></a>

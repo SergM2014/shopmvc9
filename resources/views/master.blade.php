@@ -14,7 +14,7 @@
 
         @include('custom.modalWindow.bigBusketDecorator')
 
-        <div class="container">
+        <div class="container" id="app">
 
             @include('custom.partials.header')
 

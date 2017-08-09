@@ -1,6 +1,3 @@
-import axios from 'axios';
-window.axios = axios;
-
 function removeBusketContentErrors(){
     let formerErrors = document.getElementById('bigBusketContent').querySelectorAll('td.has-error');
     for (let i=0; i<formerErrors.length; i++){
@@ -25,7 +22,7 @@ function removeWaitingscreen()
     if(document.getElementById('waitingBlock')) document.getElementById('waitingBlock').remove();
 }
 
-
+//click small busket to see big
 document.getElementById('busket-container').addEventListener('click', function(e){
 
     fetch('/busket/show', {
@@ -211,7 +208,9 @@ removeWaitingscreen();
 
 
 
-})
+});
+
+
 
 
 //remove errors from inputs form
@@ -225,4 +224,6 @@ document.body.addEventListener('keyup', function(e){
 
     }
 
-})
+});
+
+
