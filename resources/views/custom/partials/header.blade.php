@@ -17,8 +17,6 @@
                 <li class="{{ $currentRoute == 'aboutus'? 'active':'' }}"><a href="{{ route('aboutus') }}">About Us</a></li>
                 <li class="{{ $currentRoute == 'downloads'? 'active':'' }}"><a href="/downloads">Downloads</a></li>
                 <li class="{{ $currentRoute == 'contacts'? 'active':'' }}"><a href="/contacts">Contacts</a></li>
-
-
             </ul>
 
 
@@ -29,9 +27,7 @@
 
                 <a class="main-header__admin" href="/admin"><?php if(isset($_SESSION['login'])){echo "Admin Zone";}else {echo "Admin enter";};  ?></a>
 
-
             </div>
-
 
 
         </div><!--/.nav-collapse -->

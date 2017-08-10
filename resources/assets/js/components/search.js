@@ -1,9 +1,6 @@
 document.body.addEventListener('click', function(e){
    if(!e.target.closest('#search-field__container') ){
-       if(document.getElementById('searchResultsBlock')){
-           document.getElementById('searchResultsBlock').classList.add('hidden-outside');
-           setTimeout(function(){document.getElementById('searchResultsBlock').remove()}, 500);
-       }
+       searchVue.removeSearchResultsBlock();
    }
 
 
@@ -11,7 +8,7 @@ document.body.addEventListener('click', function(e){
 
 
 
-new Vue({
+let searchVue =  new Vue({
 
     el:'#search-field__container',
 
@@ -36,7 +33,7 @@ new Vue({
                     }
 
                 })
-                .catch(errors => console.log(errors))
+                .catch(response => Errors.console(response));
         },
 
 
@@ -57,7 +54,15 @@ new Vue({
                     }
                     document.getElementById('searchResultsBlock').innerHTML = response.data;
                 })
-                .catch(errors => console.log(errors))
+                .catch(response =>Errors.console(response));
+        },
+
+        removeSearchResultsBlock()
+        {
+            if(document.getElementById('searchResultsBlock')){
+                document.getElementById('searchResultsBlock').classList.add('hidden-outside');
+                setTimeout(function(){document.getElementById('searchResultsBlock').remove()}, 500);
+            }
         }
 
     }
