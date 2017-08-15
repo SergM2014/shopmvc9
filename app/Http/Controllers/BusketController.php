@@ -51,13 +51,13 @@ class BusketController extends Controller
     public function update()
     {
         $busketContent = [];
-        $products = request()->all();
-
+        $products = request('busketContent');
 
        foreach($products as $key => $value){
            $amount = (int)$value;
-           if(is_numeric($key) AND $amount >1){ $busketContent[$key]= $amount ;}
+           if(is_numeric($key) AND $amount >0){ $busketContent[$key]= $amount ;}
        }
+
        session()->put('busketContent', $busketContent);
 
 

@@ -1,65 +1,43 @@
-function removeBusketContentErrors(){
-    let formerErrors = document.getElementById('bigBusketContent').querySelectorAll('td.has-error');
-    for (let i=0; i<formerErrors.length; i++){
-        formerErrors[i].classList.remove('has-error');
-    }
-}
+class Helper {
 
-function drawWaitingScreen(){
-    let waitingBlock = `
+    static removeBusketContentErrors() {
+        let formerErrors = document.getElementById('bigBusketContent').querySelectorAll('td.has-error');
+        for (let i = 0; i < formerErrors.length; i++) {
+            formerErrors[i].classList.remove('has-error');
+        }
+    }
+
+    static drawWaitingScreen()
+        {
+            let waitingBlock = `
                     <div class="waiting-block" id="waitingBlock">
-                    
                         <img class="waiting-img" src="/img/loading.gif" alt="">
-                    
                     </div>
                 `;
-    document.body.insertAdjacentHTML('afterBegin', waitingBlock )
+            document.body.insertAdjacentHTML('afterBegin', waitingBlock)
+        }
 
-}
-
-function removeWaitingscreen()
-{
-    if(document.getElementById('waitingBlock')) document.getElementById('waitingBlock').remove();
-}
+    static removeWaitingscreen() {
+            if (document.getElementById('waitingBlock')) document.getElementById('waitingBlock').remove();
+        }
+    }
 
 //click small busket to see big
 document.getElementById('busket-container').addEventListener('click', function(e){
 
-    fetch('/busket/show', {
-        method: 'POST',
-        credentials: 'same-origin',
-
+    axios({
+        method:'post',
+        url: '/busket/show',
+        withCredentials: true,
     })
-        .then( response => response.text())
-        .then(text => document.getElementById('bigBusketContent').innerHTML = text )
+        .then(response => document.getElementById('bigBusketContent').innerHTML = response.data )
 
 });
 
 document.body.addEventListener('click', function(e){
 
-    if(e.target.id==="updateBusketBtn"){
-
-        let form = new FormData(document.getElementById('bigBusketContent'));
-
-        fetch('/busket/update', {
-            method: 'POST',
-            credentials: 'same-origin',
-            body: form
-
-        })
-            .then( response => response.text())
-            .then(text => document.getElementById('bigBusketContent').innerHTML = text )
-            .then(() =>{ return fetch('/updateSmallBusket', {
-                method: 'POST',
-                credentials: 'same-origin'
-                                            })
-                     })
-            .then( response => response.json())
-            .then(json => {
-               if(!json.success) return;
-                document.getElementById('totalAmount').innerText = json.totalAmount;
-                document.getElementById('totalSumma').innerText = json.totalSumma;
-            })
+    if(e.target.id === "updateBusketBtn") {
+        busketVue.$options.methods.update();
     }
 
 
@@ -75,14 +53,7 @@ document.body.addEventListener('click', function(e){
             .then( response => response.json())
             .then( json => {
 
-
-
-
-
-                let formerErrors = document.getElementById('bigBusketContent').querySelectorAll('td.has-error');
-                for (let i=0; i<formerErrors.length; i++){
-                    formerErrors[i].classList.remove('has-error');
-                }
+                Helper.removeBusketContentErrors();
 
                 if(json.fail){
                     let errors = json.errors;
@@ -134,7 +105,7 @@ document.body.addEventListener('click', function(e){
     if(e.target.id === "submitOrder") {
 
 
-        drawWaitingScreen();
+        Helper.drawWaitingScreen();
 
         let name= document.getElementById('name').value;
         let email = document.getElementById('email').value;
@@ -180,9 +151,8 @@ document.body.addEventListener('click', function(e){
                     })
                         .then(response => response.text())
                         .then(html => {
-
 //remove waiting screen
-removeWaitingscreen();
+                            Helper.removeWaitingscreen();
                             document.querySelector('.content').insertAdjacentHTML('afterBegin', html);
                         })
                 })
@@ -192,7 +162,7 @@ removeWaitingscreen();
             }
         })
         .catch((error) => {
-            removeWaitingscreen();
+            Helper.removeWaitingscreen();
          let errors = error.response.data;
 
 
@@ -223,6 +193,68 @@ document.body.addEventListener('keyup', function(e){
       if( parentForm.querySelector('.help-block')) parentForm.querySelector('.help-block').innerText ='';
 
     }
+
+});
+
+
+
+
+
+ let busketVue = new Vue({
+
+    el:'#bigBusketContent',
+    data:{
+       // busketContent:{}
+
+    },
+    methods:{
+        update(){
+
+           this.bindInputsFields();
+
+            axios({
+                url: '/busket/update',
+                method: 'post',
+                withCredentials:true,
+                data:{
+                    busketContent:this.busketContent
+                }
+            })
+
+                    .then(response => document.getElementById('bigBusketContent').innerHTML = response.data )
+                    .then(() =>{ return axios({
+                                url:'/updateSmallBusket',
+                                method: 'POST',
+                                withCredentials:true
+                                })
+                             })
+
+                    .then(response => {
+                       if(response.status !== 200) return;
+                        document.getElementById('totalAmount').innerText = response.data.totalAmount;
+                        document.getElementById('totalSumma').innerText = response.data.totalSumma;
+                    })
+                .catch(errors => Errors.console(errors))
+
+        },
+        bindInputsFields(){
+
+           this.busketContent = {};
+
+
+            let inputs = document.getElementById('bigBusketContent').querySelectorAll('.busketInputs');
+
+            for(let i=0; i< inputs.length; i++){
+                this.busketContent[inputs[i].dataset.id] = inputs[i].value;
+
+                    inputs[i].setAttribute('v-model',`busketContent[${i}]` );
+
+                }
+        }
+    }
+
+
+
 
 });
 

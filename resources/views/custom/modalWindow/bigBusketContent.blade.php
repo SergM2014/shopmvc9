@@ -21,7 +21,14 @@
                 <tr>
                     <td><?=  $tableCounter++  ?></td>
                     <td>{{$product->title}}</td>
-                    <td class="form-group"><div  class=""><input type="text" id="id_{{ $product->id }}" class="form-control" name="{{ $product->id }}" value ="{{ session('busketContent')[$product->id ] }}" ></div></td>
+                    <td class="form-group">
+                        <div  class="">
+                            {{--<input type="text" id="id_{{ $product->id }}" class="form-control"--}}
+                                      {{--name="{{ $product->id }}" value ="{{ session('busketContent')[$product->id ] }}" v-model="busketContent[{{ $tableCounter-2 }}]" >--}}
+                            <input type="text"  class="form-control busketInputs"
+                                   data-id="{{ $product->id }}" value ="{{ session('busketContent')[$product->id ] }}" :v-model = "model" >
+                        </div>
+                    </td>
                     <td>{{ $product->price }}</td>
                 </tr>
 
