@@ -42,53 +42,7 @@ document.body.addEventListener('click', function(e){
 
 
     if(e.target.id === "makeOrder"){
-
-        let form = new FormData(document.getElementById('bigBusketContent'));
-
-        fetch('/validateBusket', {
-            method: 'POST',
-            credentials: 'same-origin',
-            body: form
-        })
-            .then( response => response.json())
-            .then( json => {
-
-                Helper.removeBusketContentErrors();
-
-                if(json.fail){
-                    let errors = json.errors;
-                   for(let i=0; i< errors.length; i++){
-                       document.getElementById(`id_${errors[i]}`).closest('td').classList.add( 'has-error')
-                   }
-                   return;
-                }
-
-                if(json.success){
-
-//find inputs an and add readonly attr
-
-                    let inputFields = document.getElementById('bigBusketContent').querySelectorAll('input');
-                    for (let i=0; i<inputFields.length; i++){
-                        inputFields[i].setAttribute('readonly', true);
-                    }
-
-                    return  fetch('/showOrderForm', {
-                        method: 'POST',
-                        credentials: 'same-origin',
-                        body: form
-                    })
-                }
-            })
-
-//output json form
-            .then( response => response.text() )
-            .then(html => {
-                document.getElementById('bigBusketContent').insertAdjacentHTML('beforeEnd', html);
-                document.getElementById('bigBusketFooter').classList.add('hidden');
-              }
-            )
-
-            .catch(error => console.log('busket content errors'))
+        busketVue.$options.methods.makeOrder();
     }
 
 
@@ -104,77 +58,8 @@ document.body.addEventListener('click', function(e){
 
     if(e.target.id === "submitOrder") {
 
-
-        Helper.drawWaitingScreen();
-
-        let name= document.getElementById('name').value;
-        let email = document.getElementById('email').value;
-        let phone = document.getElementById('phone').value;
-
-
-        axios.post('/busket/makeOrder',{
-           email,
-           phone,
-           name,
-           withCredentials: true
-
-    })
-        .then(function(response) {
-
-
-
-        let response1 = response.data;
-
-        if (response1.success) {
-            document.body.classList.remove('modal-open');
-            document.getElementById('bigModal').classList.remove('in');
-            document.getElementById('bigModal').style.display = 'none';
-            document.querySelector('.modal-backdrop').remove();
-
-
-            fetch('/updateSmallBusket', {
-                method: 'POST',
-                credentials: 'same-origin'
-            })
-
-                .then(response => response.json())
-                .then(json => {
-                    if (!json.success) return;
-                    document.getElementById('totalAmount').innerText = json.totalAmount;
-                    document.getElementById('totalSumma').innerText = json.totalSumma;
-
-// output success message
-
-                    return  fetch('/succeededOrder', {
-                        method: 'POST',
-                        credentials: 'same-origin'
-                    })
-                        .then(response => response.text())
-                        .then(html => {
-//remove waiting screen
-                            Helper.removeWaitingscreen();
-                            document.querySelector('.content').insertAdjacentHTML('afterBegin', html);
-                        })
-                })
-// here sending email
-
-
-            }
-        })
-        .catch((error) => {
-            Helper.removeWaitingscreen();
-         let errors = error.response.data;
-
-
-        for(let i in errors){
-        //errors[i] returns name of the property
-        //errors[i][0] returns value of thre property
-        document.getElementById(i).closest('.form-group').classList.add('has-error');
-        document.getElementById(i+'HelpBlock').innerText = errors[i][0];
-        }
-        })
-
-    }
+        busketVue.$options.methods.submitOrder();
+     }
 
 
 
@@ -205,6 +90,9 @@ document.body.addEventListener('keyup', function(e){
     el:'#bigBusketContent',
     data:{
        // busketContent:{}
+        orderName:'111',
+        orderEmail:'weisse@ukr.net',
+        orderPhone:'1234567890'
 
     },
     methods:{
@@ -250,8 +138,149 @@ document.body.addEventListener('keyup', function(e){
                     inputs[i].setAttribute('v-model',`busketContent[${i}]` );
 
                 }
+        },
+
+        makeOrder(){
+           this.bindInputsFields();
+            axios({
+                url:'/validateBusket',
+                method: 'post',
+                withCredentials:true,
+                data:{
+                    busketContent:this.busketContent
+                }
+            })
+
+                .then( json => {
+
+                    Helper.removeBusketContentErrors();
+
+                    if(json.data.fail){
+                        let errors = json.data.errors;
+                        for(let i=0; i< errors.length; i++){
+                            document.getElementById(`id_${errors[i]}`).closest('td').classList.add( 'has-error')
+                        }
+                        return;
+                    }
+
+                    if(json.data.success){
+
+//find inputs an and add readonly attr
+
+                        let inputFields = document.getElementById('bigBusketContent').querySelectorAll('input');
+                        for (let i=0; i<inputFields.length; i++){
+                            inputFields[i].setAttribute('readonly', true);
+                        }
+
+                        return axios({
+                            url:'/showOrderForm',
+                            method:'post',
+                            withCredentials:true
+                        })
+                    }
+                })
+
+                .then(response => {
+                        document.getElementById('bigBusketContent').insertAdjacentHTML('beforeEnd', response.data);
+                        document.getElementById('bigBusketFooter').classList.add('hidden');
+                    }
+                )
+
+                .catch(errors => Errors.console(errors))
+        },
+
+        submitOrder(){
+
+            this.bindOrderFormsFields();
+
+
+            Helper.drawWaitingScreen();
+
+
+
+
+            axios.post('/busket/makeOrder',{
+                email:this.orderEmail,
+                phone:this.orderPhone,
+                name:this.orderName,
+                withCredentials: true
+
+            })
+                .then(function(response) {
+
+
+
+                    let response1 = response.data;
+
+                    if (response1.success) {
+                        document.body.classList.remove('modal-open');
+                        document.getElementById('bigModal').classList.remove('in');
+                        document.getElementById('bigModal').style.display = 'none';
+                        document.querySelector('.modal-backdrop').remove();
+
+
+                        // fetch('/updateSmallBusket', {
+                        //     method: 'POST',
+                        //     credentials: 'same-origin'
+                        // })
+
+                        axios.post('/updateSmallBusket',{
+                            withCredentials:true
+                        })
+
+
+                            .then(response => {
+                                if (!response.data.success) return;
+                                document.getElementById('totalAmount').innerText = response.data.totalAmount;
+                                document.getElementById('totalSumma').innerText = response.data.totalSumma;
+
+// output success message
+
+                                return  fetch('/succeededOrder', {
+                                    method: 'POST',
+                                    credentials: 'same-origin'
+                                })
+                                    .then(response => response.text())
+                                    .then(html => {
+//remove waiting screen
+                                        Helper.removeWaitingscreen();
+                                        document.querySelector('.content').insertAdjacentHTML('afterBegin', html);
+                                    })
+                            })
+// here sending email
+
+
+                    }
+                })
+                .catch((error) => {
+                    Helper.removeWaitingscreen();
+                    let errors = error.response.data;
+
+
+                    for(let i in errors){
+                        //errors[i] returns name of the property
+                        //errors[i][0] returns value of thre property
+                        document.getElementById(i).closest('.form-group').classList.add('has-error');
+                        document.getElementById(i+'HelpBlock').innerText = errors[i][0];
+                    }
+                })
+
+        },
+
+        bindOrderFormsFields(){
+
+            this.orderName = document.getElementById('orderForm').querySelector('#name').value;
+            this.orderEmail = document.getElementById('orderForm').querySelector('#email').value;
+            this.orderPhone = document.getElementById('orderForm').querySelector('#phone').value;
+
+
+            document.getElementById('orderForm').querySelector('#name').setAttribute('v-model',`orderName`);
+            document.getElementById('orderForm').querySelector('#email').setAttribute('v-model',`orderEmail`);
+            document.getElementById('orderForm').querySelector('#phone').setAttribute('v-model',`orderPhone`);
         }
-    }
+
+        }
+
 
 
 

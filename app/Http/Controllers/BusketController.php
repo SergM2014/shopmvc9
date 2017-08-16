@@ -98,7 +98,8 @@ class BusketController extends Controller
     public function validateBusketContent()
     {
 
-        $busketContent = request()->all();
+        //$busketContent = request()->all();
+        $busketContent = request('busketContent');
 
         $errors =[];
 
