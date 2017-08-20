@@ -25,3 +25,7 @@
     Route::post('/createSearchResultBlock', function(){ return view('custom.partials.searchResultsBlock');});
     Route::post('/searchResults', 'SearchController@findResults');
     Route::post('/showProductPreview', 'ProductController@showPreview');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
