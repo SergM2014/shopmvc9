@@ -1,7 +1,9 @@
 {
-  "/js/index.js": "/js/index.93cdad2f1c71539f9bad.js",
-  "/css/app.css": "/css/app.c44ea04e7845cd4eb57d.css",
+  "/js/index.js": "/js/index.13f3536f9179ffe20720.js",
+  "/css/app.css": "/css/app.fc042cfa6d926102a090.css",
+  "/css/admin.css": "/css/admin.fc042cfa6d926102a090.css",
   "/js/productView.js": "/js/productView.7e56054a4df09958e686.js",
   "/js/app.js": "/js/app.fde4f69bf03c61755482.js",
-  "/js/auth.js": "/js/auth.e245fac417d2a413720b.js"
+  "/js/auth.js": "/js/auth.e245fac417d2a413720b.js",
+  "/js/adminProducts.js": "/js/adminProducts.7bf6afba67ca994ef435.js"
 }

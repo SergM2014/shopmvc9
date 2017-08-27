@@ -26,6 +26,7 @@ class VerifyCsrfToken extends BaseVerifier
         '/getCommentForResponse',
         '/createSearchResultBlock',
         '/searchResults',
-        '/showProductPreview'
+        '/showProductPreview',
+        '/productsPopUpMenu'
     ];
 }

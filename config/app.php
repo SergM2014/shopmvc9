@@ -241,4 +241,6 @@ return [
 
     ],
 
+    'perPageAdmin' => 10,
+
 ];

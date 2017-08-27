@@ -11,12 +11,12 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('/css/admin.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="container">
         <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
+            {{--<div class="container">--}}
                 <div class="navbar-header">
 
                     <!-- Collapsed Hamburger -->
@@ -31,6 +31,13 @@
                     <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
+                    @if(Auth::check())
+
+                        <a class="navbar-brand" href="{{ url('/admin/products') }}">
+                            Products
+                        </a>
+
+                    @endif
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -44,7 +51,7 @@
                         <!-- Authentication Links -->
                         @if (Auth::guest())
                             <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
+                           {{-- <li><a href="{{ route('register') }}">Register</a></li>--}}
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -68,7 +75,7 @@
                         @endif
                     </ul>
                 </div>
-            </div>
+            {{--</div>--}}
         </nav>
 
         @yield('content')

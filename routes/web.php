@@ -26,6 +26,15 @@
     Route::post('/searchResults', 'SearchController@findResults');
     Route::post('/showProductPreview', 'ProductController@showPreview');
 
+    Route::get('/bumbum', function(){ return 'проверка работоспособності';})->middleware('auth');
+
+    Route::get('/admin/products', 'AdminProductsController@index');
+    Route::post('/productsPopUpMenu', function(){
+        return view('admin.popUp.allProducts');
+    });
+    Route::get('admin/product/{product}', 'AdminProductsController@show');
+    Route::get('admin/product/{product}/edit', 'AdminProductsController@edit');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
