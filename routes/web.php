@@ -32,8 +32,13 @@
     Route::post('/productsPopUpMenu', function(){
         return view('admin.popUp.allProducts');
     });
+    Route::get('/admin/product/create', 'AdminProductsController@create');
+    Route::post('/admin/product/store', 'AdminProductsController@store');
+    Route::get('/admin/product/created', function(){ return view('admin.products.created'); });
     Route::get('admin/product/{product}', 'AdminProductsController@show');
     Route::get('admin/product/{product}/edit', 'AdminProductsController@edit');
+
+
 
 Auth::routes();
 

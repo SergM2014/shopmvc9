@@ -9,6 +9,8 @@ class Product extends Model
 {
     use Searchable;
 
+    protected $fillable = ['author', 'title', 'description', 'body', 'price', 'manufacturer_id'];
+
     public function manufacturer()
     {
         return $this->belongsTo('App\Manufacturer');
