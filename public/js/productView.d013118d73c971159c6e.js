@@ -25026,6 +25026,7 @@ module.exports = g;
 
 /* WEBPACK VAR INJECTION */(function($) {__webpack_require__(28);
 __webpack_require__(43);
+__webpack_require__(47);
 
 $(document).on('click', '[data-toggle="lightbox"]', function (event) {
     event.preventDefault();
@@ -25034,87 +25035,37 @@ $(document).on('click', '[data-toggle="lightbox"]', function (event) {
 
 document.body.addEventListener('click', function (e) {
 
-    if (e.target.id === "purchase") {
-
-        e.preventDefault();
-
-        var form = new FormData(document.getElementById('purchaseForm'));
-
-        fetch('/busket/add', {
-            method: 'POST',
-            credentials: 'same-origin',
-            body: form
-        }).then(function (response) {
-            return response.json();
-        }).then(function (json) {
-            if (!json.success) return;
-            document.getElementById('totalAmount').innerText = json.totalAmount;
-            document.getElementById('totalSumma').innerText = json.totalSumma;
-        });
-    }
-
-    if (e.target.id === "productCommentSubmit") {
-
-        var product_id = document.getElementById('productId').value;
-
-        var parent_id = document.getElementById('parentId').value;
-
-        var avatar = document.getElementById('image').value;
-        var email = document.getElementById('email').value;
-        var name = document.getElementById('name').value;
-        var comment = document.getElementById('comment').value;
-        var captcha = document.getElementById('captcha').value;
-
-        axios.post('/comment/add', {
-            product_id: product_id, parent_id: parent_id, avatar: avatar, email: email, name: name, comment: comment, captcha: captcha
-        }).then(function (response) {
-            console.log(response.data);
-            document.getElementById('addCommentBlock').innerHTML = '<div class="alert alert-success" role="alert">' + response.data.message + '</div>';
-        }).catch(function (error) {
-
-            var errors = error.response.data;
-
-            for (var i in errors) {
-                //errors[i] returns name of the property
-                //errors[i][0] returns value of thre property
-
-                document.getElementById(i).closest('.form-group').classList.add('has-error');
-                document.getElementById(i + 'HelpBlock').innerText = errors[i][0];
-            }
-        });
-    }
-
     //refresh captcha by clicking
     if (e.target.closest('#captchaImg')) {
-        fetch('/refreshCaptcha', { method: 'POST' }).then(function (response) {
-            return response.text();
-        }).then(function (html) {
-            return document.getElementById('captchaImg').innerHTML = html;
+        //  fetch('/refreshCaptcha',{ method: 'POST' })
+        axios({
+            url: '/refreshCaptcha',
+            method: 'post',
+            withCredentials: true
+        }).then(function (response) {
+            return document.getElementById('captchaImg').innerHTML = response.data;
         }).catch(function (error) {
             return console.log(error);
         });
     }
 
     if (e.target.classList.contains('give_response-btn')) {
-        var parentId = e.target.dataset.parentId;
-        var productId = document.getElementById('productId').value;
+
         var commentId = e.target.dataset.commentId;
         //populate hiden parentId field
-        // document.getElementById('parentId').value = parentId;
         document.getElementById('parentId').value = commentId;
 
-        var _form = new FormData();
-        _form.append('productId', productId);
-        _form.append('parentId', parentId);
-        _form.append('commentId', commentId);
-        fetch('/getCommentForResponse', {
-            method: 'POST',
-            body: _form,
-            credentials: 'same-origin'
+        axios({
+            url: '/getCommentForResponse',
+            method: 'post',
+            withCredentials: true,
+            data: {
+                parentId: e.target.dataset.parentId,
+                productId: document.getElementById('productId').value,
+                commentId: commentId
+            }
         }).then(function (response) {
-            return response.text();
-        }).then(function (html) {
-            return document.getElementById('parentCommentBlock').innerHTML = html;
+            return document.getElementById('parentCommentBlock').innerHTML = response.data;
         });
     }
 
@@ -25124,7 +25075,66 @@ document.body.addEventListener('click', function (e) {
     }
 }); //this is end of the body
 
-__webpack_require__(47);
+
+new Vue({
+    el: '#productView',
+
+    data: {
+        name: '',
+        email: '',
+        comment: '',
+        captcha: ''
+    },
+
+    methods: {
+        makeComment: function makeComment() {
+            axios.post('/comment/add', {
+                _token: document.getElementsByName('_token')[0].value,
+                ajax: true,
+                product_id: document.getElementById('productId').value,
+                parent_id: document.getElementById('parentId').value,
+                avatar: document.getElementById('image').value,
+                email: this.email,
+                name: this.name,
+                comment: this.comment,
+                captcha: this.captcha
+            }).then(function (response) {
+
+                document.getElementById('addCommentBlock').innerHTML = '<div class="alert alert-success" role="alert">' + response.data.message + '</div>';
+            }).catch(function (error) {
+
+                var errors = error.response.data;
+
+                for (var i in errors) {
+                    //errors[i] returns name of the property
+                    //errors[i][0] returns value of thre property
+
+                    document.getElementById(i).closest('.form-group').classList.add('has-error');
+                    document.getElementById(i + 'HelpBlock').innerText = errors[i][0];
+                }
+            });
+        },
+        addToBusket: function addToBusket() {
+
+            axios({
+                url: '/busket/add',
+                method: 'post',
+                withCredentials: true,
+                data: {
+                    _token: document.getElementsByName('_token')[0].value,
+                    id: document.getElementsByName('id')[0].value,
+                    price: document.getElementsByName('price')[0].value
+                }
+            }).then(function (response) {
+
+                if (response.status !== 200) return;
+
+                document.getElementById('totalAmount').innerText = response.data.totalAmount;
+                document.getElementById('totalSumma').innerText = response.data.totalSumma;
+            });
+        }
+    }
+});
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),

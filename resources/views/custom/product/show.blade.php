@@ -20,7 +20,7 @@
 
         </div>
 
-        <section class="col-sm-10">
+        <section class="col-sm-10" id="productView">
 
             @if($product->images->isNotEmpty())
                 <div class="row">
@@ -53,10 +53,11 @@
                  @endforeach
             </div>
                 <form id="purchaseForm" class="clearfix">
-                    {{ csrf_field() }}
-                    <input type="hidden" name="id" value = "{{ $product->id }}">
-                    <input type="hidden" name="price" value="{{ $product->price }}">
-                    <button id="purchase" class="btn btn-danger pull-right">Purchase</button>
+                    {{--{{ csrf_field() }}--}}
+                    <input type="hidden" name="_token"  value="{{ csrf_token() }}">
+                    <input type="hidden" name="id"  value = "{{ $product->id }}">
+                    <input type="hidden" name="price"  value="{{ $product->price }}">
+                    <button id="purchase" class="btn btn-danger pull-right" @click.prevent="addToBusket">Purchase</button>
                 </form>
 
                 <div class="clearfix">
@@ -77,27 +78,28 @@
 
                     @include('custom.partials.addImage')
 
-                    <form id="productComment">
+                    <form id="productCommentForm">
 
                         <input type="hidden" name="productId" id="productId" value="{{ $product->id }}">
                         <input type="hidden" name="parentId" id="parentId" value="0" >
                         <input type="hidden" name="image" id="image" >
+                        {{ csrf_field() }}
 
                         <div class="form-group">
                             <label for="email">Email address</label>
-                            <input type="email" class="form-control" id="email" placeholder="Email">
+                            <input type="email" class="form-control" id="email" v-model="email" placeholder="Email">
                             <span id="emailHelpBlock" class="help-block"></span>
                         </div>
 
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Name">
+                            <input type="text" class="form-control" id="name" v-model="name" placeholder="Name">
                             <span id="nameHelpBlock" class="help-block"></span>
                         </div>
 
                         <div class="form-group">
                             <label for="comment">Comment</label>
-                            <textarea class="form-control" id="comment" placeholder="comment" rows="5"></textarea>
+                            <textarea class="form-control" id="comment" placeholder="comment" v-model="comment" rows="5"></textarea>
                             <span id="commentHelpBlock" class="help-block"></span>
                         </div>
 
@@ -106,12 +108,12 @@
                             @include('custom.partials.captcha')
                             </p>
                             <label for="name">enter captcha</label>
-                            <input type="text" class="form-control" id="captcha" name="captcha" placeholder="enter captcha">
+                            <input type="text" class="form-control" id="captcha" name="captcha" v-model="captcha" placeholder="enter captcha">
                             <span id="captchaHelpBlock" class="help-block"></span>
                         </div>
 
 
-                        <button type="button" id="productCommentSubmit" class="btn btn-default">Submit</button>
+                        <button type="button" id="productCommentSubmit" class="btn btn-default" @click="makeComment">Submit</button>
                     </form>
 
                     @if ($errors->any())
