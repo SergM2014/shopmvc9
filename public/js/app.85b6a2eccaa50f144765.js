@@ -14750,6 +14750,8 @@ var Errors = function () {
 /***/ (function(module, exports) {
 
 document.body.addEventListener('click', function (e) {
+
+    //click otside search container group
     if (!e.target.closest('#search-field__container')) {
         searchVue.removeSearchResultsBlock();
     }
@@ -14760,28 +14762,17 @@ var searchVue = new Vue({
     el: '#search-field__container',
 
     data: {
-        search: ''
+        search: '',
+        showBlock: false,
+        hiddenOutside: true
     },
 
     methods: {
-        drawResultsBlock: function drawResultsBlock() {
-            axios({
-                method: 'post',
-                url: '/createSearchResultBlock',
-                withCredentials: true
-            }).then(function (html) {
-                if (document.getElementById('searchResultsBlock')) {
-                    document.getElementById('searchResultsBlock').innerHTML = 'Searching now...';
-                } else {
-                    document.getElementById('search-field__container').insertAdjacentHTML('afterBegin', html.data);
-                }
-            }).catch(function (response) {
-                return Errors.console(response);
-            });
-        },
         findResults: function findResults() {
+            var _this = this;
 
-            this.drawResultsBlock();
+            this.showBlock = true;
+
             axios({
                 method: 'post',
                 url: '/searchResults',
@@ -14790,21 +14781,17 @@ var searchVue = new Vue({
                     search: this.search
                 }
             }).then(function (response) {
-                if (document.getElementById('searchResultsBlock').classList.contains('hidden-outside')) {
-                    document.getElementById('searchResultsBlock').classList.remove('hidden-outside');
-                }
+                _this.hiddenOutside = false;
                 document.getElementById('searchResultsBlock').innerHTML = response.data;
             }).catch(function (response) {
                 return Errors.console(response);
             });
         },
         removeSearchResultsBlock: function removeSearchResultsBlock() {
-            if (document.getElementById('searchResultsBlock')) {
-                document.getElementById('searchResultsBlock').classList.add('hidden-outside');
-                setTimeout(function () {
-                    document.getElementById('searchResultsBlock').remove();
-                }, 500);
-            }
+            this.hiddenOutside = true;
+            setTimeout(function () {
+                this.showBlock = false;
+            }, 500);
         }
     }
 

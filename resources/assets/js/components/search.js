@@ -1,4 +1,6 @@
 document.body.addEventListener('click', function(e){
+
+//click otside search container group
    if(!e.target.closest('#search-field__container') ){
        searchVue.removeSearchResultsBlock();
    }
@@ -7,39 +9,22 @@ document.body.addEventListener('click', function(e){
 });
 
 
-
 let searchVue =  new Vue({
 
     el:'#search-field__container',
 
     data: {
-        search:''
+        search:'',
+        showBlock:false,
+        hiddenOutside:true
     },
 
     methods: {
 
-        drawResultsBlock(){
-            axios({
-                method:'post',
-                url:'/createSearchResultBlock',
-                withCredentials: true,
-            })
-                .then(html => {
-                    if (document.getElementById('searchResultsBlock')) {
-                        document.getElementById('searchResultsBlock').innerHTML = 'Searching now...';
-                    }
-                    else {
-                        document.getElementById('search-field__container').insertAdjacentHTML('afterBegin', html.data)
-                    }
-
-                })
-                .catch(response => Errors.console(response));
-        },
-
-
         findResults(){
 
-            this.drawResultsBlock();
+            this.showBlock = true;
+
             axios({
                 method: 'post',
                 url:'/searchResults',
@@ -49,9 +34,7 @@ let searchVue =  new Vue({
                 }
             })
                 .then(response => {
-                    if (document.getElementById('searchResultsBlock').classList.contains('hidden-outside')) {
-                        document.getElementById('searchResultsBlock').classList.remove('hidden-outside')
-                    }
+                    this.hiddenOutside = false;
                     document.getElementById('searchResultsBlock').innerHTML = response.data;
                 })
                 .catch(response =>Errors.console(response));
@@ -59,10 +42,8 @@ let searchVue =  new Vue({
 
         removeSearchResultsBlock()
         {
-            if(document.getElementById('searchResultsBlock')){
-                document.getElementById('searchResultsBlock').classList.add('hidden-outside');
-                setTimeout(function(){document.getElementById('searchResultsBlock').remove()}, 500);
-            }
+            this.hiddenOutside = true;
+             setTimeout(function(){this.showBlock = false }, 500);
         }
 
     }

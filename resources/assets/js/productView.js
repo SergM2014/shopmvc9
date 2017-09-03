@@ -51,10 +51,38 @@ document.body.addEventListener('click', function(e){
 
 });//this is end of the body
 
+new Vue({
+    el:'#purchaseForm',
+    methods:{
+        addToBusket(){
 
+            axios({
+                url:'/busket/add',
+                method: 'post',
+                withCredentials:true,
+                data:{
+                    _token:document.getElementsByName('_token')[0].value,
+                    id:document.getElementsByName('id')[0].value,
+                    price:document.getElementsByName('price')[0].value
+                }
+            })
+                .then(response => {
+
+                    if(response.status !== 200) return;
+
+                    document.getElementById('totalAmount').innerText = response.data.totalAmount;
+                    document.getElementById('totalSumma').innerText = response.data.totalSumma
+                })
+
+
+        }
+    }
+
+
+})
 
 new Vue({
-    el:'#productView',
+    el:'#productCommentForm',
 
     data:{
         name:'',
@@ -93,28 +121,7 @@ new Vue({
                         document.getElementById(i+'HelpBlock').innerText = errors[i][0];
                     }
                 })
-        },
-        addToBusket(){
-
-            axios({
-                url:'/busket/add',
-                method: 'post',
-                withCredentials:true,
-                data:{
-                    _token:document.getElementsByName('_token')[0].value,
-                    id:document.getElementsByName('id')[0].value,
-                    price:document.getElementsByName('price')[0].value
-                }
-            })
-                .then(response => {
-
-                    if(response.status !== 200) return;
-
-                    document.getElementById('totalAmount').innerText = response.data.totalAmount;
-                    document.getElementById('totalSumma').innerText = response.data.totalSumma
-                })
-
-
         }
+
     }
 })
