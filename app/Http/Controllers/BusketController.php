@@ -60,8 +60,6 @@ class BusketController extends Controller
 
        session()->put('busketContent', $busketContent);
 
-
-
         //get totalAmount and totalSumma
         session()->put('totalAmount', array_sum($busketContent));
 
@@ -126,6 +124,8 @@ class BusketController extends Controller
 
     public function makeOrder()
     {
+
+//dd(request()->all());
         $this->validate(request(), [
             'name' => 'min:6',
            // 'phone'=>'required',

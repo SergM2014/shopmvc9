@@ -23,10 +23,9 @@
                     <td>{{$product->title}}</td>
                     <td class="form-group">
                         <div  class="">
-                            {{--<input type="text" id="id_{{ $product->id }}" class="form-control"--}}
-                                      {{--name="{{ $product->id }}" value ="{{ session('busketContent')[$product->id ] }}"  >--}}
                             <input type="text"  class="form-control busketInputs"
-                                   data-id="{{ $product->id }}" value ="{{ session('busketContent')[$product->id ] }}" :v-model = "model" >
+                                   data-id="{{ $product->id }}" value ="{{ session('busketContent')[$product->id ] }}"  >
+
                         </div>
                     </td>
                     <td>{{ $product->price }}</td>

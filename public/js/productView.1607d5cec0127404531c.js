@@ -14485,12 +14485,25 @@ var Helper = function () {
         value: function removeWaitingscreen() {
             if (document.getElementById('waitingBlock')) document.getElementById('waitingBlock').remove();
         }
+    }, {
+        key: 'updateSmallBusket',
+        value: function updateSmallBusket() {
+            return axios({
+                url: '/updateSmallBusket',
+                method: 'POST',
+                withCredentials: true
+            }).then(function (response) {
+                if (response.status !== 200) return;
+                document.getElementById('totalAmount').innerText = response.data.totalAmount;
+                document.getElementById('totalSumma').innerText = response.data.totalSumma;
+            });
+        }
     }]);
 
     return Helper;
 }();
 
-//click small busket to see big
+//click small busket to see big is opened by bootsrap
 
 
 document.getElementById('busket-container').addEventListener('click', function (e) {
@@ -14543,13 +14556,7 @@ document.body.addEventListener('keyup', function (e) {
 var busketVue = new Vue({
 
     el: '#bigBusketContent',
-    data: {
-        // busketContent:{}
-        orderName: '111',
-        orderEmail: 'weisse@ukr.net',
-        orderPhone: '1234567890'
 
-    },
     methods: {
         update: function update() {
 
@@ -14565,15 +14572,7 @@ var busketVue = new Vue({
             }).then(function (response) {
                 return document.getElementById('bigBusketContent').innerHTML = response.data;
             }).then(function () {
-                return axios({
-                    url: '/updateSmallBusket',
-                    method: 'POST',
-                    withCredentials: true
-                });
-            }).then(function (response) {
-                if (response.status !== 200) return;
-                document.getElementById('totalAmount').innerText = response.data.totalAmount;
-                document.getElementById('totalSumma').innerText = response.data.totalSumma;
+                return Helper.updateSmallBusket();
             }).catch(function (errors) {
                 return Errors.console(errors);
             });
@@ -14635,40 +14634,34 @@ var busketVue = new Vue({
         },
         submitOrder: function submitOrder() {
 
-            this.bindOrderFormsFields();
-
             Helper.drawWaitingScreen();
 
-            axios.post('/busket/makeOrder', {
-                email: this.orderEmail,
-                phone: this.orderPhone,
-                name: this.orderName,
-                withCredentials: true
+            // axios.post('/busket/makeOrder',{
+            //     email:document.getElementById('orderForm').querySelector('#name').value,
+            //     phone:document.getElementById('orderForm').querySelector('#email').value,
+            //     name:document.getElementById('orderForm').querySelector('#phone').value,
+            //     withCredentials: true
+            //
+            // })
 
+            axios({
+                url: '/busket/makeOrder',
+                method: 'post',
+                data: {
+                    email: document.getElementById('orderForm').querySelector('#email').value,
+                    phone: document.getElementById('orderForm').querySelector('#phone').value,
+                    name: document.getElementById('orderForm').querySelector('#name').value
+                }
             }).then(function (response) {
 
-                var response1 = response.data;
-
-                if (response1.success) {
+                if (response.status === 200) {
                     document.body.classList.remove('modal-open');
                     document.getElementById('bigModal').classList.remove('in');
                     document.getElementById('bigModal').style.display = 'none';
                     document.querySelector('.modal-backdrop').remove();
 
-                    // fetch('/updateSmallBusket', {
-                    //     method: 'POST',
-                    //     credentials: 'same-origin'
-                    // })
-
-                    axios.post('/updateSmallBusket', {
-                        withCredentials: true
-                    }).then(function (response) {
-                        if (!response.data.success) return;
-                        document.getElementById('totalAmount').innerText = response.data.totalAmount;
-                        document.getElementById('totalSumma').innerText = response.data.totalSumma;
-
+                    Helper.updateSmallBusket().then(function () {
                         // output success message
-
                         return fetch('/succeededOrder', {
                             method: 'POST',
                             credentials: 'same-origin'
@@ -14685,6 +14678,7 @@ var busketVue = new Vue({
                 }
             }).catch(function (error) {
                 Helper.removeWaitingscreen();
+
                 var errors = error.response.data;
 
                 for (var i in errors) {
@@ -14694,16 +14688,6 @@ var busketVue = new Vue({
                     document.getElementById(i + 'HelpBlock').innerText = errors[i][0];
                 }
             });
-        },
-        bindOrderFormsFields: function bindOrderFormsFields() {
-
-            this.orderName = document.getElementById('orderForm').querySelector('#name').value;
-            this.orderEmail = document.getElementById('orderForm').querySelector('#email').value;
-            this.orderPhone = document.getElementById('orderForm').querySelector('#phone').value;
-
-            document.getElementById('orderForm').querySelector('#name').setAttribute('v-model', 'orderName');
-            document.getElementById('orderForm').querySelector('#email').setAttribute('v-model', 'orderEmail');
-            document.getElementById('orderForm').querySelector('#phone').setAttribute('v-model', 'orderPhone');
         }
     }
 
