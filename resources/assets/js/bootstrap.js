@@ -13,6 +13,6 @@ window.Errors = Errors;
 
 require('bootstrap-sass');
 require('./components/busket');
-require('./components/search');
-require('./components/showProductPreview.js');
+require('./components/searchProduct');
+
 

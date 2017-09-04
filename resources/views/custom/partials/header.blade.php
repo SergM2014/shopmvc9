@@ -25,6 +25,9 @@
 
                     <div v-show="showBlock" id="searchResultsBlock" class="search-results__block"
                           :class="{'hidden-outside':hiddenOutside}">Searching now</div>
+                    <div class="body-background" v-show="previewVisible">
+                        <section id="previewProductContainer" class="preview-product__container" ></section>
+                    </div>
 
                     <input type="text" placeholder="Search" class="form-control" id="search-field" v-model="search" @keyup="findResults">
                 </div>

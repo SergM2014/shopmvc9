@@ -22,7 +22,7 @@ class ProductController extends Controller
 
     public function showPreview()
     {
-        $product = Product::find($_POST['id']);
+        $product = Product::find(request('id'));
 
         return view('custom.partials.productPreview', compact('product'));
 
