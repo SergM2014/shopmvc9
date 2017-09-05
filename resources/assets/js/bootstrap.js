@@ -11,6 +11,7 @@ window.Vue = Vue;
 window.Errors = Errors;
 
 
+
 require('bootstrap-sass');
 require('./components/busket');
 require('./components/searchProduct');

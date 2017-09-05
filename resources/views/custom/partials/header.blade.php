@@ -23,11 +23,13 @@
             <div class="navbar-form navbar-right">
                 <div class="form-group search-field__container" id="search-field__container">
 
-                    <div v-show="showBlock" id="searchResultsBlock" class="search-results__block"
-                          :class="{'hidden-outside':hiddenOutside}">Searching now</div>
-                    <div class="body-background" v-show="previewVisible">
-                        <section id="previewProductContainer" class="preview-product__container" ></section>
-                    </div>
+                    <results-block v-show="showBlock" id="searchResultsBlock" class="search-results__block"
+                          :class="{'hidden-outside':hiddenOutside}">Searching now</results-block>
+
+
+
+                    <product-preview v-show = "previewVisible"></product-preview>
+
 
                     <input type="text" placeholder="Search" class="form-control" id="search-field" v-model="search" @keyup="findResults">
                 </div>

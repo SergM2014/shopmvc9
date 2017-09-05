@@ -14732,6 +14732,8 @@ var Errors = function () {
 /* 31 */
 /***/ (function(module, exports) {
 
+
+
 document.body.addEventListener('click', function (e) {
 
     //click otside search container group
@@ -14755,6 +14757,7 @@ document.body.addEventListener('click', function (e) {
                 id: previewProductId
             }
         }).then(function (response) {
+
             document.getElementById('previewProductContainer').innerHTML = response.data;
             searchVue.previewVisible = true;
         }).catch(function (error) {
@@ -14772,6 +14775,11 @@ document.body.addEventListener('click', function (e) {
         document.getElementById('previewProductContainer').innerHTML = '';
         searchVue.previewVisible = false;
     }
+});
+
+Vue.component('product-preview', {
+    template: '\n        <div class="body-background">\n                        <section id="previewProductContainer" class="preview-product__container" ></section>\n                    </div>\n    '
+
 });
 
 var searchVue = new Vue({

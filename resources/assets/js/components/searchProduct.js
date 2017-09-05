@@ -1,3 +1,6 @@
+
+
+
 document.body.addEventListener('click', function(e){
 
 //click otside search container group
@@ -26,8 +29,10 @@ document.body.addEventListener('click', function(e){
             }
         })
             .then(response =>{
+
                 document.getElementById('previewProductContainer').innerHTML = response.data;
                 searchVue.previewVisible = true;
+
             } )
             .catch(error => console.log(error))
 
@@ -37,17 +42,30 @@ document.body.addEventListener('click', function(e){
     if(e.target.id === 'productPreviewResetBtn' ) {
         document.getElementById('previewProductContainer').innerHTML = '';
         searchVue.previewVisible = false;
+
     }
 //click background delete product preview
     if(e.target.closest('.body-background')  ){
         document.getElementById('previewProductContainer').innerHTML = '';
         searchVue.previewVisible = false;
+
     }
 
 
 });
 
 
+
+
+
+Vue.component('product-preview', {
+    template: `
+        <div class="body-background">
+                        <section id="previewProductContainer" class="preview-product__container" ></section>
+                    </div>
+    `
+
+});
 
 let searchVue =  new Vue({
 
