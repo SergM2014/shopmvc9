@@ -21,6 +21,8 @@ class VerifyCsrfToken extends BaseVerifier
         '/sendSuccessMail',
         '/images/uploadAvatar',
         '/images/deleteAvatar',
+        '/images/uploadProductImage',
+        '/images/deleteProductImage',
         '/comment/add',
         '/refreshCaptcha',
         '/getCommentForResponse',

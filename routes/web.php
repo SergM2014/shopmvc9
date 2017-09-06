@@ -19,6 +19,10 @@
     Route::post('/sendSuccessMail', 'BusketController@sendSuccessEmail');
     Route::post('/images/uploadAvatar', 'ImagesController@uploadAvatar');
     Route::post('/images/deleteAvatar', 'ImagesController@deleteAvatar');
+
+    Route::post('/images/uploadProductImage', 'ImagesController@uploadProductImage');
+    Route::post('/images/deleteProductImage', 'ImagesController@deleteProductImage');
+
     Route::post('/comment/add', 'CommentController@add');
     Route::post('/refreshCaptcha', function(){ return view('custom.partials.captcha'); });
     Route::post('/getCommentForResponse', 'CommentController@getCommentForResponse');

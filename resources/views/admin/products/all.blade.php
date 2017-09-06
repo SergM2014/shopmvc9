@@ -31,5 +31,5 @@
     </div>
     {{ $products->links() }}
 
-    <script src="{{ mix('js/adminProducts.js') }}"></script>
+    <script src="{{ mix('js/admin/products.js') }}"></script>
 @endsection

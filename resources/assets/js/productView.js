@@ -79,7 +79,7 @@ new Vue({
     }
 
 
-})
+});
 
 new Vue({
     el:'#productCommentForm',

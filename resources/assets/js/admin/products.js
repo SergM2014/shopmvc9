@@ -1,4 +1,4 @@
-
+require('./bootstrap');
 
 class PopUpMenu{
     constructor(e){
@@ -99,3 +99,4 @@ document.getElementById('allProductsTable').addEventListener('click', function(e
 
 
 });
+

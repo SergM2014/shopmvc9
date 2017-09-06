@@ -23,8 +23,8 @@
             <div class="navbar-form navbar-right">
                 <div class="form-group search-field__container" id="search-field__container">
 
-                    <results-block v-show="showBlock" id="searchResultsBlock" class="search-results__block"
-                          :class="{'hidden-outside':hiddenOutside}">Searching now</results-block>
+                    <div v-show="showBlock" id="searchResultsBlock" class="search-results__block"
+                          :class="{'hidden-outside':hiddenOutside}">Searching now</div>
 
 
 

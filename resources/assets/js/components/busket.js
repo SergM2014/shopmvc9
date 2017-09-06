@@ -194,14 +194,6 @@ document.body.addEventListener('keyup', function(e){
 
             Helper.drawWaitingScreen();
 
-            // axios.post('/busket/makeOrder',{
-            //     email:document.getElementById('orderForm').querySelector('#name').value,
-            //     phone:document.getElementById('orderForm').querySelector('#email').value,
-            //     name:document.getElementById('orderForm').querySelector('#phone').value,
-            //     withCredentials: true
-            //
-            // })
-
             axios({
                 url:'/busket/makeOrder',
                 method:'post',

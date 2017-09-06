@@ -1,9 +1,10 @@
 {
-  "/js/index.js": "/js/index.323b8ac4f0b66f070f0c.js",
-  "/css/app.css": "/css/app.6660c99f74099e278e41.css",
-  "/css/admin.css": "/css/admin.6660c99f74099e278e41.css",
-  "/js/productView.js": "/js/productView.6128c8c98ea0a471040d.js",
-  "/js/app.js": "/js/app.387b01905a414d9f573c.js",
-  "/js/auth.js": "/js/auth.e245fac417d2a413720b.js",
-  "/js/adminProducts.js": "/js/adminProducts.7bf6afba67ca994ef435.js"
+  "/js/index.js": "/js/index.91c28e6a7bc379d2238d.js",
+  "/css/app.css": "/css/app.a9ff62c216382efb9422.css",
+  "/css/admin.css": "/css/admin.a9ff62c216382efb9422.css",
+  "/js/productView.js": "/js/productView.6c184ccc23d2fa8fcd7a.js",
+  "/js/app.js": "/js/app.0c05b531435730fe139c.js",
+  "/js/admin/createProduct.js": "/js/admin/createProduct.ea611b480c2fdc6166fe.js",
+  "/js/admin/products.js": "/js/admin/products.716342b3a028f056b535.js",
+  "/js/admin/auth.js": "/js/admin/auth.b3991c3500f699b0b17f.js"
 }

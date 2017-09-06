@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 48);
+/******/ 	return __webpack_require__(__webpack_require__.s = 51);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -74,7 +74,7 @@
 
 
 var bind = __webpack_require__(8);
-var isBuffer = __webpack_require__(32);
+var isBuffer = __webpack_require__(29);
 
 /*global toString:true*/
 
@@ -378,6 +378,296 @@ module.exports = {
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(25);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(4);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(4);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10637,296 +10927,6 @@ return jQuery;
 
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(25);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(4);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(4);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-
-/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11112,7 +11112,7 @@ module.exports = function xhrAdapter(config) {
   });
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 5 */
@@ -13577,7 +13577,7 @@ if (typeof jQuery === 'undefined') {
 
 }(jQuery);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
 /* 10 */
@@ -13595,7 +13595,7 @@ module.exports = __webpack_require__(11);
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(8);
 var Axios = __webpack_require__(13);
-var defaults = __webpack_require__(2);
+var defaults = __webpack_require__(1);
 
 /**
  * Create an instance of Axios
@@ -13715,7 +13715,7 @@ module.exports = CancelToken;
 "use strict";
 
 
-var defaults = __webpack_require__(2);
+var defaults = __webpack_require__(1);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(14);
 var dispatchRequest = __webpack_require__(15);
@@ -13870,7 +13870,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(18);
 var isCancel = __webpack_require__(6);
-var defaults = __webpack_require__(2);
+var defaults = __webpack_require__(1);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -14431,272 +14431,6 @@ module.exports = function spread(callback) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_helpers__ = __webpack_require__(30);
-
-
-
-
-
-
-window.$ = window.jQuery = __webpack_require__(1);
-window.axios = __WEBPACK_IMPORTED_MODULE_1_axios___default.a;
-window.Vue = __WEBPACK_IMPORTED_MODULE_0_vue___default.a;
-window.Errors = __WEBPACK_IMPORTED_MODULE_2__components_helpers__["a" /* default */];
-
-__webpack_require__(9);
-__webpack_require__(29);
-__webpack_require__(31);
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports) {
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Helper = function () {
-    function Helper() {
-        _classCallCheck(this, Helper);
-    }
-
-    _createClass(Helper, null, [{
-        key: 'removeBusketContentErrors',
-        value: function removeBusketContentErrors() {
-            var formerErrors = document.getElementById('bigBusketContent').querySelectorAll('td.has-error');
-            for (var i = 0; i < formerErrors.length; i++) {
-                formerErrors[i].classList.remove('has-error');
-            }
-        }
-    }, {
-        key: 'drawWaitingScreen',
-        value: function drawWaitingScreen() {
-            var waitingBlock = '\n                    <div class="waiting-block" id="waitingBlock">\n                        <img class="waiting-img" src="/img/loading.gif" alt="">\n                    </div>\n                ';
-            document.body.insertAdjacentHTML('afterBegin', waitingBlock);
-        }
-    }, {
-        key: 'removeWaitingscreen',
-        value: function removeWaitingscreen() {
-            if (document.getElementById('waitingBlock')) document.getElementById('waitingBlock').remove();
-        }
-    }, {
-        key: 'updateSmallBusket',
-        value: function updateSmallBusket() {
-            return axios({
-                url: '/updateSmallBusket',
-                method: 'POST',
-                withCredentials: true
-            }).then(function (response) {
-                if (response.status !== 200) return;
-                document.getElementById('totalAmount').innerText = response.data.totalAmount;
-                document.getElementById('totalSumma').innerText = response.data.totalSumma;
-            });
-        }
-    }]);
-
-    return Helper;
-}();
-
-//click small busket to see big is opened by bootsrap
-
-
-document.getElementById('busket-container').addEventListener('click', function (e) {
-
-    axios({
-        method: 'post',
-        url: '/busket/show',
-        withCredentials: true
-    }).then(function (response) {
-        return document.getElementById('bigBusketContent').innerHTML = response.data;
-    });
-});
-
-document.body.addEventListener('click', function (e) {
-
-    if (e.target.id === "updateBusketBtn") {
-        busketVue.$options.methods.update();
-    }
-
-    if (e.target.id === "makeOrder") {
-        busketVue.$options.methods.makeOrder();
-    }
-
-    if (e.target.id === "canselOrder") {
-        document.getElementById('orderForm').remove();
-        document.getElementById('bigBusketFooter').classList.remove('hidden');
-        var inputFields = document.getElementById('bigBusketContent').querySelectorAll('input');
-        for (var i = 0; i < inputFields.length; i++) {
-            inputFields[i].removeAttribute('readonly');
-        }
-    }
-
-    if (e.target.id === "submitOrder") {
-
-        busketVue.$options.methods.submitOrder();
-    }
-});
-
-//remove errors from inputs form
-document.body.addEventListener('keyup', function (e) {
-
-    if (e.target.classList.contains('form-control')) {
-
-        var parentForm = e.target.closest('.form-group');
-        parentForm.classList.remove('has-error');
-        if (parentForm.querySelector('.help-block')) parentForm.querySelector('.help-block').innerText = '';
-    }
-});
-
-var busketVue = new Vue({
-
-    el: '#bigBusketContent',
-
-    methods: {
-        update: function update() {
-
-            this.bindInputsFields();
-
-            axios({
-                url: '/busket/update',
-                method: 'post',
-                withCredentials: true,
-                data: {
-                    busketContent: this.busketContent
-                }
-            }).then(function (response) {
-                return document.getElementById('bigBusketContent').innerHTML = response.data;
-            }).then(function () {
-                return Helper.updateSmallBusket();
-            }).catch(function (errors) {
-                return Errors.console(errors);
-            });
-        },
-        bindInputsFields: function bindInputsFields() {
-
-            this.busketContent = {};
-
-            var inputs = document.getElementById('bigBusketContent').querySelectorAll('.busketInputs');
-
-            for (var i = 0; i < inputs.length; i++) {
-                this.busketContent[inputs[i].dataset.id] = inputs[i].value;
-
-                inputs[i].setAttribute('v-model', 'busketContent[' + i + ']');
-            }
-        },
-        makeOrder: function makeOrder() {
-            this.bindInputsFields();
-            axios({
-                url: '/validateBusket',
-                method: 'post',
-                withCredentials: true,
-                data: {
-                    busketContent: this.busketContent
-                }
-            }).then(function (json) {
-
-                Helper.removeBusketContentErrors();
-
-                if (json.data.fail) {
-                    var errors = json.data.errors;
-                    for (var i = 0; i < errors.length; i++) {
-                        document.getElementById('id_' + errors[i]).closest('td').classList.add('has-error');
-                    }
-                    return;
-                }
-
-                if (json.data.success) {
-
-                    //find inputs an and add readonly attr
-
-                    var inputFields = document.getElementById('bigBusketContent').querySelectorAll('input');
-                    for (var _i = 0; _i < inputFields.length; _i++) {
-                        inputFields[_i].setAttribute('readonly', true);
-                    }
-
-                    return axios({
-                        url: '/showOrderForm',
-                        method: 'post',
-                        withCredentials: true
-                    });
-                }
-            }).then(function (response) {
-                document.getElementById('bigBusketContent').insertAdjacentHTML('beforeEnd', response.data);
-                document.getElementById('bigBusketFooter').classList.add('hidden');
-            }).catch(function (errors) {
-                return Errors.console(errors);
-            });
-        },
-        submitOrder: function submitOrder() {
-
-            Helper.drawWaitingScreen();
-
-            // axios.post('/busket/makeOrder',{
-            //     email:document.getElementById('orderForm').querySelector('#name').value,
-            //     phone:document.getElementById('orderForm').querySelector('#email').value,
-            //     name:document.getElementById('orderForm').querySelector('#phone').value,
-            //     withCredentials: true
-            //
-            // })
-
-            axios({
-                url: '/busket/makeOrder',
-                method: 'post',
-                data: {
-                    email: document.getElementById('orderForm').querySelector('#email').value,
-                    phone: document.getElementById('orderForm').querySelector('#phone').value,
-                    name: document.getElementById('orderForm').querySelector('#name').value
-                }
-            }).then(function (response) {
-
-                if (response.status === 200) {
-                    document.body.classList.remove('modal-open');
-                    document.getElementById('bigModal').classList.remove('in');
-                    document.getElementById('bigModal').style.display = 'none';
-                    document.querySelector('.modal-backdrop').remove();
-
-                    Helper.updateSmallBusket().then(function () {
-                        // output success message
-                        return fetch('/succeededOrder', {
-                            method: 'POST',
-                            credentials: 'same-origin'
-                        }).then(function (response) {
-                            return response.text();
-                        }).then(function (html) {
-                            //remove waiting screen
-                            Helper.removeWaitingscreen();
-                            document.querySelector('.content').insertAdjacentHTML('afterBegin', html);
-                        });
-                    });
-                    // here sending email
-
-                }
-            }).catch(function (error) {
-                Helper.removeWaitingscreen();
-
-                var errors = error.response.data;
-
-                for (var i in errors) {
-                    //errors[i] returns name of the property
-                    //errors[i][0] returns value of thre property
-                    document.getElementById(i).closest('.form-group').classList.add('has-error');
-                    document.getElementById(i + 'HelpBlock').innerText = errors[i][0];
-                }
-            });
-        }
-    }
-
-});
-
-/***/ }),
-/* 30 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -14729,102 +14463,7 @@ var Errors = function () {
 /* harmony default export */ __webpack_exports__["a"] = (Errors);
 
 /***/ }),
-/* 31 */
-/***/ (function(module, exports) {
-
-
-
-document.body.addEventListener('click', function (e) {
-
-    //click otside search container group
-    if (!e.target.closest('#search-field__container')) {
-        searchVue.removeSearchResultsBlock();
-    }
-
-    if (e.target.closest('.search-results-item')) {
-        var previewProductId = e.target.closest('.search-results-item').dataset.previewproductId;
-
-        searchVue.removeSearchResultsBlock();
-
-        var form = new FormData();
-        form.append('id', previewProductId);
-
-        axios({
-            method: 'post',
-            url: '/showProductPreview',
-            withCredentials: true,
-            data: {
-                id: previewProductId
-            }
-        }).then(function (response) {
-
-            document.getElementById('previewProductContainer').innerHTML = response.data;
-            searchVue.previewVisible = true;
-        }).catch(function (error) {
-            return console.log(error);
-        });
-    }
-
-    //click close btn delete product preview
-    if (e.target.id === 'productPreviewResetBtn') {
-        document.getElementById('previewProductContainer').innerHTML = '';
-        searchVue.previewVisible = false;
-    }
-    //click background delete product preview
-    if (e.target.closest('.body-background')) {
-        document.getElementById('previewProductContainer').innerHTML = '';
-        searchVue.previewVisible = false;
-    }
-});
-
-Vue.component('product-preview', {
-    template: '\n        <div class="body-background">\n                        <section id="previewProductContainer" class="preview-product__container" ></section>\n                    </div>\n    '
-
-});
-
-var searchVue = new Vue({
-
-    el: '#search-field__container',
-
-    data: {
-        search: '',
-        showBlock: false,
-        hiddenOutside: true,
-        previewVisible: false
-    },
-
-    methods: {
-        findResults: function findResults() {
-            var _this = this;
-
-            this.showBlock = true;
-
-            axios({
-                method: 'post',
-                url: '/searchResults',
-                withCredentials: true,
-                data: {
-                    search: this.search
-                }
-            }).then(function (response) {
-                _this.hiddenOutside = false;
-                document.getElementById('searchResultsBlock').innerHTML = response.data;
-            }).catch(function (response) {
-                return Errors.console(response);
-            });
-        },
-        removeSearchResultsBlock: function removeSearchResultsBlock() {
-            this.hiddenOutside = true;
-            setTimeout(function () {
-                this.showBlock = false;
-            }, 500);
-        }
-    }
-
-});
-
-/***/ }),
-/* 32 */
+/* 29 */
 /***/ (function(module, exports) {
 
 /*!
@@ -14851,7 +14490,7 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 33 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24943,10 +24582,10 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(34)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(31)))
 
 /***/ }),
-/* 34 */
+/* 31 */
 /***/ (function(module, exports) {
 
 var g;
@@ -24973,37 +24612,269 @@ module.exports = g;
 
 
 /***/ }),
-/* 35 */,
-/* 36 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 
-__webpack_require__(28);
-
-//continue further with ussual js
+__webpack_require__(9);
 
 /***/ }),
-/* 37 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_helpers__ = __webpack_require__(28);
+
+
+
+
+
+
+window.$ = window.jQuery = __webpack_require__(3);
+window.axios = __WEBPACK_IMPORTED_MODULE_1_axios___default.a;
+window.Vue = __WEBPACK_IMPORTED_MODULE_0_vue___default.a;
+window.Errors = __WEBPACK_IMPORTED_MODULE_2__components_helpers__["a" /* default */];
+
+__webpack_require__(32);
+__webpack_require__(9);
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(36);
+__webpack_require__(44);
+
+/***/ }),
 /* 38 */,
 /* 39 */,
 /* 40 */,
 /* 41 */,
 /* 42 */,
 /* 43 */,
-/* 44 */,
+/* 44 */
+/***/ (function(module, exports) {
+
+
+// find repeated values in two arrays
+Array.prototype.intersect = function (a) {
+    return this.filter(function (i) {
+        return a.indexOf(i) > -1;
+    });
+};
+
+var progress = document.getElementById('imageDownloadProgress'),
+    output = document.getElementById('imageDownloadOutput'),
+    submit_btn = document.getElementById('downloadImageBtn'),
+    reset_btn = document.getElementById('resetImageBtn'),
+    delete_img_sign = document.getElementById('deleteImagePreview'),
+    imageField = document.getElementById('file');
+
+// this background is for imageupload
+
+function progressHandler(event) {
+
+    var percent = Math.round(event.loaded / event.total * 100);
+
+    progress.value = percent;
+    // progress.innerText= percent+"%";
+}
+
+function completeHandler(event) {
+
+    var response = JSON.parse(event.target.responseText);
+    //output.innerHTML= response.message;
+
+    progress.value = 0;
+    // output.classList.remove('hidden');
+
+    progress.classList.add('hidden');
+    reset_btn.removeAttribute('disabled');
+
+    //further work with many images;
+    populateImagesField(response.filename);
+
+    drawImage(response.filename);
+}
+
+function errorHandler(event) {
+
+    output.innerHTML = 'Upload failed';
+}
+
+function abortHandler(event) {
+
+    output.innerHTML = 'Upload aborted';
+}
+
+function populateImagesField(filename) {
+
+    var imagesListArray = document.getElementById('imagesData').value;
+
+    if (!imagesListArray) {
+        imagesListArray = [];
+    } else {
+        imagesListArray = imagesListArray.split(',');
+    }
+
+    imagesListArray.push(filename);
+    document.getElementById('imagesData').value = imagesListArray;
+}
+
+function drawImage(filename) {
+
+    var imageTemplate = '\n        <div class="product-tn_image-container" data-image="' + filename + '">\n        \n            <img src="/img/small-close.png" class="product-tn_image__close-sign hover" >\n        \n            <img src="/uploads/productsImages/tn_' + filename + '" class="product-tn_image" alt="">\n        \n        </div>\n        \n    ';
+
+    document.getElementById('imagesContainer').insertAdjacentHTML('beforeEnd', imageTemplate);
+}
+
+//to make previe image using file API
+
+
+if (document.getElementById('file')) {
+    document.getElementById('file').onchange = function () {
+
+        if (delete_img_sign) delete_img_sign.className = 'hidden';
+
+        var input = this;
+
+        if (input.files && input.files[0]) {
+            if (input.files[0].type.match('image.*')) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    document.getElementById('downloadImagePreview').setAttribute('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+
+                document.getElementById('file').classList.add('hidden');
+
+                //output.classList.add('hidden');
+
+                reset_btn.classList.remove('hidden');
+
+                submit_btn.classList.remove('hidden');
+            } // else console.log('is not image mime type');
+        } // else console.log('not isset files data or files API not supordet');
+    }; //end of function
+
+}
+
+if (submit_btn) {
+    submit_btn.onclick = function (e) {
+
+        e.preventDefault();
+        progress.classList.remove('hidden');
+
+        var file = document.getElementById("file").files[0];
+
+        var formdata = new FormData();
+
+        formdata.append("file", file);
+
+        formdata.append("ajax", true);
+
+        var uploadUrl = "/images/uploadProductImage";
+
+        var send_image = new XMLHttpRequest();
+        send_image.upload.addEventListener("progress", progressHandler, false);
+        send_image.addEventListener("load", completeHandler, false);
+        send_image.addEventListener("error", errorHandler, false);
+        send_image.addEventListener("abort", abortHandler, false);
+        send_image.open("POST", uploadUrl);
+        send_image.send(formdata);
+
+        document.getElementById('downloadImagePreview').setAttribute('src', '/img/nophoto.jpg');
+        reset_btn.setAttribute('disabled', 'disabled');
+        reset_btn.classList.add('hidden');
+        submit_btn.classList.add('hidden');
+
+        document.getElementById('file').classList.remove('hidden');
+        document.getElementById('file').value = '';
+    }; // end of submit button
+}
+
+if (reset_btn) {
+    reset_btn.onclick = function (e) {
+        e.preventDefault();
+
+        document.getElementById('downloadImagePreview').setAttribute('src', '/img/nophoto.jpg');
+        document.getElementById('file').classList.remove('hidden');
+        var formData = new FormData();
+
+        formData.append('ajax', true);
+
+        if (document.getElementById('image')) formData.append('image', document.getElementById('image').value);
+
+        fetch('/images/deleteProductImage', {
+            method: "POST",
+            credentials: "same-origin",
+            body: formData
+        }).then(function (responce) {
+            return responce.json();
+        }).then(function (j) {
+            output.innerHTML = j.message;
+            if (output.classList.contains('hidden')) {
+                output.classList.remove('hidden');
+            }
+            imageField.value = '';
+        });
+
+        submit_btn.classList.add('hidden');
+        reset_btn.classList.add('hidden');
+        if (document.getElementById('image')) document.getElementById('image').value = '';
+    };
+}
+//end of image reset
+
+
+document.getElementById('imagesContainer').addEventListener('click', function (e) {
+
+    if (e.target.className === 'product-tn_image__close-sign hover') {
+
+        var image = e.target.closest('.product-tn_image-container').dataset.image;
+
+        e.target.closest('.product-tn_image-container').remove();
+
+        axios({
+            url: '/images/deleteProductImage',
+            method: 'post',
+            data: {
+                image: image
+
+            }
+
+        });
+
+        var imagesListArray = document.getElementById('imagesData').value;
+        imagesListArray = imagesListArray.split(',');
+        var position = imagesListArray.indexOf(image);
+        //if(imagesListArray.indexOf(image) != -1){}
+        imagesListArray.splice(position, 1);
+        document.getElementById('imagesData').value = imagesListArray;
+    }
+});
+
+/***/ }),
 /* 45 */,
 /* 46 */,
 /* 47 */,
-/* 48 */
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(36);
+module.exports = __webpack_require__(37);
 
 
 /***/ })

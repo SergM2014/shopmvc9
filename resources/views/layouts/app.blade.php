@@ -82,6 +82,6 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ mix('js/auth.js') }}"></script>
+    <script src="{{ mix('js/admin/auth.js') }}"></script>
 </body>
 </html>

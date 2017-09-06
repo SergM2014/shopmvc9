@@ -4,8 +4,39 @@
 
     <h1 class="text-danger text-center">Create Product</h1>
 
+
+    <section id="imagesContainer" class="clearfix">
+
+    </section>
+
+    <div>
+        <img src="/img/nophoto.jpg" id="downloadImagePreview" class="img-thumbnail">
+    </div>
+
+
+    <div id="imageDownloadOutput" class="image-download__output">
+
+    </div>
+
+    <form enctype="multipart/form-data">
+
+        <div class="form-group">
+
+            <input type="file" id="file">
+        </div>
+        <button type="button" id="downloadImageBtn" class="image-download__btn hidden">Load</button>
+        <button type="button" id="resetImageBtn" class="image-download__btn hidden">Delete</button>
+    </form>
+
+    <progress max="100" value="0" id="imageDownloadProgress"  class="image-download__progress hidden" ></progress>
+
+
+
+
     <form method="post" action="/admin/product/store">
         {{ csrf_field() }}
+
+        <input type="hidden" name="imagesData" id="imagesData" value="">
 
         <div class="form-group @if($errors->has('author')) has-error @endif">
             <label for="author">Author</label>
@@ -69,7 +100,7 @@
 
 
 
-
+    <script src="{{ mix('js/admin/createProduct.js') }}"></script>
 
 
 
