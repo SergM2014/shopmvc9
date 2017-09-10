@@ -26,7 +26,7 @@
     Route::post('/comment/add', 'CommentController@add');
     Route::post('/refreshCaptcha', function(){ return view('custom.partials.captcha'); });
     Route::post('/getCommentForResponse', 'CommentController@getCommentForResponse');
-    ;
+
     Route::post('/searchResults', 'SearchController@findResults');
     Route::post('/showProductPreview', 'ProductController@showPreview');
 
@@ -41,7 +41,7 @@
     Route::get('/admin/product/created', function(){ return view('admin.products.created'); });
     Route::get('admin/product/{product}', 'AdminProductsController@show');
     Route::get('admin/product/{product}/edit', 'AdminProductsController@edit');
-
+    Route::post('/getImage', function(){ return view('admin.products.drawImage'); });
 
 
 Auth::routes();

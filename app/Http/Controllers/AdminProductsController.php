@@ -19,7 +19,9 @@ class AdminProductsController extends Controller
     public function create()
     {
         $manufacturers = Manufacturer::all();
-        return view('admin.products.create', compact('manufacturers'));
+        $images = Product::getCreateProductImagesArray();
+
+        return view('admin.products.create', compact('manufacturers', 'images'));
     }
 
     public function store(Request $request)
@@ -32,7 +34,24 @@ class AdminProductsController extends Controller
             'price' => 'required|numeric',
         ]);
 
-       Product::create($request->all());
+       $product = Product::create($request->all());
+
+
+        if(!empty(request('imagesData'))) {
+
+            $imagesArray = explode(',', request('imagesData'));
+
+            for ($i=0; $i < count($imagesArray); $i++) {
+
+                $product->images()->create([
+                    'path' => $imagesArray[$i],
+                    'order' => $i
+                ]);
+
+            }
+        }
+
+
         return redirect('/admin/product/created')->with('status', 'Product Created!');
     }
 

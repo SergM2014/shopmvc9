@@ -7,6 +7,15 @@
 
     <section id="imagesContainer" class="clearfix">
 
+        @if($images)
+
+            @foreach($images as $image)
+
+                @include('admin.products.drawImage')
+
+            @endforeach
+
+        @endif
     </section>
 
     <div>
@@ -36,7 +45,7 @@
     <form method="post" action="/admin/product/store">
         {{ csrf_field() }}
 
-        <input type="hidden" name="imagesData" id="imagesData" value="">
+        <input type="hidden" name="imagesData" id="imagesData"value="{{ old('imagesData') }}">
 
         <div class="form-group @if($errors->has('author')) has-error @endif">
             <label for="author">Author</label>

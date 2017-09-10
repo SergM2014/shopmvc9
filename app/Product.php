@@ -32,9 +32,20 @@ class Product extends Model
             'author' => $this->author,
             'title' => $this->title,
             'description' => $this->description
-
              ];
+    }
+
+
+    public static function getCreateProductImagesArray()
+    {
+
+        if(!empty(old('imagesData'))) {
+            $imagesArray = explode(',', old('imagesData'));
+
+            return $imagesArray;
         }
+        return;
+    }
 
 
 

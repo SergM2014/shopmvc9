@@ -77,18 +77,18 @@ function populateImagesField(filename) {
 
 function drawImage(filename){
 
-    let imageTemplate = `
-        <div class="product-tn_image-container" data-image="${filename}">
-        
-            <img src="/img/small-close.png" class="product-tn_image__close-sign hover" >
-        
-            <img src="/uploads/productsImages/tn_${filename}" class="product-tn_image" alt="">
-        
-        </div>
-        
-    `;
+    axios({
+        url:'/getImage',
+        method:'post',
+        data:{
+            filename:filename,
+        },
 
-    document.getElementById('imagesContainer').insertAdjacentHTML('beforeEnd', imageTemplate);
+        withCredentials:true
+        })
+        .then((response) => document.getElementById('imagesContainer').insertAdjacentHTML('beforeEnd', response.data))
+
+
 }
 
 
@@ -236,7 +236,7 @@ document.getElementById('imagesContainer').addEventListener('click', function(e)
         let imagesListArray = document.getElementById('imagesData').value;
         imagesListArray = imagesListArray.split(',');
         let position = imagesListArray.indexOf(image);
-        //if(imagesListArray.indexOf(image) != -1){}
+
         imagesListArray.splice(position, 1);
         document.getElementById('imagesData').value = imagesListArray;
 
