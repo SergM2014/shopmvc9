@@ -9,9 +9,12 @@ use App\Comment;
 
 class ProductController extends Controller
 {
-    public function show(Product $product)
+    public function show(Product $product )
     {
         $id = $product->id;
+
+        $product = $this->sortImages($product);
+
         $comments = Comment::where('product_id', $id)->get();
         $parentId = $comments->min('parent_id');
 
@@ -27,4 +30,16 @@ class ProductController extends Controller
         return view('custom.partials.productPreview', compact('product'));
 
     }
+
+
+    private function sortImages(Product $product)
+    {
+        if($product->images->isNotEmpty()){
+            $images =   $product->images->sortBy('order');
+            $images->values()->all();
+            $product->images= $images;
+        }
+        return $product;
+    }
+
 }
