@@ -5,37 +5,15 @@ document.body.addEventListener('click', function(e){
 
 //click otside search container group
    if(!e.target.closest('#search-field__container') ){
-       searchVue.removeSearchResultsBlock();
+       searchVue.showBlock = false;
    }
 
 
 
-
+//click one of founded result in rusults-block
     if(e.target.closest('.search-results-item')){
-        let previewProductId = e.target.closest('.search-results-item').dataset.previewproductId;
 
-        searchVue.removeSearchResultsBlock();
-
-        let form = new FormData;
-        form.append('id',  previewProductId);
-
-
-        axios({
-            method: 'post',
-            url: '/showProductPreview',
-            withCredentials: true,
-            data: {
-                id: previewProductId
-            }
-        })
-            .then(response =>{
-
-                document.getElementById('previewProductContainer').innerHTML = response.data;
-                searchVue.previewVisible = true;
-
-            } )
-            .catch(error => console.log(error))
-
+        searchVue.showProductPreview();
     }
 
     //click close btn delete product preview
@@ -67,6 +45,14 @@ Vue.component('product-preview', {
 
 });
 
+
+Vue.component('search-block', {
+    template: `
+        <div  id="searchResultsBlock" class="search-results__block">Searching now</div>
+    `
+
+});
+
 let searchVue =  new Vue({
 
     el:'#search-field__container',
@@ -74,15 +60,13 @@ let searchVue =  new Vue({
     data: {
         search:'',
         showBlock:false,
-        hiddenOutside:true,
         previewVisible:false
     },
 
     methods: {
 
         findResults(){
-
-            this.showBlock = true;
+ this.showBlock = true;
 
             axios({
                 method: 'post',
@@ -93,17 +77,43 @@ let searchVue =  new Vue({
                 }
             })
                 .then(response => {
-                    this.hiddenOutside = false;
+                    this.showBlock = false;
                     document.getElementById('searchResultsBlock').innerHTML = response.data;
                 })
                 .catch(response =>Errors.console(response));
         },
 
-        removeSearchResultsBlock()
-        {
-            this.hiddenOutside = true;
-             setTimeout(function(){this.showBlock = false }, 500);
+
+        showProductPreview(){
+            let previewProductId = e.target.closest('.search-results-item').dataset.previewproductId;
+
+
+            this.showBlock = false;
+
+            let form = new FormData;
+            form.append('id',  previewProductId);
+
+
+            axios({
+                method: 'post',
+                url: '/showProductPreview',
+                withCredentials: true,
+                data: {
+                    id: previewProductId
+                }
+            })
+                .then(response =>{
+
+                    thus.previewVisible = true;
+console.log(document.getElementById('previewProductContainer'));
+                    document.getElementById('previewProductContainer').innerHTML = response.data;
+
+
+                } )
+            //.catch(error => console.log(error))
         }
+
+
 
     }
 

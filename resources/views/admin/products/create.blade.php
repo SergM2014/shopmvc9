@@ -89,11 +89,24 @@
             @endif
         </div>
 
+
+        <div class="form-group @if($errors->has('categoryId')) has-error @endif">
+            <label for="categoryId">Choose Category</label>
+            <select multiple class="form-control" name="categoryId[]" id="categoryId">
+                <?= $categoriesDropDownList ?>
+            </select>
+            @if($errors->has('categoryId'))
+                <span class=" text-danger">{{ $errors->first('categoryId') }}</span>
+            @endif
+        </div>
+
+
         <div class="form-group">
             <label for="manufacturer">Manufacturer</label>
-            <select class="form-control" name="manufacturer_id" id="manufacturer_id">
+            <select  class="form-control" name="manufacturerId" id="manufacturerId">
                 @foreach($manufacturers as $manufacturer)
-                 <option value="{{ $manufacturer->id }}">{{ $manufacturer->title }}</option>
+
+                 <option value="{{ $manufacturer->id }}" <?= $manufacturer->id == old('manufacturerId')? 'selected': '' ?> >{{ $manufacturer->title }}</option>
                 @endforeach
             </select>
         </div>

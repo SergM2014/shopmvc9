@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->text('body');
             $table->integer('price');
             $table->integer('manufacturer_id')->index();
+
             $table->timestamps();
         });
 

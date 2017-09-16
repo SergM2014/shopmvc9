@@ -9,7 +9,7 @@ class Product extends Model
 {
     use Searchable;
 
-    protected $fillable = ['author', 'title', 'description', 'body', 'price', 'manufacturer_id'];
+    protected $fillable = ['author', 'title', 'description', 'body', 'price', 'manufacturer_id', 'category_id'];
 
     public function manufacturer()
     {

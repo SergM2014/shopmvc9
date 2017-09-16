@@ -33,7 +33,8 @@ $factory->define(App\Product::class, function (Faker\Generator $faker) {
         'description' => $faker->paragraph,
         'body' => $faker->text,
         'price' => $faker->numberBetween($min = 1000, $max = 90000),
-        'manufacturer_id' =>$faker->numberBetween($min = 1, $max = 3)
+        'manufacturer_id' =>$faker->numberBetween($min = 1, $max = 3),
+
 
     ];
 });

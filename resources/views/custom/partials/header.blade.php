@@ -23,12 +23,12 @@
             <div class="navbar-form navbar-right">
                 <div class="form-group search-field__container" id="search-field__container">
 
-                    <div v-show="showBlock" id="searchResultsBlock" class="search-results__block"
-                          :class="{'hidden-outside':hiddenOutside}">Searching now</div>
+                    <transition name="searchBlock">
+                        <search-block v-if="showBlock"></search-block>
+                    </transition>
 
 
-
-                    <product-preview v-show = "previewVisible"></product-preview>
+                    <product-preview v-if = "previewVisible"></product-preview>
 
 
                     <input type="text" placeholder="Search" class="form-control" id="search-field" v-model="search" @keyup="findResults">

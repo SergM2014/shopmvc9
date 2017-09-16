@@ -182,10 +182,21 @@ body{
   position: absolute;
   top: 42px;
   padding:2px;
-  transition: 1s;
-  left:0;
+ /* transition: 1s;*/
+  /*left:1200px;*/
   z-index: 1500;
 }
+.searchBlock-enter-active, .searchBlock-leave-active{
+  transition:1s;
+}
+
+.searchBlock-enter, .searchBlock-leave-to{
+  left:1200px;
+}
+.searchBlock-enter-to, .searchBlock-leave{
+  left:0;
+}
+
 .search-field__container{
   position:relative;
   //overflow-x:hidden;

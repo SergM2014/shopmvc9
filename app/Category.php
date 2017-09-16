@@ -104,5 +104,43 @@ class Category extends Model
         return $print;
     }
 
+    public static function getCategoryDropDownList($selectedArray)
+    {
+        self::getCategories();
+        return self::printCategoryDropDownList($selectedArray);
+    }
+
+
+    private  static function printCategoryDropDownList($selected = null, $parent = 0, $prefix = '')
+    {
+        $print = "";
+        foreach (self::$categories as $category){
+            if($category->parent_id == $parent){
+                $print.= "<option value='{$category->id}'";
+
+                $selectedOption = ($selected === $category->id OR @in_array($category->id, $selected))? 'selected': '';
+
+                $print.= " $selectedOption >
+                                {$prefix}{$category->title}
+                          </option>";
+
+                foreach(self::$categories as $subCategory){
+                    if($subCategory->parent_id == $category->id){
+                        $flag = true;
+                    }
+                }
+
+                if(isset($flag)){
+                    $prefix.='-';
+                    $print.= self::printCategoryDropDownList( $selected, $category->id, $prefix);
+
+                    $flag = null; $prefix = substr($prefix,0,-1);
+                }
+            }
+        }
+
+        return $print;
+    }
+
 
 }
