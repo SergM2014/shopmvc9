@@ -16,6 +16,7 @@
 
         <div class="container" id="app">
 
+
             @include('custom.partials.header')
 
             <div class="content">

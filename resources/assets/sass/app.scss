@@ -230,7 +230,19 @@ body{
   top:0;
   left:0;
   z-index:1800;
-  opacity:0.7;
+  /*opacity:0.8;*/
+}
+.productPreview-enter, .productPreview-leave-to{
+  opacity: 0;
+}
+.productPreview-enter-active {
+  transition: opacity 1.5s;
+}
+.productPreview-leave-active{
+  transition: opacity 0.5s;
+}
+.productPreview-enter-to, .productPreview-leave{
+  opacity:0.75;
 }
 
 .product-preview-footer{

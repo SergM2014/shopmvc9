@@ -36,16 +36,31 @@ class Product extends Model
     }
 
 
-    public static function getCreateProductImagesArray()
+    public static function getCreateProductImagesArray($imagesObj= null)
     {
 
-        if(!empty(old('imagesData'))) {
-            $imagesArray = explode(',', old('imagesData'));
+        if(old('_token')){
+            if(!empty(old('imagesData'))) {
+                $imagesArray = explode(',', old('imagesData'));
+                return $imagesArray;
+             }
 
-            return $imagesArray;
+             return;
         }
-        return;
+
+        if($imagesObj->get()->isNotEmpty()){
+                    return  $images = $imagesObj->pluck('path')->toArray();
+                }
+            return;
+
+
     }
+
+
+
+
+
+
 
 
 

@@ -38,9 +38,10 @@
     });
     Route::get('/admin/product/create', 'AdminProductsController@create');
     Route::post('/admin/product/store', 'AdminProductsController@store');
-    Route::get('/admin/product/created', function(){ return view('admin.products.created'); });
+    Route::get('/admin/product/succeeded', function(){ return view('admin.products.succeeded'); });
     Route::get('admin/product/{product}', 'AdminProductsController@show');
     Route::get('admin/product/{product}/edit', 'AdminProductsController@edit');
+    Route::post('admin/product/{product}/update', 'AdminProductsController@update');
     Route::post('/getImage', function(){ return view('admin.products.drawImage'); });
 
 

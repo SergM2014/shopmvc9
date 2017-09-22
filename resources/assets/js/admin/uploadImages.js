@@ -218,7 +218,7 @@ document.getElementById('imagesContainer').addEventListener('click', function(e)
     if(e.target.className === 'product-tn_image__close-sign hover'){
 
        let image = e.target.closest('.product-tn_image-container').dataset.image;
-
+console.log('image=>'+image);
         e.target.closest('.product-tn_image-container').remove();
 
         axios({
@@ -233,12 +233,15 @@ document.getElementById('imagesContainer').addEventListener('click', function(e)
         });
 
 
-        let imagesListArray = document.getElementById('imagesData').value;
-        imagesListArray = imagesListArray.split(',');
-        let position = imagesListArray.indexOf(image);
+        let imagesCollection = document.getElementById('imagesContainer').querySelectorAll('.product-tn_image-container');
 
-        imagesListArray.splice(position, 1);
-        document.getElementById('imagesData').value = imagesListArray;
+        let arr = [];
+
+        for(let i=0; i<imagesCollection.length; i++){
+            arr.push(imagesCollection[i].dataset.image)
+        }
+
+        document.getElementById('imagesData').value = arr;
 
     }
 

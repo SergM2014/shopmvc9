@@ -27,9 +27,9 @@
                         <search-block v-if="showBlock"></search-block>
                     </transition>
 
-
-                    <product-preview v-if = "previewVisible"></product-preview>
-
+                    <transition name="productPreview">
+                        <product-preview v-if = "previewVisible"></product-preview>
+                    </transition>
 
                     <input type="text" placeholder="Search" class="form-control" id="search-field" v-model="search" @keyup="findResults">
                 </div>

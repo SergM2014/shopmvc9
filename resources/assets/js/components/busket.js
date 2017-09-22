@@ -7,15 +7,15 @@ class Helper {
         }
     }
 
-    static drawWaitingScreen()
-        {
-            let waitingBlock = `
-                    <div class="waiting-block" id="waitingBlock">
-                        <img class="waiting-img" src="/img/loading.gif" alt="">
-                    </div>
-                `;
-            document.body.insertAdjacentHTML('afterBegin', waitingBlock)
-        }
+    // static drawWaitingScreen()
+    //     {
+    //         let waitingBlock = `
+    //                 <div class="waiting-block" id="waitingBlock">
+    //                     <img class="waiting-img" src="/img/loading.gif" alt="">
+    //                 </div>
+    //             `;
+    //         document.body.insertAdjacentHTML('afterBegin', waitingBlock)
+    //     }
 
     static removeWaitingscreen() {
             if (document.getElementById('waitingBlock')) document.getElementById('waitingBlock').remove();
@@ -96,12 +96,23 @@ document.body.addEventListener('keyup', function(e){
 
 });
 
-
+Vue.component('waiting-screen',{
+    template:`
+         <div class="waiting-block" id="waitingBlock">
+                        <img class="waiting-img" src="/img/loading.gif" alt="">
+                    </div>
+    `
+});
 
 
  let busketVue = new Vue({
 
-    el:'#bigBusketContent',
+    // el:'#bigBusketContent',
+     el:'#bigBusketContainer',
+
+     data:{
+       waitingScreen:false,
+     },
 
     methods:{
         update(){
@@ -192,7 +203,8 @@ document.body.addEventListener('keyup', function(e){
 
         submitOrder(){
 
-            Helper.drawWaitingScreen();
+           // Helper.drawWaitingScreen();
+            this.waitingScreen = true;
 
             axios({
                 url:'/busket/makeOrder',
@@ -224,7 +236,8 @@ document.body.addEventListener('keyup', function(e){
                                     .then(response => response.text())
                                     .then(html => {
 //remove waiting screen
-                                        Helper.removeWaitingscreen();
+                                       // Helper.removeWaitingscreen();
+                                        this.waitingScreen = false;
                                         document.querySelector('.content').insertAdjacentHTML('afterBegin', html);
                                     })
                             })
@@ -234,8 +247,8 @@ document.body.addEventListener('keyup', function(e){
                     }
                 })
                 .catch((error) => {
-                    Helper.removeWaitingscreen();
-
+                   // Helper.removeWaitingscreen();
+                    this.waitingScreen = false;
                     let errors = error.response.data;
 
 

@@ -68,8 +68,8 @@ class ImagesController extends Controller
     {
         $image =request('image');
 
-        unlink (public_path('uploads/productsImages/'.$image));
-        unlink (public_path('uploads/productsImages/tn_'.$image));
+        @unlink (public_path('uploads/productsImages/'.$image));
+        @unlink (public_path('uploads/productsImages/tn_'.$image));
 
         return response()->json([
             'message' => 'file is deleted',

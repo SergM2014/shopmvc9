@@ -1,10 +1,15 @@
-<div id="bigModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+<div id="bigBusketContainer">
 
-    <div class="modal-dialog modal-lg" role="document">
-        <form id="bigBusketContent" class="modal-content">
+    <waiting-screen v-if="waitingScreen"></waiting-screen>
 
-            ...
+    <div id="bigModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
 
-        </form>
+        <div class="modal-dialog modal-lg" role="document">
+            <form id="bigBusketContent" class="modal-content">
+
+                ...
+
+            </form>
+        </div>
     </div>
 </div>

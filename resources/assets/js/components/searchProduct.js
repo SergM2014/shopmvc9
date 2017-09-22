@@ -13,7 +13,7 @@ document.body.addEventListener('click', function(e){
 //click one of founded result in rusults-block
     if(e.target.closest('.search-results-item')){
 
-        searchVue.showProductPreview();
+        searchVue.showProductPreview(e);
     }
 
     //click close btn delete product preview
@@ -38,10 +38,7 @@ document.body.addEventListener('click', function(e){
 
 Vue.component('product-preview', {
     template: `
-        <div class="body-background">
-                        <section id="previewProductContainer" class="preview-product__container" ></section>
-                    </div>
-    `
+        <div class="body-background" id="previewProductContainer"></div>`
 
 });
 
@@ -66,7 +63,8 @@ let searchVue =  new Vue({
     methods: {
 
         findResults(){
- this.showBlock = true;
+
+            this.showBlock = true;
 
             axios({
                 method: 'post',
@@ -77,22 +75,20 @@ let searchVue =  new Vue({
                 }
             })
                 .then(response => {
-                    this.showBlock = false;
                     document.getElementById('searchResultsBlock').innerHTML = response.data;
                 })
                 .catch(response =>Errors.console(response));
         },
 
 
-        showProductPreview(){
+        showProductPreview(e){
             let previewProductId = e.target.closest('.search-results-item').dataset.previewproductId;
 
-
             this.showBlock = false;
+            this.previewVisible = true;
 
             let form = new FormData;
             form.append('id',  previewProductId);
-
 
             axios({
                 method: 'post',
@@ -102,15 +98,10 @@ let searchVue =  new Vue({
                     id: previewProductId
                 }
             })
-                .then(response =>{
-
-                    thus.previewVisible = true;
-console.log(document.getElementById('previewProductContainer'));
+                .then((response) =>{
                     document.getElementById('previewProductContainer').innerHTML = response.data;
-
-
                 } )
-            //.catch(error => console.log(error))
+            .catch(error => console.log(error))
         }
 
 
