@@ -48,6 +48,8 @@ class Product extends Model
              return;
         }
 
+        if(!$imagesObj) return;
+
         if($imagesObj->get()->isNotEmpty()){
                     return  $images = $imagesObj->pluck('path')->toArray();
                 }

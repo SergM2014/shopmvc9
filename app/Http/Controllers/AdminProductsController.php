@@ -44,14 +44,10 @@ class AdminProductsController extends Controller
            'description' => request('description'), 'body'=>request('body'), 'price'=>request('price'),
            'manufacturer_id'=>request('manufacturerId')]);
 
-
         $this->addProductImages($product);
+        $this->syncCategories($product);
 
-
-        $this->attachCategories($product);
-
-
-        return redirect('/admin/product/susseeded')->with('status', 'Product Created!');
+        return redirect('/admin/product/succeeded')->with('status', 'Product Created!');
     }
 
 
@@ -91,12 +87,12 @@ class AdminProductsController extends Controller
             'description' => request('description'), 'body'=>request('body'), 'price'=>request('price'),
             'manufacturer_id'=>request('manufacturerId')]);
 
-
+//delete all images of the givven product;
         Image::where('product_id', $productId)->delete();
 
         $this->addProductImages($product);
 
-
+        $this->syncCategories($product);
 
 
         return redirect('/admin/product/succeeded')->with('status', 'Product Updated!');
@@ -122,18 +118,15 @@ class AdminProductsController extends Controller
         }
     }
 
-    /**
-     * @param $product
-     */
-    private function attachCategories($product)
+
+    private function syncCategories($product)
     {
         if (!empty(request('categoryId'))) {
 
-            foreach (request('categoryId') as $categoryId) {
-
-                $product->categories()->attach($categoryId);
-
-            }
+            $product->categories()->sync(request('categoryId'));
+        } else
+        {
+            $product->categories()->detach();
         }
     }
 
