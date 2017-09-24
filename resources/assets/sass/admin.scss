@@ -50,3 +50,19 @@
   height:20px;
 
 }
+
+.button-link{
+  cursor: pointer;
+  border: none;
+  background-color: inherit;
+  color: #3d7086;
+  padding-left: 0;
+}
+.button-link:hover{
+  text-decoration: underline;
+  color: #435486;
+}
+.button-link:active, .button-link:focus{
+
+  outline: none !important;
+}

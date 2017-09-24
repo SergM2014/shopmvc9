@@ -43,6 +43,7 @@
     Route::get('admin/product/{product}/edit', 'AdminProductsController@edit');
     Route::post('admin/product/{product}/update', 'AdminProductsController@update');
     Route::post('/getImage', function(){ return view('admin.products.drawImage'); });
+    Route::delete('admin/product/{product}', 'AdminProductsController@destroy');
 
 
 Auth::routes();

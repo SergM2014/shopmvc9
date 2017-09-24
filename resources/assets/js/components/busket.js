@@ -7,20 +7,6 @@ class Helper {
         }
     }
 
-    // static drawWaitingScreen()
-    //     {
-    //         let waitingBlock = `
-    //                 <div class="waiting-block" id="waitingBlock">
-    //                     <img class="waiting-img" src="/img/loading.gif" alt="">
-    //                 </div>
-    //             `;
-    //         document.body.insertAdjacentHTML('afterBegin', waitingBlock)
-    //     }
-
-    static removeWaitingscreen() {
-            if (document.getElementById('waitingBlock')) document.getElementById('waitingBlock').remove();
-        }
-
 
      static  updateSmallBusket(){
             return axios({
@@ -73,7 +59,7 @@ document.body.addEventListener('click', function(e){
 
     if(e.target.id === "submitOrder") {
 
-        busketVue.$options.methods.submitOrder();
+        busketVue.$options.methods.submitOrder.call(busketVue);
      }
 
 
@@ -83,7 +69,7 @@ document.body.addEventListener('click', function(e){
 
 
 
-//remove errors from inputs form
+//remove errors mark-ups from inputs form
 document.body.addEventListener('keyup', function(e){
 
     if(e.target.classList.contains('form-control')){
@@ -112,6 +98,7 @@ Vue.component('waiting-screen',{
 
      data:{
        waitingScreen:false,
+
      },
 
     methods:{
@@ -203,7 +190,6 @@ Vue.component('waiting-screen',{
 
         submitOrder(){
 
-           // Helper.drawWaitingScreen();
             this.waitingScreen = true;
 
             axios({
@@ -235,8 +221,7 @@ Vue.component('waiting-screen',{
                                 })
                                     .then(response => response.text())
                                     .then(html => {
-//remove waiting screen
-                                       // Helper.removeWaitingscreen();
+
                                         this.waitingScreen = false;
                                         document.querySelector('.content').insertAdjacentHTML('afterBegin', html);
                                     })
@@ -247,7 +232,6 @@ Vue.component('waiting-screen',{
                     }
                 })
                 .catch((error) => {
-                   // Helper.removeWaitingscreen();
                     this.waitingScreen = false;
                     let errors = error.response.data;
 

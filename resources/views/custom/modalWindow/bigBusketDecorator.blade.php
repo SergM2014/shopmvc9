@@ -1,6 +1,8 @@
 <div id="bigBusketContainer">
 
+    <transition>
     <waiting-screen v-if="waitingScreen"></waiting-screen>
+    </transition>
 
     <div id="bigModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
 

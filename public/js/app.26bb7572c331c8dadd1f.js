@@ -24659,22 +24659,6 @@ var Helper = function () {
                 formerErrors[i].classList.remove('has-error');
             }
         }
-
-        // static drawWaitingScreen()
-        //     {
-        //         let waitingBlock = `
-        //                 <div class="waiting-block" id="waitingBlock">
-        //                     <img class="waiting-img" src="/img/loading.gif" alt="">
-        //                 </div>
-        //             `;
-        //         document.body.insertAdjacentHTML('afterBegin', waitingBlock)
-        //     }
-
-    }, {
-        key: 'removeWaitingscreen',
-        value: function removeWaitingscreen() {
-            if (document.getElementById('waitingBlock')) document.getElementById('waitingBlock').remove();
-        }
     }, {
         key: 'updateSmallBusket',
         value: function updateSmallBusket() {
@@ -24728,11 +24712,11 @@ document.body.addEventListener('click', function (e) {
 
     if (e.target.id === "submitOrder") {
 
-        busketVue.$options.methods.submitOrder();
+        busketVue.$options.methods.submitOrder.call(busketVue);
     }
 });
 
-//remove errors from inputs form
+//remove errors mark-ups from inputs form
 document.body.addEventListener('keyup', function (e) {
 
     if (e.target.classList.contains('form-control')) {
@@ -24754,6 +24738,7 @@ var busketVue = new Vue({
 
     data: {
         waitingScreen: false
+
     },
 
     methods: {
@@ -24834,7 +24819,6 @@ var busketVue = new Vue({
         submitOrder: function submitOrder() {
             var _this = this;
 
-            // Helper.drawWaitingScreen();
             this.waitingScreen = true;
 
             axios({
@@ -24861,8 +24845,7 @@ var busketVue = new Vue({
                         }).then(function (response) {
                             return response.text();
                         }).then(function (html) {
-                            //remove waiting screen
-                            // Helper.removeWaitingscreen();
+
                             _this.waitingScreen = false;
                             document.querySelector('.content').insertAdjacentHTML('afterBegin', html);
                         });
@@ -24871,7 +24854,6 @@ var busketVue = new Vue({
 
                 }
             }).catch(function (error) {
-                // Helper.removeWaitingscreen();
                 _this.waitingScreen = false;
                 var errors = error.response.data;
 
