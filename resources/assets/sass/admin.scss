@@ -66,3 +66,32 @@
 
   outline: none !important;
 }
+
+.admin-category-menu__item-text{
+  margin-bottom: 5px;
+  display: inline-block;
+  cursor: pointer;
+  border: 1px solid black;
+  padding: 3px;
+  border-radius: 3px;
+  width: 250px;
+  text-align: center;
+}
+
+.admin-category-menu__item-text:hover{
+  background-color: #c7254e;
+}
+
+.list{
+  display:inline-block;
+}
+
+.list ul, .list li{
+  list-style-type: none;
+}
+.flex-centered{
+  display:flex!important;
+}
+.auto-margin{
+  margin:auto;
+}

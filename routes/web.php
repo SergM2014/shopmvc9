@@ -45,6 +45,8 @@
     Route::post('/getImage', function(){ return view('admin.products.drawImage'); });
     Route::delete('admin/product/{product}', 'AdminProductsController@destroy');
 
+    Route::get('/admin/categories', 'AdminCategoriesController@index');
+
 
 Auth::routes();
 

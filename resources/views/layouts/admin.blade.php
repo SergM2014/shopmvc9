@@ -29,12 +29,16 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        Back to site
                     </a>
                     @if(Auth::check())
 
                         <a class="navbar-brand" href="{{ url('/admin/products') }}">
                             Products
+                        </a>
+
+                        <a class="navbar-brand" href="{{ url('/admin/categories') }}">
+                            Categories
                         </a>
 
                     @endif

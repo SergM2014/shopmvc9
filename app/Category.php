@@ -142,5 +142,43 @@ class Category extends Model
         return $print;
     }
 
+    public static function getAdminCategoriesList()
+    {
+        self::getCategories();
+
+
+        $leftMenu = self::printOutAdminCategoriesList();
+
+        return $leftMenu;
+    }
+
+
+    protected static function printOutAdminCategoriesList(  $parent = 0)
+    {
+        if(!isset($print)){$print='';}
+        foreach(self::$categories as $category){
+            if($category->parent_id ==$parent ){
+
+                $print.="<li  class='admin-category-menu__item ' data-category-id='$category->id' >
+                            <span class='admin-category-menu__item-text'>$category->title</span>" ;
+                foreach(self::$categories as $sub_cat){
+                    if($sub_cat->parent_id == $category->id){
+                        $flag = TRUE; break;
+                    }
+                }
+
+                if(isset($flag)){
+                    $print.= "<ul>";
+                    $print.= self::printOutAdminCategoriesList( $category->id);
+                    $print.= "</ul>";
+                    $print.= "</li>";
+                } else{
+                    $print.="</li>";
+                }
+            }
+        }
+        return $print;
+    }
+
 
 }

@@ -26,7 +26,7 @@ class PopUpMenu{
         }
 
 
-
+// check whether tthe menu is inside of screen
         if(this.x+x >this.screenWidth+pageXOffset) this.x= (this.screenWidth+pageXOffset-x);
         if(this.y+y >this.screenHeight+pageYOffset) this.y= (this.screenHeight+pageYOffset-y);
 
@@ -67,7 +67,10 @@ class PopUpMenu{
     }
 
 
-}
+} //end of Pop up menu
+
+
+
 
 class Modal {
     static createBackground() {

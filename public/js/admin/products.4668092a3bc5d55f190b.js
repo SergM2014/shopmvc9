@@ -24689,6 +24689,7 @@ var PopUpMenu = function () {
                 document.body.insertBefore(this.popUp, document.body.firstChild);
             }
 
+            // check whether tthe menu is inside of screen
             if (this.x + x > this.screenWidth + pageXOffset) this.x = this.screenWidth + pageXOffset - x;
             if (this.y + y > this.screenHeight + pageYOffset) this.y = this.screenHeight + pageYOffset - y;
 
@@ -24734,7 +24735,8 @@ var PopUpMenu = function () {
     }]);
 
     return PopUpMenu;
-}();
+}(); //end of Pop up menu
+
 
 var Modal = function () {
     function Modal() {
