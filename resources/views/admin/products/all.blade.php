@@ -5,9 +5,11 @@
     <div class="add-btn__container clearfix">
         <a class="btn btn-success pull-right add-product-btn" href="/admin/product/create" role="button">Add Product</a>
     </div>
-    <div class="table-responsive">
-        <table class="table table-striped" id="allProductsTable">
+    <div class="table-responsive" id="productsTableContainer">
 
+        <div id="popupMenu" class="popup-menu" v-show="showPopupMenu"></div>
+
+        <table class="table table-striped" id="allProductsTable" @click="showMenu">
             <tr>
                 <th></th><th>Author</th><th>Title</th><th>Price</th><th>Manufacturer</th><th>Added At</th>
             </tr>

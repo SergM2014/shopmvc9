@@ -1,76 +1,5 @@
 require('./bootstrap');
 
-class PopUpMenu{
-    constructor(e){
-        this.x = e.pageX;
-        this.y = e.pageY;
-
-        this.screenWidth = document.body.clientWidth;
-        this.screenHeight = document.body.clientHeight;
-        this.target = e.target;
-    }
-
-
-    drawMenu(x = 100, y = 60){
-
-        if(/*popupMenuSaved && */document.getElementById('popupMenu')){
-            this.popUp = document.getElementById('popupMenu');
-            this.popUp.classList.remove('hidden')
-        } else {
-
-            this.popUp = document.createElement('div');
-            this.popUp.className = "popup-menu";
-            this.popUp.id = "popupMenu";
-
-            document.body.insertBefore(this.popUp, document.body.firstChild);
-        }
-
-
-// check whether tthe menu is inside of screen
-        if(this.x+x >this.screenWidth+pageXOffset) this.x= (this.screenWidth+pageXOffset-x);
-        if(this.y+y >this.screenHeight+pageYOffset) this.y= (this.screenHeight+pageYOffset-y);
-
-        this.popUp.style.left = this.x+"px";
-        this.popUp.style.top = this.y+"px";
-    }
-
-    static deleteMenu()
-    {
-        if(document.getElementById('popupMenu')){document.getElementById('popupMenu').remove();}
-    }
-
-
-    fillUpMenuContent(id, route, processContr = ''){
-        this.drawMenu();
-
-//console.log(popUpContr);
-        let formData = new FormData;
-        formData.append('id', id);
-        formData.append('processContr', processContr);
-
-       fetch( route,{
-           method: 'post',
-           credentials:'same-origin',
-           body:formData
-       })
-            .then(response => response.text())
-            .then(html =>document.getElementById('popupMenu').innerHTML= html);
-    }
-
-    static hideMenu()
-    {
-        if(document.getElementById('popupMenu')){
-            document.getElementById('popupMenu').classList.add('hidden');
-
-
-        }
-    }
-
-
-} //end of Pop up menu
-
-
-
 
 class Modal {
     static createBackground() {
@@ -91,15 +20,62 @@ class Modal {
 }
 
 
-document.getElementById('allProductsTable').addEventListener('click', function(e){
+ let productsTable = new Vue({
+    el:'#productsTableContainer',
+    data:{
+        width:100,
+        height:60,
+        showPopupMenu:false,
 
-    let form = new FormData;
-    let productId = e.target.closest('.parent_tr').dataset.productId;
-    form.append('id', productId);
+        screenWidth : document.body.clientWidth,
+        screenHeight : document.body.clientHeight,
 
-    new PopUpMenu(e).fillUpMenuContent(productId, '/productsPopUpMenu')
+    },
+    methods:{
+        showMenu(e){
+
+            this.x = e.pageX;
+            this.y = e.pageY;
+
+            if(this.x+this.width >this.screenWidth+pageXOffset) this.x= (this.screenWidth+pageXOffset-this.width);
+            if(this.y+this.height >this.screenHeight+pageYOffset) this.y= (this.screenHeight+pageYOffset-this.height);
 
 
+
+            document.getElementById('popupMenu').style.left = this.x+"px";
+            document.getElementById('popupMenu').style.top = this.y+"px";
+
+            this.fillUpMenu(e);
+            this.showPopupMenu = true;
+
+        },
+
+        fillUpMenu(e)
+        {
+
+            let id = e.target.closest('.parent_tr').dataset.productId;
+            let formData = new FormData;
+            formData.append('id', id);
+
+
+            fetch( '/productsPopUpMenu',{
+                method: 'post',
+                credentials:'same-origin',
+                body:formData
+            })
+                .then(response => response.text())
+                .then(html =>document.getElementById('popupMenu').innerHTML= html);
+
+        }
+    }
+});
+
+
+document.body.addEventListener('click', function(e){
+
+    if(!e.target.closest('#productsTableContainer')) {
+        productsTable.showPopupMenu = false;
+    }
 
 });
 
