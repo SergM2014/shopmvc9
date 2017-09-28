@@ -13603,17 +13603,9 @@ var Modal = function () {
     }
 
     _createClass(Modal, null, [{
-        key: 'createBackground',
-        value: function createBackground() {
-            var background = document.createElement('div');
-            background.className = "modal-background";
-            background.id = "modalBackground";
-            document.body.insertBefore(background, document.body.firstChild);
-        }
-    }, {
         key: 'createModalWindow',
         value: function createModalWindow(controller, formData) {
-            this.createBackground();
+
             postAjax(controller, formData).then(function (response) {
                 return response.text();
             }).then(function (html) {
@@ -13631,13 +13623,14 @@ var productsTable = new Vue({
         width: 100,
         height: 60,
         showPopupMenu: false,
+        showModalBackground: false,
 
         screenWidth: document.body.clientWidth,
         screenHeight: document.body.clientHeight
 
     },
     methods: {
-        showMenu: function showMenu(e) {
+        drawMenu: function drawMenu(e) {
 
             this.x = e.pageX;
             this.y = e.pageY;
@@ -13666,14 +13659,42 @@ var productsTable = new Vue({
             }).then(function (html) {
                 return document.getElementById('popupMenu').innerHTML = html;
             });
+        },
+        showModalWindow: function showModalWindow() {
+            this.showModalBackground = true;
+            this.showPopupMenu = false;
+            axios({
+                method: 'post',
+                url: '/admin/product/confirmWindow',
+                withCredentials: true
+            }).then(function (response) {
+                document.getElementById('modalBackground').innerHTML = response.data;
+            });
+        },
+        deleteProduct: function deleteProduct() {
+            document.getElementById('productDeleteForm').submit();
+            document.getElementById('confirmDeleteProductBtn').setAttribute('disabled', 'disabled');
         }
     }
 });
 
 document.body.addEventListener('click', function (e) {
 
+    //remove products poup if click outside the table
     if (!e.target.closest('#productsTableContainer')) {
         productsTable.showPopupMenu = false;
+    }
+    //show confirm delete product Window
+    if (e.target.id === 'productDeleteBtn') {
+        productsTable.showModalWindow();
+    }
+    // cansel the action that demanda confirmation
+    if (e.target.id === "canselBtn") {
+        productsTable.showModalBackground = false;
+    }
+    //confirm delete of the product
+    if (e.target.id === "confirmDeleteProductBtn") {
+        productsTable.deleteProduct();
     }
 });
 

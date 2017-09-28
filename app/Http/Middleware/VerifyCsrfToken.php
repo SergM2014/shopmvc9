@@ -30,6 +30,7 @@ class VerifyCsrfToken extends BaseVerifier
         '/searchResults',
         '/showProductPreview',
         '/productsPopUpMenu',
-        '/drawImage'
+        '/drawImage',
+        '/admin/product/confirmWindow'
     ];
 }

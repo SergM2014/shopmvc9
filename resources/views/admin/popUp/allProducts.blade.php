@@ -5,7 +5,7 @@
 <form id="productDeleteForm" action ="/admin/product/<?= $_POST['id'] ?>"  method="POST">
     {{ method_field('DELETE') }}
     {{ csrf_field() }}
-    <button type="button" class="button-link" id="productDeleteBtn">Delete</button>
+    <button type="button" class="button-link" id="productDeleteBtn" @click="showModalWindow">Delete</button>
 </form>
 
 

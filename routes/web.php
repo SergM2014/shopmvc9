@@ -32,10 +32,9 @@
 
     Route::get('/bumbum', function(){ return 'проверка работоспособності';})->middleware('auth');
 
+
     Route::get('/admin/products', 'AdminProductsController@index');
-    Route::post('/productsPopUpMenu', function(){
-        return view('admin.popUp.allProducts');
-    });
+    Route::post('/productsPopUpMenu', function(){ return view('admin.popUp.allProducts'); });
     Route::get('/admin/product/create', 'AdminProductsController@create');
     Route::post('/admin/product/store', 'AdminProductsController@store');
     Route::get('/admin/product/succeeded', function(){ return view('admin.products.succeeded'); });
@@ -44,6 +43,8 @@
     Route::post('admin/product/{product}/update', 'AdminProductsController@update');
     Route::post('/getImage', function(){ return view('admin.products.drawImage'); });
     Route::delete('admin/product/{product}', 'AdminProductsController@destroy');
+    Route::post('admin/product/confirmWindow', function(){ return view('admin.modal.deleteProduct');});
+
 
     Route::get('/admin/categories', 'AdminCategoriesController@index');
 
