@@ -47,7 +47,7 @@ class AdminProductsController extends Controller
         $this->addProductImages($product);
         $this->syncCategories($product);
 
-        return redirect('/admin/product/succeeded')->with('status', 'Product Created!');
+        return redirect('/admin/products/succeeded')->with('status', 'Product Created!');
     }
 
 
@@ -95,7 +95,7 @@ class AdminProductsController extends Controller
         $this->syncCategories($product);
 
 
-        return redirect('/admin/product/succeeded')->with('status', 'Product Updated!');
+        return redirect('/admin/products/succeeded')->with('status', 'Product Updated!');
 
     }
 
@@ -134,7 +134,7 @@ class AdminProductsController extends Controller
     public function destroy($id)
     {
         Product::destroy($id);
-        return redirect('/admin/product/succeeded')->with('status', 'Product deleted!');
+        return redirect('/admin/products/succeeded')->with('status', 'Product deleted!');
     }
 
 

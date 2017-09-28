@@ -42,7 +42,7 @@
 
 
 
-    <form method="post" action="/admin/product/store">
+    <form method="post" action="/admin/products">
         {{ csrf_field() }}
 
         <input type="hidden" name="imagesData" id="imagesData"value="{{ old('imagesData') }}">

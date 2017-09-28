@@ -43,7 +43,8 @@
 
 
 
-    <form method="post" action="/admin/product/{{ $product->id }}/update">
+    <form method="post" action="/admin/products/{{ $product->id }}">
+        {{ method_field('PUT') }}
         {{ csrf_field() }}
 
         <input type="hidden" name="imagesData" id="imagesData"value="<?= old('imagesData')?? implode(',',$product->images()->pluck('path')->toArray()) ?>">

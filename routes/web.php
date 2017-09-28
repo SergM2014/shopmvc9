@@ -8,18 +8,20 @@
     Route::get('/downloads', 'IndexController@downloads')->name('downloads');
     Route::get('/contacts', 'IndexController@contacts')->name('contacts');
     Route::get('/product/{product}', 'ProductController@show')->name('catalogShowProduct');
+
     Route::post('/busket/add', 'BusketController@add');
     Route::post('/busket/show', 'BusketController@show');
     Route::post('/busket/update', 'BusketController@update');
+
     Route::post('/updateSmallBusket', 'BusketController@updateHeader');
     Route::post('/showOrderForm', 'BusketController@showOrderForm');
     Route::post('/validateBusket', 'BusketController@validateBusketContent');
     Route::post('/busket/makeOrder', 'BusketController@makeOrder');
     Route::post('/succeededOrder', 'BusketController@succeededOrder');
     Route::post('/sendSuccessMail', 'BusketController@sendSuccessEmail');
+
     Route::post('/images/uploadAvatar', 'ImagesController@uploadAvatar');
     Route::post('/images/deleteAvatar', 'ImagesController@deleteAvatar');
-
     Route::post('/images/uploadProductImage', 'ImagesController@uploadProductImage');
     Route::post('/images/deleteProductImage', 'ImagesController@deleteProductImage');
 
@@ -30,20 +32,14 @@
     Route::post('/searchResults', 'SearchController@findResults');
     Route::post('/showProductPreview', 'ProductController@showPreview');
 
-    Route::get('/bumbum', function(){ return 'проверка работоспособності';})->middleware('auth');
 
 
-    Route::get('/admin/products', 'AdminProductsController@index');
-    Route::post('/productsPopUpMenu', function(){ return view('admin.popUp.allProducts'); });
-    Route::get('/admin/product/create', 'AdminProductsController@create');
-    Route::post('/admin/product/store', 'AdminProductsController@store');
-    Route::get('/admin/product/succeeded', function(){ return view('admin.products.succeeded'); });
-    Route::get('admin/product/{product}', 'AdminProductsController@show');
-    Route::get('admin/product/{product}/edit', 'AdminProductsController@edit');
-    Route::post('admin/product/{product}/update', 'AdminProductsController@update');
     Route::post('/getImage', function(){ return view('admin.products.drawImage'); });
-    Route::delete('admin/product/{product}', 'AdminProductsController@destroy');
-    Route::post('admin/product/confirmWindow', function(){ return view('admin.modal.deleteProduct');});
+    Route::get('/admin/products/succeeded', function(){ return view('admin.products.succeeded'); });
+    Route::post('/admin/products/popupMenu', function(){ return view('admin.popUp.allProducts'); });
+    Route::post('/admin/products/confirmWindow', function(){ return view('admin.modal.deleteProduct');});
+
+    Route::resource('/admin/products', 'AdminProductsController');
 
 
     Route::get('/admin/categories', 'AdminCategoriesController@index');

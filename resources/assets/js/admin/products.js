@@ -1,20 +1,6 @@
 require('./bootstrap');
 
 
-class Modal {
-
-
-    static createModalWindow(controller, formData){
-
-        postAjax(controller,formData)
-            .then(response => response.text())
-            .then(html =>document.getElementById('modalBackground').insertAdjacentHTML('afterBegin', html));
-    }
-
-
-}
-
-
  let productsTable = new Vue({
     el:'#productsTableContainer',
     data:{
@@ -54,7 +40,7 @@ class Modal {
             formData.append('id', id);
 
 
-            fetch( '/productsPopUpMenu',{
+            fetch( '/admin/products/popupMenu',{
                 method: 'post',
                 credentials:'same-origin',
                 body:formData
@@ -70,7 +56,7 @@ class Modal {
              this.showPopupMenu = false;
             axios({
                 method:'post',
-                url:'/admin/product/confirmWindow',
+                url:'/admin/products/confirmWindow',
                 withCredentials: true,
             })
                 .then(function(response) {

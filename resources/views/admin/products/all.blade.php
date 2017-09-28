@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="add-btn__container clearfix">
-        <a class="btn btn-success pull-right add-product-btn" href="/admin/product/create" role="button">Add Product</a>
+        <a class="btn btn-success pull-right add-product-btn" href="/admin/products/create" role="button">Add Product</a>
     </div>
     <div class="table-responsive" id="productsTableContainer">
 
@@ -30,7 +30,7 @@
         </table>
     </div>
     <div class="add-btn__container clearfix">
-        <a class="btn btn-success pull-right add-product-btn" href="/admin/product/create" role="button">Add Product</a>
+        <a class="btn btn-success pull-right add-product-btn" href="/admin/products/create" role="button">Add Product</a>
     </div>
     {{ $products->links() }}
 
