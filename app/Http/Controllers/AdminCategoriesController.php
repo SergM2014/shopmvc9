@@ -48,8 +48,6 @@ class AdminCategoriesController extends Controller
             'title' =>'required|min:6',
         ]);
 
-       // dd('this is update action');
-//now update the given category Instanse
         $id = request('id');
        $category = Category::find($id);
        $category->parent_id = request('parentId');
@@ -57,6 +55,13 @@ class AdminCategoriesController extends Controller
        $category->save();
         return redirect('/admin/categories/succeeded')->with('status', 'Category Updated!');
 
+    }
+
+
+    public function destroy($id)
+    {
+        Category::destroy($id);
+        return redirect('/admin/categories/succeeded')->with('status', 'Category deleted!');
     }
 
 }

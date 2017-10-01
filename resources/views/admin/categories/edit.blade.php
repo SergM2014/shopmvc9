@@ -5,7 +5,7 @@
 
     <div class="center-block flex-centered">
 
-        <form action="/admin/categories" method="POST" class="auto-margin" >
+        <form action="/admin/categories/<?= $id ?>" method="POST" class="auto-margin" >
 
 
         <h1 class="bg-danger text-center">Edit Category</h1>

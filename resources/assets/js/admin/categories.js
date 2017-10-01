@@ -90,7 +90,7 @@ document.body.addEventListener('click', function(e){
     }
 //confirm delete of the product
     if(e.target.id === "confirmDeleteCategoryBtn"){
-        productsTable.deleteProduct();
+        productsTable.deleteCategory();
     }
 
 });
