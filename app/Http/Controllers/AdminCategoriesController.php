@@ -31,4 +31,32 @@ class AdminCategoriesController extends Controller
         return redirect('/admin/categories/succeeded')->with('status', 'Category Created!');
     }
 
+    public function edit(Category $category)
+    {
+        $parentId = old('_token')? old('parentId'): $category->parent_id;
+
+        $dropDownList = Category::getUpdateCategoryDropDownList($parentId,  $category->id);
+
+        $id = $category->id;
+
+        return view('admin.categories.edit', compact('dropDownList', 'category', 'id'));
+    }
+
+    public function update(Request $request)
+    {
+        $this->validate($request, [
+            'title' =>'required|min:6',
+        ]);
+
+       // dd('this is update action');
+//now update the given category Instanse
+        $id = request('id');
+       $category = Category::find($id);
+       $category->parent_id = request('parentId');
+       $category->title = request('title');
+       $category->save();
+        return redirect('/admin/categories/succeeded')->with('status', 'Category Updated!');
+
+    }
+
 }
