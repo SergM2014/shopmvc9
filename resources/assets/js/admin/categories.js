@@ -3,7 +3,7 @@ require('./bootstrap');
 require('./components');
 
  let productsTable = new Vue({
-    el:'#productsTableContainer',
+    el:'#categoriesContainer',
     data:{
         width:100,
         height:60,
@@ -36,12 +36,12 @@ require('./components');
         fillUpMenu(e)
         {
 
-            let id = e.target.closest('.parent_tr').dataset.productId;
+            let id = e.target.closest('li').dataset.categoryId;
             let formData = new FormData;
             formData.append('id', id);
 
 
-            fetch( '/admin/products/popupMenu',{
+            fetch( '/admin/categories/popupMenu',{
                 method: 'post',
                 credentials:'same-origin',
                 body:formData
@@ -57,7 +57,7 @@ require('./components');
              this.showPopupMenu = false;
             axios({
                 method:'post',
-                url:'/admin/products/confirmWindow',
+                url:'/admin/categories/confirmWindow',
                 withCredentials: true,
             })
                 .then(function(response) {
@@ -65,9 +65,9 @@ require('./components');
                 })
         },
 
-        deleteProduct()
+        deleteCategory()
         {
-            document.getElementById('productDeleteForm').submit();
+            document.getElementById('categoryDeleteForm').submit();
             document.getElementById('confirmDeleteProductBtn').setAttribute('disabled', 'disabled');
         }
     }
@@ -77,19 +77,19 @@ require('./components');
 document.body.addEventListener('click', function(e){
 
 //remove products poup if click outside the table
-    if(!e.target.closest('#productsTableContainer')) {
+    if(!e.target.closest('#categoriesContainer')) {
         productsTable.showPopupMenu = false;
     }
 //show confirm delete product Window
-    if(e.target.id ==='productDeleteBtn'){
+    if(e.target.id ==='categoryDeleteBtn'){
         productsTable.showModalWindow()
     }
-// cansel the action that demand a confirmation
+// cansel the action that demanda confirmation
     if(e.target.id === "canselBtn" || e.target.id === "modalBackground"){
         productsTable.showModalBackground = false;
     }
 //confirm delete of the product
-    if(e.target.id === "confirmDeleteProductBtn"){
+    if(e.target.id === "confirmDeleteCategoryBtn"){
         productsTable.deleteProduct();
     }
 

@@ -7,8 +7,8 @@
     </div>
     <div class="table-responsive" id="productsTableContainer">
 
-        <div id="modalBackground" class="modal-background" v-if="showModalBackground" ></div>
-        <div id="popupMenu" class="popup-menu" v-show="showPopupMenu"></div>
+        <modal-background v-if="showModalBackground"></modal-background>
+        <popup-menu v-show="showPopupMenu"></popup-menu>
 
         <table class="table table-striped" id="allProductsTable" @click="drawMenu">
             <tr>

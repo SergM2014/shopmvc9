@@ -42,7 +42,16 @@
     Route::resource('/admin/products', 'AdminProductsController');
 
 
+
+    Route::post('/admin/categories/popupMenu', function(){ return view('admin.popUp.allCategories'); });
+    Route::post('/admin/categories/confirmWindow', function(){ return view('admin.modal.deleteCategory');});
+    Route::get('/admin/categories/succeeded', function(){ return view('admin.categories.succeeded'); });
+
+
     Route::get('/admin/categories', 'AdminCategoriesController@index');
+    Route::get('/admin/categories/create', 'AdminCategoriesController@create');
+    Route::post('/admin/categories', 'AdminCategoriesController@store');
+
 
 
 Auth::routes();

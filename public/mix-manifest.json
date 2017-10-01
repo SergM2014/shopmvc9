@@ -1,10 +1,6 @@
 {
-  "/js/index.js": "/js/index.8c2856212c9483186233.js",
-  "/css/app.css": "/css/app.8e04840cab82605513a3.css",
-  "/css/admin.css": "/css/admin.8e04840cab82605513a3.css",
-  "/js/productView.js": "/js/productView.1469c9195e726b3eb1e5.js",
-  "/js/admin/createProduct.js": "/js/admin/createProduct.a1329352ac46776a0103.js",
-  "/js/app.js": "/js/app.26bb7572c331c8dadd1f.js",
-  "/js/admin/products.js": "/js/admin/products.f67a70ea620f29713c69.js",
-  "/js/admin/auth.js": "/js/admin/auth.b3991c3500f699b0b17f.js"
+  "/js/admin/products.js": "/js/admin/products.1c3338ed8eff438bbf18.js",
+  "/css/admin.css": "/css/admin.7b472957208ba8f95275.css",
+  "/js/admin/categories.js": "/js/admin/categories.d53b0cd318032e1d440d.js",
+  "/js/admin/auth.js": "/js/admin/auth.f6415c4d89ce4ab41751.js"
 }

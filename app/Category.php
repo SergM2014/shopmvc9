@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+    protected $fillable = [
+      'parent_id', 'title'
+    ];
+
     private static $categories;
 
     private static function getCategories()
