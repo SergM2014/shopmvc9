@@ -51,7 +51,7 @@ require('./components');
 
         },
 
-        showModalWindow()
+        showModalWindow(categoryId)
         {
              this.showModalBackground = true;
              this.showPopupMenu = false;
@@ -59,6 +59,9 @@ require('./components');
                 method:'post',
                 url:'/admin/categories/confirmWindow',
                 withCredentials: true,
+                data:{
+                    id:categoryId
+                }
             })
                 .then(function(response) {
                     document.getElementById('modalBackground').innerHTML = response.data
@@ -82,9 +85,11 @@ document.body.addEventListener('click', function(e){
     }
 //show confirm delete product Window
     if(e.target.id ==='categoryDeleteBtn'){
-        productsTable.showModalWindow()
+        let categoryId = e.target.dataset.categoryId;
+
+        productsTable.showModalWindow(categoryId)
     }
-// cansel the action that demanda confirmation
+// cansel the action that demand a confirmation
     if(e.target.id === "canselBtn" || e.target.id === "modalBackground"){
         productsTable.showModalBackground = false;
     }

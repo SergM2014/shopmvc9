@@ -5,7 +5,7 @@
 <form id="categoryDeleteForm" action ="/admin/categories/<?= $_POST['id'] ?>"  method="POST">
     {{ method_field('DELETE') }}
     {{ csrf_field() }}
-    <button type="button" class="button-link" id="categoryDeleteBtn" @click="showModalWindow">Delete</button>
+    <button type="button" class="button-link" id="categoryDeleteBtn" @click="showModalWindow" data-category-id="<?= $_POST['id'] ?>">Delete</button>
 </form>
 
 

@@ -44,18 +44,10 @@
 
 
     Route::post('/admin/categories/popupMenu', function(){ return view('admin.popUp.allCategories'); });
-    Route::post('/admin/categories/confirmWindow', function(){ return view('admin.modal.deleteCategory');});
+    Route::post('/admin/categories/confirmWindow', 'AdminCategoriesController@showConfirmWindow');
     Route::get('/admin/categories/succeeded', function(){ return view('admin.categories.succeeded'); });
 
-
-//    Route::put('/admin/categories', 'AdminCategoriesController@update');
-//    Route::get('/admin/categories', 'AdminCategoriesController@index');
-//    Route::get('/admin/categories/create', 'AdminCategoriesController@create');
-//    Route::post('/admin/categories', 'AdminCategoriesController@store');
-//    Route::get('/admin/categories/{category}/edit', 'AdminCategoriesController@edit');
-//    Route::delete('/admin/categories/{category}', 'AdminCategoriesController@destroy');
-
-Route::resource('/admin/categories', 'AdminCategoriesController');
+    Route::resource('/admin/categories', 'AdminCategoriesController');
 
 
 

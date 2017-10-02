@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use App\Product;
 
 class AdminCategoriesController extends Controller
 {
@@ -60,8 +61,21 @@ class AdminCategoriesController extends Controller
 
     public function destroy($id)
     {
-        Category::destroy($id);
+       // Category::destroy($id);
         return redirect('/admin/categories/succeeded')->with('status', 'Category deleted!');
+    }
+
+
+    public function showConfirmWindow()
+    {
+     //whether category has products return true/false
+        $category = Category::find(\request('id'));
+       $hasProducts = $category->products()->get()->isNotEmpty();
+
+       $hasChildCategories = Category::where('parent_id', \request('id'))->get()->isNotEmpty();
+
+
+        return view('admin.modal.deleteCategory', compact('hasProducts', 'hasChildCategories'));
     }
 
 }
