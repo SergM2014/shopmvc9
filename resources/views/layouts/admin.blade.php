@@ -85,7 +85,6 @@
         @yield('content')
     </div>
 
-    <!-- Scripts -->
-    <script src="{{ mix('js/admin/auth.js') }}"></script>
+
 </body>
 </html>

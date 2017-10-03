@@ -14,4 +14,8 @@
         </div>
     </div>
 </div>
+
+<!-- Scripts -->
+<script src="{{ mix('js/admin/auth.js') }}"></script>
+
 @endsection

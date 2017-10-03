@@ -87,9 +87,6 @@ let searchVue =  new Vue({
             this.showBlock = false;
             this.previewVisible = true;
 
-            let form = new FormData;
-            form.append('id',  previewProductId);
-
             axios({
                 method: 'post',
                 url: '/showProductPreview',

@@ -38,12 +38,12 @@ document.getElementById('busket-container').addEventListener('click', function(e
 document.body.addEventListener('click', function(e){
 
     if(e.target.id === "updateBusketBtn") {
-        busketVue.$options.methods.update();
+        busketVue.update();
     }
 
 
     if(e.target.id === "makeOrder"){
-        busketVue.$options.methods.makeOrder();
+        busketVue.makeOrder();
     }
 
 
@@ -59,7 +59,7 @@ document.body.addEventListener('click', function(e){
 
     if(e.target.id === "submitOrder") {
 
-        busketVue.$options.methods.submitOrder.call(busketVue);
+        busketVue.submitOrder.call(busketVue);
      }
 
 
@@ -93,7 +93,6 @@ Vue.component('waiting-screen',{
 
  let busketVue = new Vue({
 
-    // el:'#bigBusketContent',
      el:'#bigBusketContainer',
 
      data:{

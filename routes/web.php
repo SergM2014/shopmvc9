@@ -35,20 +35,21 @@
 
 
     Route::post('/getImage', function(){ return view('admin.products.drawImage'); });
-    Route::get('/admin/products/succeeded', function(){ return view('admin.products.succeeded'); });
-    Route::post('/admin/products/popupMenu', function(){ return view('admin.popUp.allProducts'); });
-    Route::post('/admin/products/confirmWindow', function(){ return view('admin.modal.deleteProduct');});
 
-    Route::resource('/admin/products', 'AdminProductsController');
+    Route::prefix('admin')->group(function () {
 
+        Route::get('products/succeeded', function () { return view('admin.succeeded'); });
+        Route::post('products/popupMenu', function () { return view('admin.popUp.allProducts'); });
+        Route::post('products/confirmWindow', function () { return view('admin.modal.deleteProduct'); });
 
+        Route::resource('products', 'AdminProductsController');
 
-    Route::post('/admin/categories/popupMenu', function(){ return view('admin.popUp.allCategories'); });
-    Route::post('/admin/categories/confirmWindow', 'AdminCategoriesController@showConfirmWindow');
-    Route::get('/admin/categories/succeeded', function(){ return view('admin.categories.succeeded'); });
+        Route::post('categories/popupMenu', function () { return view('admin.popUp.allCategories'); });
+        Route::post('categories/confirmWindow', 'AdminCategoriesController@showConfirmWindow');
+        Route::get('categories/succeeded', function () { return view('admin.succeeded'); });
 
-    Route::resource('/admin/categories', 'AdminCategoriesController');
-
+        Route::resource('categories', 'AdminCategoriesController');
+    });
 
 
 Auth::routes();
