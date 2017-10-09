@@ -41,6 +41,10 @@
                             Categories
                         </a>
 
+                        <a class="navbar-brand" href="{{ url('/admin/comments') }}">
+                            Comments
+                        </a>
+
                     @endif
                 </div>
 

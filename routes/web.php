@@ -49,6 +49,9 @@
         Route::get('categories/succeeded', function () { return view('admin.succeeded'); });
 
         Route::resource('categories', 'AdminCategoriesController');
+
+        Route::post('comments/popupMenu', function () { return view('admin.popUp.allComments'); });
+        Route::resource('comments', 'AdminCommentsController');
     });
 
 

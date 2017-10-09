@@ -70,4 +70,9 @@ class Comment extends Model
 
        return $print;
     }
+
+    public function product()
+    {
+        return $this->belongsTo('App\Product');
+    }
 }

@@ -125,3 +125,13 @@
   justify-content: space-around;
   margin:50px 0;
 }
+.comment_item{
+  border-bottom: 1px solid black;
+  margin: 20px 0;
+  background-color: #a2988b;
+  cursor:pointer;
+  padding:10px;
+}
+.comment_item:last-of-type{
+  border-bottom: none;
+}
