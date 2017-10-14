@@ -51,6 +51,9 @@
         Route::resource('categories', 'AdminCategoriesController');
 
         Route::post('comments/popupMenu', function () { return view('admin.popUp.allComments'); });
+        Route::post('comments/{comment}/publish', 'AdminCommentsController@publish');
+        Route::post('comments/{comment}/unpublish', 'AdminCommentsController@unpublish');
+
         Route::resource('comments', 'AdminCommentsController');
     });
 

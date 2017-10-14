@@ -38,7 +38,9 @@ class AdminCommentsController extends Controller
     public function index()
     {
        $orderVariables = $this->findOutOrder();
+
         $comments = Comment::orderBy(...$orderVariables)->paginate(10);
+//dd($comments);
        // $comments = Comment::orderBy(...$orderVariables)->with('product')->paginate(10);
         return view('admin.comments.index', compact('comments'));
     }
@@ -50,7 +52,7 @@ class AdminCommentsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.comments.create');
     }
 
     /**

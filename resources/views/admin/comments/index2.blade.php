@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <?php /*dd($comments); */?>
+
 
 
     <div class="center-block flex-centered">
@@ -38,39 +38,34 @@
 
                 @foreach ($comments as $comment)
 
+                    <li class='comment_item' data-comment-id="<?= $comment->id ?>">
+                        <div class='avatar_comment-block'>
+                            <div class="product-area">
+                                <h3 class="text-danger"><?= $comment->product ?> </h3>
 
-                        <li class='comment_item' data-comment-id="<?= $comment->id ?>">
-                            <div class='avatar_comment-block'>
-                                <div class="product-area">
-                                    @if($comment->product)
-
-                                        <h3 class="text-danger"><?= $comment->product->title ?></h3>
-                                        <h3 class="text-warning"><?= $comment->product->author ?></h3>
-                                    @endif
-
-                                </div>
-                                <span class='text-warning'> Name:</span> <?= $comment->name ?><br>
-
-                               <?php $avatarImage = $comment->avatar? "/uploads/avatars/$comment->avatar" : "/img/noavatar.jpg" ?>
-
-                                 <img src= <?= $avatarImage ?> alt='' class='comment_avatar'>
-                                <br>
-
-                                <span class='text-warning'> Added at: </span> <?= $comment->created_at ?> </div>
-
-
-
-
-                            <div class='text_comment-block'>
-                               <?= $comment->comment ?>
                             </div>
+                            <span class='text-warning'> Name:</span> <?= $comment->name ?><br>
 
-                            <div class="published_status">
-                                <?= $comment->published == '1' ? '<h4 class="text-success">Published </h4>' :
+                            <?php $avatarImage = $comment->avatar? "/uploads/avatars/$comment->avatar" : "/img/noavatar.jpg" ?>
+
+                            <img src= <?= $avatarImage ?> alt='' class='comment_avatar'>
+                            <br>
+
+                            <span class='text-warning'> Added at: </span> <?= $comment->created_at ?> </div>
+
+
+
+
+                        <div class='text_comment-block'>
+                            <?= $comment->comment ?>
+                        </div>
+
+                        <div class="published_status">
+                            <?= $comment->published == '1' ? '<h4 class="text-success">Published </h4>' :
                                 '<h4 class="text-danger">Unpublished </h4>' ?>
-                            </div>
+                        </div>
 
-                        </li>
+                    </li>
 
 
                 @endforeach

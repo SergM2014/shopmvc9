@@ -68,10 +68,20 @@ require('./components');
                 })
         },
 
-        deleteCategory()
+        deleteComment()
         {
             document.getElementById('commentDeleteForm').submit();
             document.getElementById('confirmDeleteCommentBtn').setAttribute('disabled', 'disabled');
+        },
+
+        publishComment()
+        {
+            document.getElementById('commentPublishForm').submit();
+        },
+
+        unpublishComment()
+        {
+            document.getElementById('commentUnpublishForm').submit();
         }
     }
 });
@@ -95,7 +105,7 @@ document.body.addEventListener('click', function(e){
     }
 //confirm delete of the product
     if(e.target.id === "confirmDeleteButtonBtn"){
-        commentsContainer.deleteCategory();
+        commentsContainer.deleteComment;
     }
 
 });
