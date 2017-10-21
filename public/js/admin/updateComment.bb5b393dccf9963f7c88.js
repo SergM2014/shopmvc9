@@ -107,7 +107,7 @@ function progressHandler(event) {
 function completeHandler(event) {
 
     var response = JSON.parse(event.target.responseText);
-    //output.innerHTML= response.message;
+    output.innerHTML = response.message;
 
     progress.value = 0;
     // output.classList.remove('hidden');
@@ -117,8 +117,6 @@ function completeHandler(event) {
 
     //further work with many images;
     populateImagesField(response.filename);
-
-    output.innerHTML = response.message;
 }
 
 function errorHandler(event) {
@@ -191,7 +189,7 @@ if (submit_btn) {
 
         formdata.append("ajax", true);
 
-        var uploadUrl = "/images/uploadProductImage";
+        var uploadUrl = "/images/uploadAvatar";
 
         var send_image = new XMLHttpRequest();
         send_image.upload.addEventListener("progress", progressHandler, false);
@@ -224,7 +222,7 @@ if (reset_btn) {
 
         if (document.getElementById('image')) formData.append('image', document.getElementById('image').value);
 
-        fetch('/images/deleteProductImage', {
+        fetch('/images/deleteAvatar', {
             method: "POST",
             credentials: "same-origin",
             body: formData

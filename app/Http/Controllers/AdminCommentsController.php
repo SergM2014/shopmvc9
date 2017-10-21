@@ -106,7 +106,7 @@ class AdminCommentsController extends Controller
 
         Comment::where('id', $id)->update(['name' => request('name'), 'email' => request('email'),
             'comment'=>request('comment'), 'avatar'=> request('imagesData')]);
-        //if(request('imagesData')){Comment::where('id', $id)}
+
         return redirect('/admin/comments/succeeded')->with('status', 'Comment Updated!');
     }
 

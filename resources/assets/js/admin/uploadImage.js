@@ -131,7 +131,7 @@ if(submit_btn){
 
         formdata.append("ajax", true);
 
-        let uploadUrl = "/images/uploadProductImage";
+        let uploadUrl = "/images/uploadAvatar";
 
         let send_image=new XMLHttpRequest();
         send_image.upload.addEventListener("progress", progressHandler, false);
@@ -173,7 +173,7 @@ if(reset_btn) {
 
 
 
-                fetch( '/images/deleteProductImage',
+                fetch( '/images/deleteAvatar',
                     {
                         method : "POST",
                         credentials: "same-origin",
