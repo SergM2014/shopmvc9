@@ -27,6 +27,7 @@ const { mix } = require('laravel-mix');
 
 mix.js('resources/assets/js/admin/auth.js', 'public/js/admin').version();
 mix.js('resources/assets/js/admin/comments.js', 'public/js/admin').version();
+mix.js('resources/assets/js/admin/updateComment.js', 'public/js/admin').version();
 
 
 mix.sass('resources/assets/sass/admin.scss', 'public/css').version();

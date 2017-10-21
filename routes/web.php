@@ -53,6 +53,7 @@
         Route::post('comments/popupMenu', function () { return view('admin.popUp.allComments'); });
         Route::post('comments/{comment}/publish', 'AdminCommentsController@publish');
         Route::post('comments/{comment}/unpublish', 'AdminCommentsController@unpublish');
+        Route::get('comments/succeeded', function () { return view('admin.succeeded'); });
 
         Route::resource('comments', 'AdminCommentsController');
     });

@@ -85,7 +85,8 @@ class AdminCommentsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $comment = Comment::find($id);
+        return view('admin.comments.edit', compact('comment'));
     }
 
     /**
@@ -97,7 +98,16 @@ class AdminCommentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name'=>'required',
+            'email'=>'required|email',
+            'comment'=>'required'
+        ]);
+
+        Comment::where('id', $id)->update(['name' => request('name'), 'email' => request('email'),
+            'comment'=>request('comment'), 'avatar'=> request('imagesData')]);
+        //if(request('imagesData')){Comment::where('id', $id)}
+        return redirect('/admin/comments/succeeded')->with('status', 'Comment Updated!');
     }
 
     /**

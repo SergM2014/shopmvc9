@@ -9,6 +9,8 @@
 
 @import "jqueryFreeCarousel.css";
 
+@import "imageDownload.scss";
+
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
@@ -102,39 +104,7 @@ body{
 }
 
 
-.image-download__preview {
-  max-height:112px;
-  max-width:112px;
-  border-radius:5px;
-}
 
-
-
-.image-download__block{
-  margin-bottom:10px;
-  position:relative;
-}
-
-.image-download__btn{
-  padding:2px;
-  cursor:pointer;
-}
-.image-download__output{
-  display: inline-block;
-  width: 50%;
-  position: absolute;
-  top:25px;
-  text-align: center;
-  padding-left: 5px;
-}
-.image-upload--succeded, .image-delete--succeded{
-  color: #56ff76;
-  text-align:center;
-}
-.image-upload--failed{
-  color:red;
-  text-align:center;
-}
 .captcha_image{
   cursor:pointer;
 }

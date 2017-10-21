@@ -10,6 +10,7 @@ class Comment extends Model
         'product_id',
         'parent_id',
         'name',
+        'email',
         'avatar',
         'comment',
         'published',

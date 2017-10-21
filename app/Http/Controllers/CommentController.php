@@ -14,7 +14,6 @@ class CommentController extends Controller
             'email'=>'required|email',
             'comment'=>'required',
             'captcha' => 'required|captcha'
-            //'captcha' => 'required'
         ],
         //this is custom error message
         [

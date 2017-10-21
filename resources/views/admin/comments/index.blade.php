@@ -43,7 +43,6 @@
                             <div class='avatar_comment-block'>
                                 <div class="product-area">
                                     @if($comment->product)
-
                                         <h3 class="text-danger"><?= $comment->product->title ?></h3>
                                         <h3 class="text-warning"><?= $comment->product->author ?></h3>
                                     @endif

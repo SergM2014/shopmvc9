@@ -17,6 +17,7 @@ class CreateCommentsTable extends Migration
             $table->increments('id');
             $table->string('avatar')->nullable();
             $table->string('name');
+            $table->string('email');
             $table->integer('parent_id')->index();
             $table->integer('product_id')->index();
             $table->text('comment');
