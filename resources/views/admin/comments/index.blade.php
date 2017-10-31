@@ -1,15 +1,16 @@
 @extends('layouts.admin')
 
 @section('content')
-    <?php /*dd($comments); */?>
+
 
 
     <div class="center-block flex-centered">
 
-        <div class="auto-margin" id="commentsContainer">
+        <div class="auto-margin " id="commentsContainer">
 
             <modal-background v-if="showModalBackground"></modal-background>
             <popup-menu v-show="showPopupMenu"></popup-menu>
+            <alert v-show="showAlert"></alert>
 
             <h1 class="bg-danger text-center">Comments</h1>
 
@@ -64,7 +65,7 @@
                                <?= $comment->comment ?>
                             </div>
 
-                            <div class="published_status">
+                            <div class="published_status" data-comment-id-published="<?= $comment->id ?>">
                                 <?= $comment->published == '1' ? '<h4 class="text-success">Published </h4>' :
                                 '<h4 class="text-danger">Unpublished </h4>' ?>
                             </div>

@@ -1,6 +1,6 @@
 require('./bootstrap');
 
-require('./components');
+require('./vueComponents');
 
  let productsTable = new Vue({
     el:'#productsTableContainer',

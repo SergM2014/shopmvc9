@@ -137,3 +137,11 @@
 .comment_item:last-of-type{
   border-bottom: none;
 }
+.alert{
+  position: fixed!important;
+  top:200px;
+  min-width:400px;
+}
+.container{
+  position:relative;
+}

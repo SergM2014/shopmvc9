@@ -1,6 +1,6 @@
 require('./bootstrap');
 
-require('./components');
+require('./vueComponents');
 
  let commentsContainer = new Vue({
     el:'#commentsContainer',
@@ -9,6 +9,7 @@ require('./components');
         height:60,
         showPopupMenu:false,
         showModalBackground:false,
+        showAlert:false,
 
         screenWidth : document.body.clientWidth,
         screenHeight : document.body.clientHeight,
@@ -74,9 +75,30 @@ require('./components');
             document.getElementById('confirmDeleteCommentBtn').setAttribute('disabled', 'disabled');
         },
 
-        publishComment()
+        publishComment(id)
         {
-            document.getElementById('commentPublishForm').submit();
+           let publishCluster =  new FormData(document.getElementById('commentPublishForm'));
+            axios({
+                method:'post',
+                url:`/admin/comments/${id}/publish`,
+                withCredentials:true,
+                data:publishCluster
+            })
+                .then(response => {
+                    this.showPopupMenu = false;
+                    if(response.data.success) {
+
+                        console.log(response.data);
+
+                        let publishedMessage = document.querySelector(`[data-comment-id-published="${id}"]`);
+                        publishedMessage.innerHTML = "<h4 class='text-success'>Published </h4>";
+                        this.showAlert = true;
+                        document.getElementById('alertText').innerText = response.data.message;
+                    } else {
+//prozess error
+                        console.log('something went.wrong')
+                    }
+                })
         },
 
         unpublishComment()
@@ -106,6 +128,15 @@ document.body.addEventListener('click', function(e){
 //confirm delete of the product
     if(e.target.id === "confirmDeleteButtonBtn"){
         commentsContainer.deleteComment;
+    }
+
+
+    if(e.target.id === "commentPublishBtn"){
+        commentsContainer.publishComment(e.target.dataset.commentId);
+    }
+
+    if(e.target.id === "closeCommentAlert"){
+        commentsContainer.showAlert = false;
     }
 
 });

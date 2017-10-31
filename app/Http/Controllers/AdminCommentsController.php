@@ -120,4 +120,23 @@ class AdminCommentsController extends Controller
     {
         //
     }
+
+
+    public function publish($id)
+    {
+        $comment = Comment::find($id);
+        $comment->published = "1";
+        $comment->save();
+        return response()->json([
+            'id' => $id,
+            'message' => 'Comment is published!',
+            'success' => true
+        ]);
+    }
+
+    public function unpublish($id)
+    {
+
+    }
+
 }
