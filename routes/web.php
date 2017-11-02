@@ -54,6 +54,7 @@
         Route::post('comments/{comment}/publish', 'AdminCommentsController@publish');
         Route::post('comments/{comment}/unpublish', 'AdminCommentsController@unpublish');
         Route::get('comments/succeeded', function () { return view('admin.succeeded'); });
+        Route::post('comments/confirmWindow', 'AdminCommentsController@showConfirmWindow');
 
         Route::resource('comments', 'AdminCommentsController');
     });

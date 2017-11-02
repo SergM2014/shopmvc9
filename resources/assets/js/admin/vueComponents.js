@@ -12,7 +12,7 @@ Vue.component('popup-menu', {
 
 Vue.component('alert', {
    template: `
-   <div id="alert" class="alert alert-success" role="alert">
+   <div id="alert" class="alert publish-status alert-success" role="alert">
         <button class="close" id="closeCommentAlert">&times;</button>
      <strong id="alertText" >Warning!</strong>
 </div>

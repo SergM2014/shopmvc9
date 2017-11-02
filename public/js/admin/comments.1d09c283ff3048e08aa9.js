@@ -13653,6 +13653,7 @@ var commentsContainer = new Vue({
         },
         deleteComment: function deleteComment() {
             document.getElementById('commentDeleteForm').submit();
+            console.log(document.getElementById('commentDeleteForm'));
             document.getElementById('confirmDeleteCommentBtn').setAttribute('disabled', 'disabled');
         },
         publishComment: function publishComment(id) {
@@ -13667,8 +13668,6 @@ var commentsContainer = new Vue({
             }).then(function (response) {
                 _this.showPopupMenu = false;
                 if (response.data.success) {
-
-                    console.log(response.data);
 
                     var publishedMessage = document.querySelector('[data-comment-id-published="' + id + '"]');
                     publishedMessage.innerHTML = "<h4 class='text-success'>Published </h4>";
@@ -13692,8 +13691,6 @@ var commentsContainer = new Vue({
             }).then(function (response) {
                 _this2.showPopupMenu = false;
                 if (response.data.success) {
-
-                    console.log(response.data);
 
                     var unpublishedMessage = document.querySelector('[data-comment-id-published="' + id + '"]');
                     unpublishedMessage.innerHTML = "<h4 class='text-danger'>Unpublished </h4>";
@@ -13725,8 +13722,11 @@ document.body.addEventListener('click', function (e) {
         commentsContainer.showModalBackground = false;
     }
     //confirm delete of the product
-    if (e.target.id === "confirmDeleteButtonBtn") {
-        commentsContainer.deleteComment;
+
+
+    if (e.target.id === "confirmDeleteCommentBtn") {
+        console.log('pressed');
+        commentsContainer.deleteComment();
     }
 
     if (e.target.id === "commentPublishBtn") {
@@ -14629,7 +14629,7 @@ Vue.component('popup-menu', {
 });
 
 Vue.component('alert', {
-    template: '\n   <div id="alert" class="alert alert-success" role="alert">\n        <button class="close" id="closeCommentAlert">&times;</button>\n     <strong id="alertText" >Warning!</strong>\n</div>\n   '
+    template: '\n   <div id="alert" class="alert publish-status alert-success" role="alert">\n        <button class="close" id="closeCommentAlert">&times;</button>\n     <strong id="alertText" >Warning!</strong>\n</div>\n   '
 });
 
 /***/ }),

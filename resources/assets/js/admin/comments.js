@@ -72,6 +72,7 @@ require('./vueComponents');
         deleteComment()
         {
             document.getElementById('commentDeleteForm').submit();
+console.log(document.getElementById('commentDeleteForm'));
             document.getElementById('confirmDeleteCommentBtn').setAttribute('disabled', 'disabled');
         },
 
@@ -87,8 +88,6 @@ require('./vueComponents');
                 .then(response => {
                     this.showPopupMenu = false;
                     if(response.data.success) {
-
-                        console.log(response.data);
 
                         let publishedMessage = document.querySelector(`[data-comment-id-published="${id}"]`);
                         publishedMessage.innerHTML = "<h4 class='text-success'>Published </h4>";
@@ -113,8 +112,6 @@ require('./vueComponents');
                 .then(response => {
                     this.showPopupMenu = false;
                     if(response.data.success) {
-
-                        console.log(response.data);
 
                         let unpublishedMessage = document.querySelector(`[data-comment-id-published="${id}"]`);
                         unpublishedMessage.innerHTML = "<h4 class='text-danger'>Unpublished </h4>";
@@ -147,8 +144,11 @@ document.body.addEventListener('click', function(e){
         commentsContainer.showModalBackground = false;
     }
 //confirm delete of the product
-    if(e.target.id === "confirmDeleteButtonBtn"){
-        commentsContainer.deleteComment;
+
+
+    if(e.target.id === "confirmDeleteCommentBtn"){
+console.log('pressed');
+        commentsContainer.deleteComment();
     }
 
 

@@ -118,7 +118,8 @@ class AdminCommentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Comment::destroy($id);
+        return redirect('/admin/comments/succeeded')->with('status', 'Comment deleted!');
     }
 
 
@@ -144,6 +145,12 @@ class AdminCommentsController extends Controller
             'message' => 'Comment is unpublished!',
             'success' => true
         ]);
+    }
+
+
+    public function showConfirmWindow()
+    {
+        return view('admin.modal.deleteComment');
     }
 
 }
