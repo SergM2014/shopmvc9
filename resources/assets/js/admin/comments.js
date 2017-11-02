@@ -101,9 +101,30 @@ require('./vueComponents');
                 })
         },
 
-        unpublishComment()
+        unpublishComment(id)
         {
-            document.getElementById('commentUnpublishForm').submit();
+            let publishCluster =  new FormData(document.getElementById('commentUnublishForm'));
+            axios({
+                method:'post',
+                url:`/admin/comments/${id}/unpublish`,
+                withCredentials:true,
+                data:publishCluster
+            })
+                .then(response => {
+                    this.showPopupMenu = false;
+                    if(response.data.success) {
+
+                        console.log(response.data);
+
+                        let unpublishedMessage = document.querySelector(`[data-comment-id-published="${id}"]`);
+                        unpublishedMessage.innerHTML = "<h4 class='text-danger'>Unpublished </h4>";
+                        this.showAlert = true;
+                        document.getElementById('alertText').innerText = response.data.message;
+                    } else {
+//prozess error
+                        console.log('something went.wrong')
+                    }
+                })
         }
     }
 });
@@ -134,6 +155,12 @@ document.body.addEventListener('click', function(e){
     if(e.target.id === "commentPublishBtn"){
         commentsContainer.publishComment(e.target.dataset.commentId);
     }
+
+
+    if(e.target.id === "commentUnpublishBtn"){
+        commentsContainer.unpublishComment(e.target.dataset.commentId);
+    }
+
 
     if(e.target.id === "closeCommentAlert"){
         commentsContainer.showAlert = false;

@@ -13680,8 +13680,30 @@ var commentsContainer = new Vue({
                 }
             });
         },
-        unpublishComment: function unpublishComment() {
-            document.getElementById('commentUnpublishForm').submit();
+        unpublishComment: function unpublishComment(id) {
+            var _this2 = this;
+
+            var publishCluster = new FormData(document.getElementById('commentUnublishForm'));
+            axios({
+                method: 'post',
+                url: '/admin/comments/' + id + '/unpublish',
+                withCredentials: true,
+                data: publishCluster
+            }).then(function (response) {
+                _this2.showPopupMenu = false;
+                if (response.data.success) {
+
+                    console.log(response.data);
+
+                    var unpublishedMessage = document.querySelector('[data-comment-id-published="' + id + '"]');
+                    unpublishedMessage.innerHTML = "<h4 class='text-danger'>Unpublished </h4>";
+                    _this2.showAlert = true;
+                    document.getElementById('alertText').innerText = response.data.message;
+                } else {
+                    //prozess error
+                    console.log('something went.wrong');
+                }
+            });
         }
     }
 });
@@ -13709,6 +13731,10 @@ document.body.addEventListener('click', function (e) {
 
     if (e.target.id === "commentPublishBtn") {
         commentsContainer.publishComment(e.target.dataset.commentId);
+    }
+
+    if (e.target.id === "commentUnpublishBtn") {
+        commentsContainer.unpublishComment(e.target.dataset.commentId);
     }
 
     if (e.target.id === "closeCommentAlert") {

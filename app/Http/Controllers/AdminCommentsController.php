@@ -136,7 +136,14 @@ class AdminCommentsController extends Controller
 
     public function unpublish($id)
     {
-
+        $comment = Comment::find($id);
+        $comment->published = "0";
+        $comment->save();
+        return response()->json([
+            'id' => $id,
+            'message' => 'Comment is unpublished!',
+            'success' => true
+        ]);
     }
 
 }
