@@ -2,8 +2,8 @@ require('./bootstrap');
 
 require('./vueComponents');
 
- let productsTable = new Vue({
-    el:'#categoriesContainer',
+ let manufacturersContainer = new Vue({
+    el:'#manufacturersContainer',
     data:{
         width:100,
         height:60,
@@ -36,12 +36,12 @@ require('./vueComponents');
         fillUpMenu(e)
         {
 
-            let id = e.target.closest('li').dataset.categoryId;
+            let id = e.target.closest('li').dataset.manufacturerId;
             let formData = new FormData;
             formData.append('id', id);
 
 
-            fetch( '/admin/categories/popupMenu',{
+            fetch( '/admin/manufacturers/popupMenu',{
                 method: 'post',
                 credentials:'same-origin',
                 body:formData
@@ -51,16 +51,16 @@ require('./vueComponents');
 
         },
 
-        showModalWindow(categoryId)
+        showModalWindow(manufacturerId)
         {
              this.showModalBackground = true;
              this.showPopupMenu = false;
             axios({
                 method:'post',
-                url:'/admin/categories/confirmWindow',
+                url:'/admin/manufacturers/confirmWindow',
                 withCredentials: true,
                 data:{
-                    id:categoryId
+                    id:manufacturerId
                 }
             })
                 .then(function(response) {
@@ -68,10 +68,10 @@ require('./vueComponents');
                 })
         },
 
-        deleteCategory()
+        deleteManufacturer()
         {
-            document.getElementById('categoryDeleteForm').submit();
-            document.getElementById('confirmDeleteProductBtn').setAttribute('disabled', 'disabled');
+            document.getElementById('manufacturerDeleteForm').submit();
+            document.getElementById('confirmDeleteManufacturerBtn').setAttribute('disabled', 'disabled');
         }
     }
 });
@@ -80,22 +80,22 @@ require('./vueComponents');
 document.body.addEventListener('click', function(e){
 
 //remove products poup if click outside the table
-    if(!e.target.closest('#categoriesContainer')) {
-        productsTable.showPopupMenu = false;
+    if(!e.target.closest('#manufacturersContainer')) {
+        manufacturersContainer.showPopupMenu = false;
     }
 //show confirm delete product Window
-    if(e.target.id ==='categoryDeleteBtn'){
-        let categoryId = e.target.dataset.categoryId;
+    if(e.target.id ==='manufacturerDeleteBtn'){
+        let manufacturerId = e.target.dataset.manufacturerId;
 
-        productsTable.showModalWindow(categoryId)
+        manufacturersContainer.showModalWindow(manufacturerId)
     }
 // cansel the action that demand a confirmation
     if(e.target.id === "canselBtn" || e.target.id === "modalBackground"){
-        productsTable.showModalBackground = false;
+        manufacturersContainer.showModalBackground = false;
     }
 //confirm delete of the product
-    if(e.target.id === "confirmDeleteCategoryBtn"){
-        productsTable.deleteCategory();
+    if(e.target.id === "confirmDeleteManufacturerBtn"){
+        manufacturersContainer.deleteManufacturer();
     }
 
 });

@@ -69,7 +69,7 @@
   outline: none !important;
 }
 
-.admin-category-menu__item-text{
+.admin-category-menu__item-text, .admin-manufacturer-menu__item-text{
   margin-bottom: 5px;
   display: inline-block;
   cursor: pointer;
@@ -80,12 +80,15 @@
   text-align: center;
 }
 
-.admin-category-menu__item-text:hover{
+.admin-category-menu__item-text:hover, .admin-manufacturer-menu__item-text:hover{
   background-color: #c7254e;
 }
 
 .list{
   display:inline-block;
+}
+.list-manufacturers{
+  padding-left:0;
 }
 
 .list ul, .list li{

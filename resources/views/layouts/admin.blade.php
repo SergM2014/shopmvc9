@@ -45,6 +45,10 @@
                             Comments
                         </a>
 
+                        <a class="navbar-brand" href="{{ url('/admin/manufacturers') }}">
+                            Manufacturers
+                        </a>
+
                     @endif
                 </div>
 
