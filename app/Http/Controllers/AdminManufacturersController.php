@@ -64,9 +64,9 @@ class AdminManufacturersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Manufacturer $manufacturer)
     {
-        //
+        return view('admin.manufacturers.edit', compact('manufacturer'));
     }
 
     /**
@@ -78,7 +78,13 @@ class AdminManufacturersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title' =>'required|min:6',
+        ]);
+
+        $manufacturer = Manufacturer::find($id);
+        $manufacturer::where('id', $id)->update(['eng_translit_title' => request('title'), 'title' => request('title'), 'url'=> '/'.request('title') ]);
+        return redirect('/admin/manufacturers/succeeded')->with('status', 'Manufacturer Updated!');
     }
 
     /**
