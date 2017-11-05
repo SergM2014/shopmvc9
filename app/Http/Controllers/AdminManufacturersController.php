@@ -95,6 +95,15 @@ class AdminManufacturersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Manufacturer::destroy($id);
+        return redirect('/admin/manufacturers/succeeded')->with('status', 'Manufacturer deleted!');
+    }
+
+    public function showConfirmWindow()
+    {
+
+
+
+        return view('admin.modal.deleteManufacturer');
     }
 }

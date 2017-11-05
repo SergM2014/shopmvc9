@@ -59,6 +59,7 @@
         Route::resource('comments', 'AdminCommentsController');
 
         Route::post('manufacturers/popupMenu', function () { return view('admin.popUp.allManufacturers'); });
+        Route::post('manufacturers/confirmWindow', 'AdminManufacturersController@showConfirmWindow');
         Route::get('manufacturers/succeeded', function () { return view('admin.succeeded'); });
         Route::resource('manufacturers', 'AdminManufacturersController');
     });
