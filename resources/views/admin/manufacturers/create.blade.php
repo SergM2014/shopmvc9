@@ -5,20 +5,13 @@
 
     <div class="center-block flex-centered">
 
-        <form action="/admin/categories" method="POST" class="auto-margin" >
+        <form action="/admin/manufacturers" method="POST" class="auto-margin" >
 
 
-        <h1 class="bg-danger text-center">Create Category</h1>
+            <h1 class="bg-danger text-center">Create Manufacturer</h1>
 
             {{ csrf_field() }}
-            <div class="form-group">
-                <label for="parentId" class="text-warning">Choose Parent Category</label>
-                <br>
-                <select name="parentId" class="form-control" >
-                    <option value="0">Designate as start category</option>
-                    {!!  $dropDownList !!}
-                </select>
-            </div>
+
 
             <div class="form-group">
                 <label for="title" class="text-warning">Title</label>

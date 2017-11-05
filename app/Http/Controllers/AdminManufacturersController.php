@@ -26,7 +26,7 @@ class AdminManufacturersController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.manufacturers.create');
     }
 
     /**
@@ -37,7 +37,14 @@ class AdminManufacturersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'title' =>'required|min:6',
+        ]);
+
+        Manufacturer::create(['eng_translit_title'=> request('title'), 'title' => request('title'),
+            'url'=> '/'.request('title')]);
+
+        return redirect('/admin/manufacturers/succeeded')->with('status', 'Manufacturer Created!');
     }
 
     /**

@@ -29,7 +29,7 @@ class AdminCategoriesController extends Controller
         Category::create(['title' => request('title'),
             'parent_id'=>request('parentId')]);
 
-        return redirect('/admin/categories/succeeded')->with('status', 'Category Created!');
+        return redirect('/admin/manufacturers/succeeded')->with('status', 'Category Created!');
     }
 
     public function edit(Category $category)
