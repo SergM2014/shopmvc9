@@ -36,7 +36,7 @@
 
     Route::post('/getImage', function(){ return view('admin.products.drawImage'); });
 
-    
+
     Route::group(['prefix'=>'admin', 'middleware'=> 'auth'], function () {
 
         Route::get('products/succeeded', function () { return view('admin.succeeded'); });
