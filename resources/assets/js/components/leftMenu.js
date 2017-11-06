@@ -13,7 +13,7 @@ document.body.addEventListener('click', function(e){
             if(! childrenLi) return;
             for (let i=0; i<childrenLi.length; i++){
                 let ul = childrenLi[i].querySelector('ul');
-                if(childrenLi[i].dataset.categoryId != currentMenuItemId){
+                if(childrenLi[i].dataset.categoryId !== currentMenuItemId){
                     if (ul){
                         ul.classList.add('hidden');
                         let sign = ul.closest('li').querySelector('.left-menu__contains-subcatetegories-sign');

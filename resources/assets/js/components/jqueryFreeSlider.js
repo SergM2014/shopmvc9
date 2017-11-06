@@ -108,17 +108,17 @@ class Slider {
     {
         let newnow;
 //if thelast slider than reset nex slider to number 1
-        if (now == this.slider_number) {
+        if (now === this.slider_number) {
             newnow = 1;
         } else {
             newnow = (Number(now) + 1);
         }
 
 //if the only one slider exists than always 1
-        if (this.slider_number == 1) newnow = 1;
+        if (this.slider_number === 1) newnow = 1;
 
 //hidr(slideup) the last active slider
-        if (last != 0) {
+        if (last !== 0) {
             Slider.toggleImage(last);
         }
 

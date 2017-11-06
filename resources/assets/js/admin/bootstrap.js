@@ -11,7 +11,7 @@ window.Vue = Vue;
 window.Errors = Errors;
 
 
-require('./auth');
+//require('./auth');
 
 
 

@@ -29,6 +29,7 @@
 
         @include('custom.partials.footer')
 
+        <script src="{{ mix('/js/bootstrap-sass.js')}}"></script>
 
     </body>
 </html>

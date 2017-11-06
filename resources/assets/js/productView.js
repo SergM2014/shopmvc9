@@ -13,7 +13,6 @@ document.body.addEventListener('click', function(e){
 
 //refresh captcha by clicking
     if(e.target.closest('#captchaImg')){
-      //  fetch('/refreshCaptcha',{ method: 'POST' })
         axios({
             url:'/refreshCaptcha',
             method: 'post',
