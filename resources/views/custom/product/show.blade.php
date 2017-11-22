@@ -27,11 +27,13 @@
 
                     @foreach($product->images as $image)
 
-                        <div class="col-xs-6 col-md-3">
-                            <a href="/uploads/productsImages/{{ $image->path }}" class="thumbnail" data-toggle="lightbox" >
-                                <img src="/uploads/productsImages/{{ $image->path }}" alt="..." class="img-fluid">
-                            </a>
-                        </div>
+                        @if (file_exists('/uploads/productsImages/{{ $image->path }}'))
+                            <div class="col-xs-6 col-md-3">
+                                <a href="/uploads/productsImages/{{ $image->path }}" class="thumbnail" data-toggle="lightbox" >
+                                    <img src="/uploads/productsImages/{{ $image->path }}" alt="..." class="img-fluid" >
+                                </a>
+                            </div>
+                        @endif
 
                     @endforeach
 

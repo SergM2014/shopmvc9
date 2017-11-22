@@ -7,7 +7,7 @@ use App\Slider;
 use App\Carousel;
 use App\Category;
 use App\Background;
-use App\Manufacturer;
+
 
 
 class IndexController extends Controller
