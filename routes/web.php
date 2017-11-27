@@ -63,6 +63,12 @@
         Route::post('manufacturers/confirmWindow', 'AdminManufacturersController@showConfirmWindow');
         Route::get('manufacturers/succeeded', function () { return view('admin.succeeded'); });
         Route::resource('manufacturers', 'AdminManufacturersController');
+
+
+        Route::resource('users', 'AdminUsersController');
+
+
+        Route::get('/', 'HomeController@index');
     });
 
 

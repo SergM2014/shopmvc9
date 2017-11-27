@@ -33,21 +33,37 @@
                     </a>
                     @if(Auth::check())
 
-                        <a class="navbar-brand" href="{{ url('/admin/products') }}">
-                            Products
-                        </a>
+                        @can('user')
 
-                        <a class="navbar-brand" href="{{ url('/admin/categories') }}">
-                            Categories
-                        </a>
+                            <a class="navbar-brand" href="{{ url('/admin/products') }}">
+                                Products
+                            </a>
 
-                        <a class="navbar-brand" href="{{ url('/admin/comments') }}">
-                            Comments
-                        </a>
+                            <a class="navbar-brand" href="{{ url('/admin/categories') }}">
+                                Categories
+                            </a>
 
-                        <a class="navbar-brand" href="{{ url('/admin/manufacturers') }}">
-                            Manufacturers
-                        </a>
+                            <a class="navbar-brand" href="{{ url('/admin/manufacturers') }}">
+                                Manufacturers
+                            </a>
+
+                        @endcan
+
+                        @can('admin')
+
+                            <a class="navbar-brand" href="{{ url('/admin/comments') }}">
+                                Comments
+                            </a>
+
+                        @endcan
+
+                        @can('superadmin')
+
+                            <a class="navbar-brand" href="{{ url('/admin/users') }}">
+                                Users
+                            </a>
+
+                        @endcan
 
                     @endif
                 </div>
@@ -93,6 +109,6 @@
         @yield('content')
     </div>
 
-    <script src="{{ mix('/js/admin/auth.js')}}"></script>
+
 </body>
 </html>
