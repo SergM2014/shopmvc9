@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 62);
+/******/ 	return __webpack_require__(__webpack_require__.s = 64);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -24639,7 +24639,6 @@ window.axios = __WEBPACK_IMPORTED_MODULE_1_axios___default.a;
 window.Vue = __WEBPACK_IMPORTED_MODULE_0_vue___default.a;
 window.Errors = __WEBPACK_IMPORTED_MODULE_2__components_helpers__["a" /* default */];
 
-//require('./auth');
 __webpack_require__(32);
 
 /***/ }),
@@ -24666,15 +24665,16 @@ Vue.component('alert', {
 /* 39 */,
 /* 40 */,
 /* 41 */,
-/* 42 */
+/* 42 */,
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(33);
 
 __webpack_require__(34);
 
-var manufacturersContainer = new Vue({
-    el: '#manufacturersContainer',
+var productsTable = new Vue({
+    el: '#productsTableContainer',
     data: {
         width: 100,
         height: 60,
@@ -24702,11 +24702,11 @@ var manufacturersContainer = new Vue({
         },
         fillUpMenu: function fillUpMenu(e) {
 
-            var id = e.target.closest('li').dataset.manufacturerId;
+            var id = e.target.closest('.parent_tr').dataset.productId;
             var formData = new FormData();
             formData.append('id', id);
 
-            fetch('/admin/manufacturers/popupMenu', {
+            fetch('/admin/products/popupMenu', {
                 method: 'post',
                 credentials: 'same-origin',
                 body: formData
@@ -24716,23 +24716,20 @@ var manufacturersContainer = new Vue({
                 return document.getElementById('popupMenu').innerHTML = html;
             });
         },
-        showModalWindow: function showModalWindow(manufacturerId) {
+        showModalWindow: function showModalWindow() {
             this.showModalBackground = true;
             this.showPopupMenu = false;
             axios({
                 method: 'post',
-                url: '/admin/manufacturers/confirmWindow',
-                withCredentials: true,
-                data: {
-                    id: manufacturerId
-                }
+                url: '/admin/products/confirmWindow',
+                withCredentials: true
             }).then(function (response) {
                 document.getElementById('modalBackground').innerHTML = response.data;
             });
         },
-        deleteManufacturer: function deleteManufacturer() {
-            document.getElementById('manufacturerDeleteForm').submit();
-            document.getElementById('confirmDeleteManufacturerBtn').setAttribute('disabled', 'disabled');
+        deleteProduct: function deleteProduct() {
+            document.getElementById('productDeleteForm').submit();
+            document.getElementById('confirmDeleteProductBtn').setAttribute('disabled', 'disabled');
         }
     }
 });
@@ -24740,27 +24737,24 @@ var manufacturersContainer = new Vue({
 document.body.addEventListener('click', function (e) {
 
     //remove products poup if click outside the table
-    if (!e.target.closest('#manufacturersContainer')) {
-        manufacturersContainer.showPopupMenu = false;
+    if (!e.target.closest('#productsTableContainer')) {
+        productsTable.showPopupMenu = false;
     }
     //show confirm delete product Window
-    if (e.target.id === 'manufacturerDeleteBtn') {
-        var manufacturerId = e.target.dataset.manufacturerId;
-
-        manufacturersContainer.showModalWindow(manufacturerId);
+    if (e.target.id === 'productDeleteBtn') {
+        productsTable.showModalWindow();
     }
     // cansel the action that demand a confirmation
     if (e.target.id === "canselBtn" || e.target.id === "modalBackground") {
-        manufacturersContainer.showModalBackground = false;
+        productsTable.showModalBackground = false;
     }
     //confirm delete of the product
-    if (e.target.id === "confirmDeleteManufacturerBtn") {
-        manufacturersContainer.deleteManufacturer();
+    if (e.target.id === "confirmDeleteProductBtn") {
+        productsTable.deleteProduct();
     }
 });
 
 /***/ }),
-/* 43 */,
 /* 44 */,
 /* 45 */,
 /* 46 */,
@@ -24779,10 +24773,12 @@ document.body.addEventListener('click', function (e) {
 /* 59 */,
 /* 60 */,
 /* 61 */,
-/* 62 */
+/* 62 */,
+/* 63 */,
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(42);
+module.exports = __webpack_require__(43);
 
 
 /***/ })

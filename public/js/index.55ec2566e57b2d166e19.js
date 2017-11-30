@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 67);
+/******/ 	return __webpack_require__(__webpack_require__.s = 69);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -12329,7 +12329,8 @@ var searchVue = new Vue({
 /* 43 */,
 /* 44 */,
 /* 45 */,
-/* 46 */
+/* 46 */,
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -12341,30 +12342,30 @@ var searchVue = new Vue({
 
 __webpack_require__(35);
 
+__webpack_require__(56);
+
 __webpack_require__(55);
 
 __webpack_require__(54);
 
-__webpack_require__(53);
-
 /***/ }),
-/* 47 */,
-/* 48 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
+/* 48 */,
 /* 49 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 50 */,
+/* 50 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
 /* 51 */,
 /* 52 */,
-/* 53 */
+/* 53 */,
+/* 54 */
 /***/ (function(module, exports) {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -12481,7 +12482,7 @@ container.addEventListener('mousemove', Scroller.stop.bind(Scroller));
 container.addEventListener('mouseout', Scroller.init.bind(Scroller));
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports) {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -12629,7 +12630,7 @@ var Slider = function () {
 window.onload = new Slider().startSliding('1', '0');
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports) {
 
 document.body.addEventListener('click', function (e) {
@@ -12666,7 +12667,6 @@ document.body.addEventListener('click', function (e) {
 });
 
 /***/ }),
-/* 56 */,
 /* 57 */,
 /* 58 */,
 /* 59 */,
@@ -12677,12 +12677,14 @@ document.body.addEventListener('click', function (e) {
 /* 64 */,
 /* 65 */,
 /* 66 */,
-/* 67 */
+/* 67 */,
+/* 68 */,
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(46);
-__webpack_require__(48);
-module.exports = __webpack_require__(49);
+__webpack_require__(47);
+__webpack_require__(49);
+module.exports = __webpack_require__(50);
 
 
 /***/ })

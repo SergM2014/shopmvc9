@@ -5,8 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Comment;
 
+
 class AdminCommentsController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        $this->middleware(function($request, $next){
+
+            abort_unless($request->user()->can('admin'), 403);
+            return $next($request);
+        });
+
+    }
 
     private function findOutOrder()
     {

@@ -14,6 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
+
     ];
 
     /**
@@ -27,13 +28,15 @@ class AuthServiceProvider extends ServiceProvider
 
         //
         Gate::define('user', function ($user){
-           // return $user->role == 'user';
+
             if ($user->role == 'superadmin' OR $user->role == 'admin' OR $user->role == 'user') return true;
+            return false;
         });
 
         Gate::define('admin', function($user){
            //return $user->role == 'admin';
             if ($user->role == 'superadmin' OR $user->role == 'admin') return true;
+            return false;
         });
 
         Gate::define('superadmin', function($user){

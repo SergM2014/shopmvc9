@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 60);
+/******/ 	return __webpack_require__(__webpack_require__.s = 61);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -24639,7 +24639,6 @@ window.axios = __WEBPACK_IMPORTED_MODULE_1_axios___default.a;
 window.Vue = __WEBPACK_IMPORTED_MODULE_0_vue___default.a;
 window.Errors = __WEBPACK_IMPORTED_MODULE_2__components_helpers__["a" /* default */];
 
-//require('./auth');
 __webpack_require__(32);
 
 /***/ }),
@@ -24840,7 +24839,8 @@ document.body.addEventListener('click', function (e) {
 /* 57 */,
 /* 58 */,
 /* 59 */,
-/* 60 */
+/* 60 */,
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(40);

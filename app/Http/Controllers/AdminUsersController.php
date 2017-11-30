@@ -4,16 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
 class AdminUsersController extends Controller
 {
+
+    public function __construct(Request $request)
+    {
+        $this->middleware(function($request, $next){
+
+            abort_unless($request->user()->can('superadmin'), 403);
+            return $next($request);
+        });
+
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return 'this is index action';
+        return view('admin.users.all');
+
     }
 
     /**

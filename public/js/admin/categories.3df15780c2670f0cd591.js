@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 63);
+/******/ 	return __webpack_require__(__webpack_require__.s = 60);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -24639,7 +24639,6 @@ window.axios = __WEBPACK_IMPORTED_MODULE_1_axios___default.a;
 window.Vue = __WEBPACK_IMPORTED_MODULE_0_vue___default.a;
 window.Errors = __WEBPACK_IMPORTED_MODULE_2__components_helpers__["a" /* default */];
 
-//require('./auth');
 __webpack_require__(32);
 
 /***/ }),
@@ -24663,11 +24662,7 @@ Vue.component('alert', {
 /* 36 */,
 /* 37 */,
 /* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(33);
@@ -24675,7 +24670,7 @@ __webpack_require__(33);
 __webpack_require__(34);
 
 var productsTable = new Vue({
-    el: '#productsTableContainer',
+    el: '#categoriesContainer',
     data: {
         width: 100,
         height: 60,
@@ -24703,11 +24698,11 @@ var productsTable = new Vue({
         },
         fillUpMenu: function fillUpMenu(e) {
 
-            var id = e.target.closest('.parent_tr').dataset.productId;
+            var id = e.target.closest('li').dataset.categoryId;
             var formData = new FormData();
             formData.append('id', id);
 
-            fetch('/admin/products/popupMenu', {
+            fetch('/admin/categories/popupMenu', {
                 method: 'post',
                 credentials: 'same-origin',
                 body: formData
@@ -24717,19 +24712,22 @@ var productsTable = new Vue({
                 return document.getElementById('popupMenu').innerHTML = html;
             });
         },
-        showModalWindow: function showModalWindow() {
+        showModalWindow: function showModalWindow(categoryId) {
             this.showModalBackground = true;
             this.showPopupMenu = false;
             axios({
                 method: 'post',
-                url: '/admin/products/confirmWindow',
-                withCredentials: true
+                url: '/admin/categories/confirmWindow',
+                withCredentials: true,
+                data: {
+                    id: categoryId
+                }
             }).then(function (response) {
                 document.getElementById('modalBackground').innerHTML = response.data;
             });
         },
-        deleteProduct: function deleteProduct() {
-            document.getElementById('productDeleteForm').submit();
+        deleteCategory: function deleteCategory() {
+            document.getElementById('categoryDeleteForm').submit();
             document.getElementById('confirmDeleteProductBtn').setAttribute('disabled', 'disabled');
         }
     }
@@ -24738,24 +24736,30 @@ var productsTable = new Vue({
 document.body.addEventListener('click', function (e) {
 
     //remove products poup if click outside the table
-    if (!e.target.closest('#productsTableContainer')) {
+    if (!e.target.closest('#categoriesContainer')) {
         productsTable.showPopupMenu = false;
     }
     //show confirm delete product Window
-    if (e.target.id === 'productDeleteBtn') {
-        productsTable.showModalWindow();
+    if (e.target.id === 'categoryDeleteBtn') {
+        var categoryId = e.target.dataset.categoryId;
+
+        productsTable.showModalWindow(categoryId);
     }
     // cansel the action that demand a confirmation
     if (e.target.id === "canselBtn" || e.target.id === "modalBackground") {
         productsTable.showModalBackground = false;
     }
     //confirm delete of the product
-    if (e.target.id === "confirmDeleteProductBtn") {
-        productsTable.deleteProduct();
+    if (e.target.id === "confirmDeleteCategoryBtn") {
+        productsTable.deleteCategory();
     }
 });
 
 /***/ }),
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */,
 /* 44 */,
 /* 45 */,
 /* 46 */,
@@ -24772,13 +24776,10 @@ document.body.addEventListener('click', function (e) {
 /* 57 */,
 /* 58 */,
 /* 59 */,
-/* 60 */,
-/* 61 */,
-/* 62 */,
-/* 63 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(43);
+module.exports = __webpack_require__(39);
 
 
 /***/ })

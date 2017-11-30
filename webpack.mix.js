@@ -31,6 +31,7 @@ mix.js('resources/assets/js/admin/auth.js', 'public/js/admin');
 mix.js('resources/assets/js/admin/comments.js', 'public/js/admin').version();
 mix.js('resources/assets/js/admin/updateComment.js', 'public/js/admin').version();
 mix.js('resources/assets/js/admin/manufacturers.js', 'public/js/admin').version();
+mix.js('resources/assets/js/admin/users.js', 'public/js/admin').version();
 
 
 mix.sass('resources/assets/sass/admin.scss', 'public/css').version();
