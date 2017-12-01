@@ -15,7 +15,7 @@
                 @foreach($users as $user)
 
                     <li data-user-id="<?= $user->id ?>" class="admin-user-menu__item">
-                        <span class="admin-user-menu__item-text"><?= $user->name ?></span>
+                        <span class="admin-user-menu__item-text"><?= $user->name ?>/<small class="text-danger"><?= $user->role ?></small></span>
                     </li>
 
                 @endforeach
