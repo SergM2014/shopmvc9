@@ -65,6 +65,9 @@
         Route::resource('manufacturers', 'AdminManufacturersController');
 
 
+        Route::post('users/popupMenu', function () { return view('admin.popUp.allUsers'); });
+        Route::post('users/confirmWindow', 'AdminUsersController@showConfirmWindow');
+        Route::get('users/succeeded', function () { return view('admin.succeeded'); });
         Route::resource('users', 'AdminUsersController');
 
 

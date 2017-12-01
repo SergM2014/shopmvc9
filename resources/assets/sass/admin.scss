@@ -6,7 +6,8 @@
   cursor:pointer;
 }
 .popup-menu{
-  position:absolute;
+  /*position:absolute;*/
+  position:fixed;
   background: #ffdb7f;
   z-index:500;
   padding:2px;
@@ -69,7 +70,7 @@
   outline: none !important;
 }
 
-.admin-category-menu__item-text, .admin-manufacturer-menu__item-text{
+.admin-category-menu__item-text, .admin-manufacturer-menu__item-text, .admin-user-menu__item-text{
   margin-bottom: 5px;
   display: inline-block;
   cursor: pointer;
@@ -80,14 +81,14 @@
   text-align: center;
 }
 
-.admin-category-menu__item-text:hover, .admin-manufacturer-menu__item-text:hover{
+.admin-category-menu__item-text:hover, .admin-manufacturer-menu__item-text:hover, .admin-user-menu__item-text:hover{
   background-color: #c7254e;
 }
 
 .list{
   display:inline-block;
 }
-.list-manufacturers{
+.list-manufacturers, .list-users{
   padding-left:0;
 }
 

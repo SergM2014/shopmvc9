@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
 
@@ -25,7 +26,8 @@ class AdminUsersController extends Controller
      */
     public function index(Request $request)
     {
-        return view('admin.users.all');
+        $users = User::all();
+        return view('admin.users.index', compact('users'));
 
     }
 
@@ -36,7 +38,7 @@ class AdminUsersController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.users.create');
     }
 
     /**
@@ -47,7 +49,18 @@ class AdminUsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' =>'required|unique:users|min:6',
+            'email' =>'required|email',
+            'password' => 'required|confirmed|min:6',
+
+            'role' =>'required',
+        ]);
+
+        User::create(['name'=> request('name'), 'email' => request('email'),
+            'password'=> bcrypt(request('password')), 'role'=> request('role'), 'remember_token' => str_random(100) ]);
+
+        return redirect('/admin/users/succeeded')->with('status', 'User Created!');
     }
 
     /**

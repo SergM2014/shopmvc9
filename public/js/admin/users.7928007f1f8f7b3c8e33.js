@@ -24675,6 +24675,70 @@ __webpack_require__(33);
 
 __webpack_require__(34);
 
+var usersContainer = new Vue({
+    el: '#usersContainer',
+    data: {
+        width: 100,
+        height: 60,
+        showPopupMenu: false,
+        showModalBackground: false,
+
+        screenWidth: document.body.clientWidth,
+        screenHeight: document.body.clientHeight
+
+    },
+    methods: {
+        drawMenu: function drawMenu(e) {
+
+            this.x = e.pageX;
+            this.y = e.pageY;
+
+            if (this.x + this.width > this.screenWidth + pageXOffset) this.x = this.screenWidth + pageXOffset - this.width;
+            if (this.y + this.height > this.screenHeight + pageYOffset) this.y = this.screenHeight + pageYOffset - this.height;
+
+            document.getElementById('popupMenu').style.left = this.x + "px";
+            document.getElementById('popupMenu').style.top = this.y + "px";
+
+            this.fillUpMenu(e);
+            this.showPopupMenu = true;
+        },
+        fillUpMenu: function fillUpMenu(e) {
+
+            var id = e.target.closest('li').dataset.userId;
+            var formData = new FormData();
+            formData.append('id', id);
+
+            fetch('/admin/users/popupMenu', {
+                method: 'post',
+                credentials: 'same-origin',
+                body: formData
+            }).then(function (response) {
+                return response.text();
+            }).then(function (html) {
+                return document.getElementById('popupMenu').innerHTML = html;
+            });
+        },
+        showModalWindow: function showModalWindow(userId) {
+            this.showModalBackground = true;
+            this.showPopupMenu = false;
+            axios({
+                method: 'post',
+                url: '/admin/users/confirmWindow',
+                withCredentials: true,
+                data: {
+                    id: userId
+                }
+            }).then(function (response) {
+                document.getElementById('modalBackground').innerHTML = response.data;
+            });
+        },
+        deleteManufacturer: function deleteManufacturer() {
+            document.getElementById('userDeleteForm').submit();
+            document.getElementById('confirmDeleteUserBtn').setAttribute('disabled', 'disabled');
+        }
+    }
+});
+
 /***/ }),
 /* 46 */,
 /* 47 */,

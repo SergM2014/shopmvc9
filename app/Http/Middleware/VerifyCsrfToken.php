@@ -35,5 +35,6 @@ class VerifyCsrfToken extends BaseVerifier
         '/admin/categories/popupMenu',
         '/admin/comments/popupMenu',
         '/admin/manufacturers/popupMenu',
+        '/admin/users/popupMenu',
     ];
 }
