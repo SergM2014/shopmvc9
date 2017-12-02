@@ -80,9 +80,9 @@ class AdminUsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return  view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -94,7 +94,30 @@ class AdminUsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $this->validate($request, [
+            'name' =>'required|min:6',
+            'email' =>'required|email',
+
+            'role' =>'required',
+        ]);
+
+        if($request->password){
+            $this->validate($request, [
+                'password' => 'required|confirmed|min:6',
+            ]);
+        }
+
+
+       User::where('id', $id)
+           ->update(['name'=> request('name'), 'email' => request('email'), 'role'=> request('role')]);
+
+        if($request->password){
+            User::where('id', $id)
+                    ->update(['password'=>bcrypt($request->password)]);
+        }
+
+        return redirect('/admin/users/succeeded')->with('status', 'User Updated!');
     }
 
     /**
