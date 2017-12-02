@@ -128,6 +128,16 @@ class AdminUsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(!env('APP_DEBUG')){
+             User::destroy($id);
+        }
+
+        return redirect('/admin/users/succeeded')->with('status', 'User deleted!');
+
+    }
+
+    public function showConfirmWindow()
+    {
+        return view('admin.modal.deleteUser');
     }
 }

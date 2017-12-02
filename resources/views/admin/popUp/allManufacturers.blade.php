@@ -2,10 +2,10 @@
 <br>
 <a href="/admin/manufacturers/<?= $_POST['id'] ?>/edit">Update</a>
 <br>
-<form id="manufacturerDeleteForm" action ="/admin/manufacturers/<?= $_POST['id'] ?>"  method="POST">
+<form id="userDeleteForm" action ="/admin/users/<?= $_POST['id'] ?>"  method="POST">
     {{ method_field('DELETE') }}
     {{ csrf_field() }}
-    <button type="button" class="button-link" id="manufacturerDeleteBtn" @click="showModalWindow" data-manufacturer-id="<?= $_POST['id'] ?>">Delete</button>
+    <button type="button" class="button-link" id="userDeleteBtn" @click="showModalWindow" data-manufacturer-id="<?= $_POST['id'] ?>">Delete</button>
 </form>
 
 

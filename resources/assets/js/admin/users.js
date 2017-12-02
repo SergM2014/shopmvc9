@@ -68,10 +68,35 @@ let usersContainer = new Vue({
                 })
         },
 
-        deleteManufacturer()
+        deleteUser()
         {
             document.getElementById('userDeleteForm').submit();
             document.getElementById('confirmDeleteUserBtn').setAttribute('disabled', 'disabled');
         }
     }
+});
+
+
+
+document.body.addEventListener('click', function(e){
+
+//remove users poup if click outside the table
+    if(!e.target.closest('#usersContainer')) {
+        usersContainer.showPopupMenu = false;
+    }
+//show confirm delete user Window
+    if(e.target.id ==='userDeleteBtn'){
+        let userId = e.target.dataset.userId;
+
+        usersContainer.showModalWindow(userId)
+    }
+// cansel the action that demand a confirmation
+    if(e.target.id === "canselBtn" || e.target.id === "modalBackground"){
+        usersContainer.showModalBackground = false;
+    }
+//confirm delete of the user
+    if(e.target.id === "confirmDeleteUserBtn"){
+        usersContainer.deleteUser();
+    }
+
 });
