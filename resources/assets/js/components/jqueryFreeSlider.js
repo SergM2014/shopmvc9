@@ -11,6 +11,7 @@ class Slider {
 
     static toggleImage(id)//спочатку получаемо цифру 1
     {
+
         let currentElem = document.getElementById(id);
         let currentElemHeight = Slider.getElemHeight(currentElem);//получаем высоту элемента
         let titleElems = currentElem.getElementsByTagName('*');//елкмкнты що маються в теге содержащиго картинку
@@ -117,8 +118,9 @@ class Slider {
 //if the only one slider exists than always 1
         if (this.slider_number === 1) newnow = 1;
 
-//hidr(slideup) the last active slider
-        if (last !== 0) {
+//hier(slideup) the last active slider
+        // if (last !== 0) { // this variant doesnot work
+        if(last != 0){
             Slider.toggleImage(last);
         }
 

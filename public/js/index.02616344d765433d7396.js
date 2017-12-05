@@ -12350,18 +12350,8 @@ __webpack_require__(54);
 
 /***/ }),
 /* 48 */,
-/* 49 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
+/* 49 */,
+/* 50 */,
 /* 51 */,
 /* 52 */,
 /* 53 */,
@@ -12512,8 +12502,9 @@ var Slider = function () {
             //if the only one slider exists than always 1
             if (this.slider_number === 1) newnow = 1;
 
-            //hidr(slideup) the last active slider
-            if (last !== 0) {
+            //hier(slideup) the last active slider
+            // if (last !== 0) { // this variant doesnot work
+            if (last != 0) {
                 Slider.toggleImage(last);
             }
 
@@ -12529,6 +12520,7 @@ var Slider = function () {
         key: 'toggleImage',
         value: function toggleImage(id) //спочатку получаемо цифру 1
         {
+
             var currentElem = document.getElementById(id);
             var currentElemHeight = Slider.getElemHeight(currentElem); //получаем высоту элемента
             var titleElems = currentElem.getElementsByTagName('*'); //елкмкнты що маються в теге содержащиго картинку
@@ -12682,9 +12674,7 @@ document.body.addEventListener('click', function (e) {
 /* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(47);
-__webpack_require__(49);
-module.exports = __webpack_require__(50);
+module.exports = __webpack_require__(47);
 
 
 /***/ })

@@ -12,14 +12,14 @@ const { mix } = require('laravel-mix');
  */
 
 
-
+mix.js('resources/assets/js/components/bootstrap-sass.js', 'public/js');
 mix.sass('resources/assets/sass/app.scss', 'public/css').version();
 
 
 mix.js('resources/assets/js/index.js', 'public/js').version();
 mix.js('resources/assets/js/app.js', 'public/js').version();
 mix.js('resources/assets/js/productView.js', 'public/js').version();
-mix.js('resources/assets/js/components/bootstrap-sass.js', 'public/js');
+
 
 
 mix.js('resources/assets/js/admin/products.js', 'public/js/admin').version();

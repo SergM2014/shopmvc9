@@ -19,8 +19,10 @@
 
 
         <?php $num=1; if(!empty($sliders)): ?>
+
         <div id="slider">
             <?php foreach($sliders as $image): ?>
+
             <div class="slider_image notdisplayed" style="/*display:none;*/ background-image:  url(<?='/uploads/sliders/'.$image->image; ?>) ;" id="<?= $num;?>">
 
                 <div class="bottom bottom_title">

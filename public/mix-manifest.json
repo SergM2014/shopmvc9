@@ -1,7 +1,5 @@
 {
-  "/js/index.js": "/js/index.55ec2566e57b2d166e19.js",
-  "/css/app.css": "/css/app.1f88fba2c90d6ffaed28.css",
-  "/css/admin.css": "/css/admin.1f88fba2c90d6ffaed28.css",
+  "/js/index.js": "/js/index.02616344d765433d7396.js",
   "/js/productView.js": "/js/productView.8fe3fccbfd31a607b7e2.js",
   "/js/admin/createProduct.js": "/js/admin/createProduct.f73002541ac4122d7b72.js",
   "/js/admin/users.js": "/js/admin/users.28f20db422eb93b7a940.js",
@@ -10,7 +8,9 @@
   "/js/admin/comments.js": "/js/admin/comments.4203fda0299c623ec309.js",
   "/js/admin/categories.js": "/js/admin/categories.3df15780c2670f0cd591.js",
   "/js/app.js": "/js/app.4b5a8ab1b0dd363ae26d.js",
-  "/js/bootstrap-sass.js": "/js/bootstrap-sass.f6415c4d89ce4ab41751.js",
+  "/js/bootstrap-sass.js": "/js/bootstrap-sass.c65971848afb11d5a9bd.js",
+  "/css/app.css": "/css/app.486dee4af9ba4c56a7ec.css",
+  "/css/admin.css": "/css/admin.486dee4af9ba4c56a7ec.css",
   "/js/admin/auth.js": "/js/admin/auth.f6415c4d89ce4ab41751.js",
   "/js/admin/updateComment.js": "/js/admin/updateComment.bb5b393dccf9963f7c88.js"
 }
