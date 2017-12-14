@@ -194,6 +194,7 @@ Vue.component('waiting-screen',{
             axios({
                 url:'/busket/makeOrder',
                 method:'post',
+                withCredentials:true,
                 data:{
                     email:document.getElementById('orderForm').querySelector('#email').value,
                     phone:document.getElementById('orderForm').querySelector('#phone').value,
