@@ -1,5 +1,5 @@
 <footer class="footer">
     <div class="container">
-        <p class="text-center">That is me </p>
+        <p class="text-center">@lang('messages.footerDisclaimer')</p>
     </div>
 </footer>

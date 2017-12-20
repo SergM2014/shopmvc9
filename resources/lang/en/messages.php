@@ -15,6 +15,8 @@
         'currentLanguage' => 'English',
         'psc' => 'psc',
         'hrn' => 'hrn',
+        '404Error' => 'Sorry! The Page is not found! Error 404!',
+        'footerDisclaimer' => 'Disclaimer in footer',
 
 
     ];
