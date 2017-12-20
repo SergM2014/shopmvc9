@@ -1,6 +1,6 @@
 <div class="row">
 
-    <h2 class="text-center text-danger">Catalog</h2>
+    <h2 class="text-center text-danger">@lang('messages.catalog')</h2>
 
     <div class="col-sm-2">
 
@@ -31,20 +31,20 @@
 
                     <div class="col-sm-8 col-sm-offset-1">
 
-                        <p class="text-danger"><span class="bg-danger">Author: </span>{{ $item->author }}</p>
+                        <p class="text-danger"><span class="bg-danger">@lang('messages.author'): </span>{{ $item->author }}</p>
 
-                        <p class="text-warning"><span class="bg-danger">Title: </span> {{ $item->title }}</p>
+                        <p class="text-warning"><span class="bg-danger">@lang('messages.title'): </span> {{ $item->title }}</p>
 
                     </div>
 
                 </div>
 
-                <p class="text-info"><span class="bg-danger">Description: </span>{{ $item->description }}</p>
+                <p class="text-info"><span class="bg-danger">@lang('messages.description'): </span>{{ $item->description }}</p>
 
-                <p class="text-info"><span class="bg-danger">Manufacturer: </span>{{ $item->manufacturer->title }}</p>
+                <p class="text-info"><span class="bg-danger">@lang('messages.manufacturer'): </span>{{ $item->manufacturer->title }}</p>
 
                 @if($item->categories->isNotEmpty())
-                    <p class="text-info"> <span class="bg-danger">Category:</span>
+                    <p class="text-info"> <span class="bg-danger">@lang('messages.category'):</span>
                         @foreach ($item->categories as $category)
                             {{ $category->title }}
                         @endforeach
@@ -52,10 +52,10 @@
 
                 @endif
 
-                <p class="text-danger"><span class="bg-danger">Price:</span> {{ $item->price }} $</p>
+                <p class="text-danger"><span class="bg-danger">@lang('messages.price'):</span> {{ $item->price }} $</p>
 
                 <div>
-                    <a href="/product/{{ $item->id }}" class="pull-right">Show product</a>
+                    <a href="/{{ App\Http\Middleware\LocaleMiddleware::getLocale().'/product/'. $item->id }}" class="pull-right">@lang('messages.showProduct')</a>
                 </div>
 
             </article>
@@ -64,7 +64,7 @@
             <div class="text-center"> {{ $catalogResults->links() }}</div>
 
         @else
-            <h1 class="bg-danger text-center">Noting is found. Try another query! </h1>
+            <h1 class="bg-danger text-center">@lang('messages.nothingFound')</h1>
         @endif;
 
 

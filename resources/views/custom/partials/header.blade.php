@@ -8,15 +8,15 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Project name</a>
+            <a class="navbar-brand" href="/{{ App\Http\Middleware\LocaleMiddleware::getLocale() }}#">Project name</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse" id="navbar">
             <ul class="nav navbar-nav">
-                <li class="{{ $currentRoute == 'index'? 'active':'' }}"><a href="/">@lang('messages.main')</a></li>
-                <li class="{{ preg_match('/^catalog/', $currentRoute )? 'active':'' }}"><a href="{{ route('catalog') }}">@lang('messages.catalog')</a></li>
-                <li class="{{ $currentRoute == 'aboutus'? 'active':'' }}"><a href="{{ route('aboutus') }}">@lang('messages.aboutUs')</a></li>
-                <li class="{{ $currentRoute == 'downloads'? 'active':'' }}"><a href="/downloads">@lang('messages.downloads')</a></li>
-                <li class="{{ $currentRoute == 'contacts'? 'active':'' }}"><a href="/contacts">@lang('messages.contacts')</a></li>
+                <li class="{{ $currentRoute == 'index'? 'active':'' }}"><a href="/{{ App\Http\Middleware\LocaleMiddleware::getLocale().'/' }}">@lang('messages.main')</a></li>
+                <li class="{{ preg_match('/^catalog/', $currentRoute )? 'active':'' }}"><a href="/{{ App\Http\Middleware\LocaleMiddleware::getLocale().'/catalog/all'}}">@lang('messages.catalog')</a></li>
+                <li class="{{ $currentRoute == 'aboutus'? 'active':'' }}"><a href="/{{ App\Http\Middleware\LocaleMiddleware::getLocale().'/aboutus' }}">@lang('messages.aboutUs')</a></li>
+                <li class="{{ $currentRoute == 'downloads'? 'active':'' }}"><a href="/{{ App\Http\Middleware\LocaleMiddleware::getLocale().'/downloads' }}">@lang('messages.downloads')</a></li>
+                <li class="{{ $currentRoute == 'contacts'? 'active':'' }}"><a href="/{{ App\Http\Middleware\LocaleMiddleware::getLocale().'/contacts' }}">@lang('messages.contacts')</a></li>
             </ul>
 
 
