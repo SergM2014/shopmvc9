@@ -31,6 +31,19 @@
                         <product-preview v-if = "previewVisible"></product-preview>
                     </transition>
 
+
+                    <div class="dropdown inline">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Language/Мова
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="<?= route('setlocale', ['lang' => 'uk']) ?>">Українська</a></li>
+                            <li><a href="<?= route('setlocale', ['lang' => 'en']) ?>">English</a></li>
+                        </ul>
+                    </div>
+
+
                     <input type="text" placeholder="Search" class="form-control" id="search-field" v-model="search" @keyup="findResults">
                 </div>
 
