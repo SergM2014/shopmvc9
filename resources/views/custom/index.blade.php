@@ -4,7 +4,7 @@
 
     <ol class="breadcrumb">
 
-        <li class="active">Main</li>
+        <li class="active">@lang('messages.main')</li>
     </ol>
 
 <div class="row">

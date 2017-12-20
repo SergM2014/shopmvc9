@@ -12,11 +12,11 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse" id="navbar">
             <ul class="nav navbar-nav">
-                <li class="{{ $currentRoute == 'index'? 'active':'' }}"><a href="/">Main</a></li>
-                <li class="{{ preg_match('/^catalog/', $currentRoute )? 'active':'' }}"><a href="{{ route('catalog') }}">Catalog</a></li>
-                <li class="{{ $currentRoute == 'aboutus'? 'active':'' }}"><a href="{{ route('aboutus') }}">About Us</a></li>
-                <li class="{{ $currentRoute == 'downloads'? 'active':'' }}"><a href="/downloads">Downloads</a></li>
-                <li class="{{ $currentRoute == 'contacts'? 'active':'' }}"><a href="/contacts">Contacts</a></li>
+                <li class="{{ $currentRoute == 'index'? 'active':'' }}"><a href="/">@lang('messages.main')</a></li>
+                <li class="{{ preg_match('/^catalog/', $currentRoute )? 'active':'' }}"><a href="{{ route('catalog') }}">@lang('messages.catalog')</a></li>
+                <li class="{{ $currentRoute == 'aboutus'? 'active':'' }}"><a href="{{ route('aboutus') }}">@lang('messages.aboutUs')</a></li>
+                <li class="{{ $currentRoute == 'downloads'? 'active':'' }}"><a href="/downloads">@lang('messages.downloads')</a></li>
+                <li class="{{ $currentRoute == 'contacts'? 'active':'' }}"><a href="/contacts">@lang('messages.contacts')</a></li>
             </ul>
 
 
@@ -34,7 +34,7 @@
 
                     <div class="dropdown inline">
                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            Language/Мова
+                            @lang('messages.currentLanguage')
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -47,7 +47,11 @@
                     <input type="text" placeholder="Search" class="form-control" id="search-field" v-model="search" @keyup="findResults">
                 </div>
 
-                <a class="main-header__admin" href="/login"><?php if(isset($_SESSION['login'])){echo "Admin Zone";}else {echo "Admin enter";};  ?></a>
+                <a class="main-header__admin" href="/login">
+                    <?php if(isset($_SESSION['login'])): ?> @lang('messages.adminZone')
+                        <?php else: ?> @lang('messages.enterAdmin')
+                        <?php endif ?>
+                </a>
 
             </div>
 
@@ -59,8 +63,8 @@
             <div class="small-busket__container" id="busket-container" data-toggle="modal" data-target=".bs-example-modal-lg">
                 <img src="/img/busket.jpg" class="small-busket__img" alt="the busket">
                 <div class="small-busket__info" id="smallBusketInfo">
-                    <p class="busket__info-item text-danger" >Amount : <span id="totalAmount"><?= session('totalAmount')?? 0 ?></span> psc  </p>
-                    <p class="busket__info-item text-danger" >Summa :  <span id="totalSumma"><?= session('totalSumma')?? 0 ?> </span> hrn </p>
+                    <p class="busket__info-item text-danger" >@lang('messages.amount') : <span id="totalAmount"><?= session('totalAmount')?? 0 ?></span> @lang('messages.psc')  </p>
+                    <p class="busket__info-item text-danger" >@lang('messages.summa') :  <span id="totalSumma"><?= session('totalSumma')?? 0 ?> </span> @lang('messages.hrn') </p>
                 </div>
             </div>
         </div>
