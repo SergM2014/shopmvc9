@@ -8,15 +8,15 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/{{ App\Http\Middleware\LocaleMiddleware::getLocale() }}#">Project name</a>
+            <a class="navbar-brand" href="/{{ App\Http\Middleware\LocaleMiddleware::printLink() }}#">Project name</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse" id="navbar">
             <ul class="nav navbar-nav">
-                <li class="{{ $currentRoute == 'index'? 'active':'' }}"><a href="/{{ App\Http\Middleware\LocaleMiddleware::getLocale().'/' }}">@lang('messages.main')</a></li>
-                <li class="{{ preg_match('/^catalog/', $currentRoute )? 'active':'' }}"><a href="/{{ App\Http\Middleware\LocaleMiddleware::getLocale().'/catalog/all'}}">@lang('messages.catalog')</a></li>
-                <li class="{{ $currentRoute == 'aboutus'? 'active':'' }}"><a href="/{{ App\Http\Middleware\LocaleMiddleware::getLocale().'/aboutus' }}">@lang('messages.aboutUs')</a></li>
-                <li class="{{ $currentRoute == 'downloads'? 'active':'' }}"><a href="/{{ App\Http\Middleware\LocaleMiddleware::getLocale().'/downloads' }}">@lang('messages.downloads')</a></li>
-                <li class="{{ $currentRoute == 'contacts'? 'active':'' }}"><a href="/{{ App\Http\Middleware\LocaleMiddleware::getLocale().'/contacts' }}">@lang('messages.contacts')</a></li>
+                <li class="{{ $currentRoute == 'index'? 'active':'' }}"><a href="/{{ App\Http\Middleware\LocaleMiddleware::printLink() }}">@lang('messages.main')</a></li>
+                <li class="{{ preg_match('/^catalog/', $currentRoute )? 'active':'' }}"><a href="/{{ App\Http\Middleware\LocaleMiddleware::printLink()}}/catalog/all">@lang('messages.catalog')</a></li>
+                <li class="{{ $currentRoute == 'aboutus'? 'active':'' }}"><a href="/{{ App\Http\Middleware\LocaleMiddleware::printLink().'/aboutus' }}">@lang('messages.aboutUs')</a></li>
+                <li class="{{ $currentRoute == 'downloads'? 'active':'' }}"><a href="/{{ App\Http\Middleware\LocaleMiddleware::printLink().'/downloads' }}">@lang('messages.downloads')</a></li>
+                <li class="{{ $currentRoute == 'contacts'? 'active':'' }}"><a href="/{{ App\Http\Middleware\LocaleMiddleware::printLink().'/contacts' }}">@lang('messages.contacts')</a></li>
             </ul>
 
 
@@ -47,7 +47,7 @@
                     <input type="text" placeholder="Search" class="form-control" id="search-field" v-model="search" @keyup="findResults">
                 </div>
 
-                <a class="main-header__admin" href="/login">
+                <a class="main-header__admin" href="/{{ App\Http\Middleware\LocaleMiddleware::printLink() }}/login">
                     <?php if(isset($_SESSION['login'])): ?> @lang('messages.adminZone')
                         <?php else: ?> @lang('messages.enterAdmin')
                         <?php endif ?>

@@ -32,6 +32,14 @@ class LocaleMiddleware
 
         }
         return null;
+
+    }
+
+    public static function printLink()
+    {
+        $locale = self::getLocale();
+        if(!$locale) return '/'.$_SERVER['SERVER_NAME'] ;
+        return $locale;
     }
 
     /*

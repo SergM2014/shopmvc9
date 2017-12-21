@@ -40,7 +40,7 @@ class Category extends Model
 
                 $print.='<li class="left-menu_li" data-category-id ='.$category->id.' data-parent-id='.$category->parent_id.'>
                  <div class="left-menu__item  nested-'.$suffix.'"  >
-                 <a href="/'.LocaleMiddleware::getLocale().'/catalog/category/'.$category->title.'" class="left-menu__link">'. $category->title .'</a>' ;
+                 <a href="/'.LocaleMiddleware::printLink().'/catalog/category/'.$category->title.'" class="left-menu__link">'. $category->title .'</a>' ;
 
                 foreach(self::$categories as $sub_cat){
                     if($sub_cat->parent_id == $category->id){ $flag = TRUE; break; }
@@ -89,7 +89,7 @@ class Category extends Model
         foreach(self::$categories as $category){
             if($category->parent_id ==$parent ){
 
-                $print.='<li  class="left-catalog-menu__item"><a href="/'.LocaleMiddleware::getLocale().'/catalog/category/'. $category->title .'" class="left-catalog-menu__link">'.$category->title.'</a>' ;
+                $print.='<li  class="left-catalog-menu__item"><a href="/'.LocaleMiddleware::printLink().'/catalog/category/'. $category->title .'" class="left-catalog-menu__link">'.$category->title.'</a>' ;
                 foreach(self::$categories as $sub_cat){
                     if($sub_cat->parent_id == $category->id){
                         $flag = TRUE; break;

@@ -2,8 +2,8 @@
 
 @section('content')
     <ol class="breadcrumb">
-        <li><a href="/">Main</a></li>
-        <li class="active">Downloads</li>
+        <li><a href="/{{ App\Http\Middleware\LocaleMiddleware::printLink() .'/' }}">@lang('messages.main')</a></li>
+        <li class="active">@lang('messages.contacts')</li>
     </ol>
 
 
@@ -11,7 +11,7 @@
 
     <div class="row">
 
-        <h2 class="text-center text-danger">Contacts</h2>
+        <h2 class="text-center text-danger">@lang('messages.contacts')</h2>
 
         <div class="col-sm-2">
 

@@ -142,7 +142,5 @@ Route::get('setlocale/{lang}', function ($lang) {
 
 
 //examples of usage
-/*<a href="{{ url(App\Http\Middleware\LocaleMiddleware::getLocale() .'/home') }}">Home</a>
-или
-<a href="/{{ App\Http\Middleware\LocaleMiddleware::getLocale() .'/home' }}">Home</a>*/
-//only this form else error
+/*href="/{{ App\Http\Middleware\LocaleMiddleware::printLink() }}/login"*/
+

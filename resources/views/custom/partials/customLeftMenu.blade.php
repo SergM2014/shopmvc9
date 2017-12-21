@@ -8,7 +8,7 @@
 <ul class="left-menu">
     @foreach( $manufacturers as $manufacturer)
 
-        <li><a href="/{{ App\Http\Middleware\LocaleMiddleware::getLocale() .'/catalog/manufacturer/'. $manufacturer->eng_translit_title }}">{{ $manufacturer->title }}</a></li>
+        <li><a href="/{{ App\Http\Middleware\LocaleMiddleware::printLink() .'/catalog/manufacturer/'. $manufacturer->eng_translit_title }}">{{ $manufacturer->title }}</a></li>
 
     @endforeach
 </ul>
