@@ -43,5 +43,14 @@
         'delete' => 'Delete',
         'commentToResponde' => 'Comment to responde',
         'commentAddedSuccessfuly' => 'Comment is added successfully!',
+        'goToProduct' => 'Go to product',
+        'reset' => 'Reset',
+        'search' => 'Search',
+        'password' => 'Password',
+        'rememberMe' => 'Remember Me',
+        'login' => 'Login',
+        'forgetYourPassword' => 'Forget Your password?',
+        'backToSite' => 'Back to Site',
+
 
     ];

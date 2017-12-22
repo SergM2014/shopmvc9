@@ -42,4 +42,12 @@
         'delete' => 'Видалити',
         'commentToResponde' => 'Відкликнутись на коментар',
         'commentAddedSuccessfuly' => 'Коментар успішно додано!',
+        'goToProduct' => 'Перейти до продукту',
+        'reset'=>'Скинути',
+        'search' => 'пошук',
+        'password' => 'Пароль',
+        'rememberMe'=> 'Запамятати мене',
+        'login' => 'Залогінитись',
+        'forgetYourPassword' => 'Забули Ваш пароль?',
+        'backToSite' => 'Назад до сайту',
     ];

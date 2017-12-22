@@ -11,6 +11,6 @@
 
 @else
 
-    Nothing is found try another query!
+    @lang('messages.nothingFound')
 
 @endif

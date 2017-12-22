@@ -6,10 +6,10 @@
     <div class="product-preview-footer">
 
         <div class="product-preview__btn-container pull-right">
-            <a class="btn btn-warning  product-preview-btn " href="/product/{{ $product->id }}" role="button">Go to the product</a>
+            <a class="btn btn-warning  product-preview-btn " href="/product/{{ $product->id }}" role="button">@lang('messages.goToProduct')</a>
         </div>
         <div class="product-preview__btn-container pull-right">
-            <button type="button" id="productPreviewResetBtn" class="btn btn-danger  product-preview-btn ">Reset</button>
+            <button type="button" id="productPreviewResetBtn" class="btn btn-danger  product-preview-btn ">@lang('messages.reset')</button>
         </div>
     </div>
 </section>

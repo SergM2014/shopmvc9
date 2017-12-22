@@ -29,7 +29,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        Back to site
+                        @lang('messages.backToSite')
                     </a>
                     @if(Auth::check())
 
