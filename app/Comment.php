@@ -19,8 +19,16 @@ class Comment extends Model
 
 
 
+
+
+
     public static function getCommentsTreeStructure($parent, $comments)
     {
+
+        $nameL = trans('messages.name');
+        $addedAtL = trans('messages.addedAt');
+        $giveResponseL = trans('messages.giveResponse');
+
        $print = '';
        foreach ($comments as $comment){
 
@@ -29,14 +37,14 @@ class Comment extends Model
                $print.= "<li>
                             <div class='comment_item'>
                             <div class='avatar_comment-block'>
-                           <span class='text-warning'> Name:</span>  $comment->name <br>";
+                           <span class='text-warning'> $nameL : <?php :</span>  $comment->name <br>";
 
                             $avatarImage = $comment->avatar? "/uploads/avatars/$comment->avatar" : "/img/noavatar.jpg";
 
                               $print.= " <img src= $avatarImage alt='' class='comment_avatar'>
                             <br>
                             
-                           <span class='text-warning'> Added at: </span> $comment->created_at ";
+                           <span class='text-warning'> $addedAtL : </span> $comment->created_at ";
 
             $print.="</div>
                     
@@ -49,7 +57,7 @@ class Comment extends Model
             <div class='clearfix'></div>
                  <div class='response_btn-container'>
                     <button type='button' class='btn-xs pull-right give_response-btn'
-                     data-parent-id='{$comment->parent_id}' data-comment-id='{$comment->id}'>Give Response</button>
+                     data-parent-id='{$comment->parent_id}' data-comment-id='{$comment->id}'>$giveResponseL</button>
                 </div>
             </div>      ";
 

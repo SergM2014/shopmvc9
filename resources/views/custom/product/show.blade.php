@@ -2,9 +2,9 @@
 
 @section('content')
     <ol class="breadcrumb">
-        <li><a href="/">Main</a></li>
-        <li><a href="{{ route('catalog') }}">Catalog</a></li>
-        <li class="active">Product</li>
+        <li><a href="/{{ App\Http\Middleware\LocaleMiddleware::printLink() .'/' }}">@lang('messages.main')</a></li>
+        <li><a href="/{{ App\Http\Middleware\LocaleMiddleware::printLink() .'/catalog/all' }}">@lang('messages.catalog')</a></li>
+        <li class="active">@lang('messages.product')</li>
     </ol>
 
 
@@ -12,7 +12,7 @@
 
     <div class="row">
 
-        <h2 class="text-center text-danger">Product</h2>
+        <h2 class="text-center text-danger">@lang('messages.product')</h2>
 
         <div class="col-sm-2">
 
@@ -41,13 +41,13 @@
 
             @endif
 
-            <div class="text-center text-danger">Author: {{ $product->author }}</div>
-            <div class="text-center"><span class="text-info"> Title: </span> {{ $product->title }}</div>
-                <div><span class="text-info"> Description: </span>{{ $product->description }}</div>
+            <div class="text-center text-danger">@lang('messages.author'): {{ $product->author }}</div>
+            <div class="text-center"><span class="text-info"> @lang('messages.title'): </span> {{ $product->title }}</div>
+                <div><span class="text-info"> @lang('messages.description'): </span>{{ $product->description }}</div>
             <div>{{ $product->body }}</div>
-            <div><span class="text-info"> Price: </span> {{ $product->price }} <span class="text-info"> hrn </span></div>
-            <div><span class="text-info"> Manufacturer: </span> {{ $product->manufacturer->title }}</div>
-            <div><span class="text-info"> Category: </span>
+            <div><span class="text-info"> @lang('messages.price'): </span> {{ $product->price }} <span class="text-info"> hrn </span></div>
+            <div><span class="text-info"> @lang('messages.manufacturer'): </span> {{ $product->manufacturer->title }}</div>
+            <div><span class="text-info"> @lang('messages.category'): </span>
                 @foreach ($product->categories as $category)
 
                 {{ $category->title }}
@@ -59,11 +59,11 @@
                     <input type="hidden" name="_token"  value="{{ csrf_token() }}">
                     <input type="hidden" name="id"  value = "{{ $product->id }}">
                     <input type="hidden" name="price"  value="{{ $product->price }}">
-                    <button id="purchase" class="btn btn-danger pull-right" @click.prevent="addToBusket">Purchase</button>
+                    <button id="purchase" class="btn btn-danger pull-right" @click.prevent="addToBusket">@lang('messages.purchase')</button>
                 </form>
 
                 <div class="clearfix">
-                    <h2 class="text-center">Comments</h2>
+                    <h2 class="text-center">@lang('messages.comments')</h2>
                     <ul class="list-group comment_list">
 
                         <?= $treeComments ?>
@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="clearfix" id="addCommentBlock">
-                    <h4 class="text-center alert-danger">Add Comment</h4>
+                    <h4 class="text-center alert-danger">@lang('messages.addComment')</h4>
                     <div id="parentCommentBlock" class="parent_comment_block">
 
                     </div>
@@ -88,20 +88,20 @@
                         {{ csrf_field() }}
 
                         <div class="form-group">
-                            <label for="email">Email address</label>
+                            <label for="email">Email</label>
                             <input type="email" class="form-control" id="email" v-model="email" placeholder="Email">
                             <span id="emailHelpBlock" class="help-block"></span>
                         </div>
 
                         <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" v-model="name" placeholder="Name">
+                            <label for="name">@lang('messages.name')</label>
+                            <input type="text" class="form-control" id="name" v-model="name" placeholder="@lang('messages.name')">
                             <span id="nameHelpBlock" class="help-block"></span>
                         </div>
 
                         <div class="form-group">
-                            <label for="comment">Comment</label>
-                            <textarea class="form-control" id="comment" placeholder="comment" v-model="comment" rows="5"></textarea>
+                            <label for="comment">@lang('messages.comment')</label>
+                            <textarea class="form-control" id="comment" placeholder="@lang('messages.comment')" v-model="comment" rows="5"></textarea>
                             <span id="commentHelpBlock" class="help-block"></span>
                         </div>
 
@@ -109,13 +109,13 @@
                             <p id="captchaImg" class="captcha_image">
                             @include('custom.partials.captcha')
                             </p>
-                            <label for="name">enter captcha</label>
-                            <input type="text" class="form-control" id="captcha" name="captcha" v-model="captcha" placeholder="enter captcha">
+                            <label for="name">@lang('messages.enterCaptcha')</label>
+                            <input type="text" class="form-control" id="captcha" name="captcha" v-model="captcha" placeholder="@lang('messages.enterCaptcha')">
                             <span id="captchaHelpBlock" class="help-block"></span>
                         </div>
 
 
-                        <button type="button" id="productCommentSubmit" class="btn btn-default" @click="makeComment">Submit</button>
+                        <button type="button" id="productCommentSubmit" class="btn btn-default" @click="makeComment">@lang('messages.submit')</button>
                     </form>
 
                     @if ($errors->any())

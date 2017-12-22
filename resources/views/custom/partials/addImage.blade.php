@@ -16,8 +16,8 @@
 
 
 
-        <button type="button" id="downloadImageBtn" class="image-download__btn hidden">Load</button>
-        <button type="button" id="resetImageBtn" class="image-download__btn <?= !@$givenImage? "hidden":'' ?>">Delete</button>
+        <button type="button" id="downloadImageBtn" class="image-download__btn hidden">@lang('messages.load')</button>
+        <button type="button" id="resetImageBtn" class="image-download__btn <?= !@$givenImage? "hidden":'' ?>">@lang('messages.delete')</button>
     </form>
 
     <progress max="100" value="0" id="imageDownloadProgress"  class="image-download__progress hidden" >

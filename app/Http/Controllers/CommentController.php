@@ -17,7 +17,7 @@ class CommentController extends Controller
         ],
         //this is custom error message
         [
-            'captcha' => 'put correct captcha',
+            'captcha' => trans('messages.captcha'),
         ]
             );
 
@@ -27,7 +27,7 @@ class CommentController extends Controller
             'changed' =>'0']);
 
         return response()->json([
-            'message' => 'comment is added successfully',
+            'message' => trans('messages.commentAddedSuccessfuly'),
             'success' => 'true',
 
 

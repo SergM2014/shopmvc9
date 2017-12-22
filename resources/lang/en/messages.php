@@ -28,9 +28,20 @@
         'price' => 'Price',
         'showProduct' => 'Show product',
         'nothingFound' => 'Nothing found! Try another query!',
-
-
-
-
+        'product' => 'Product',
+        'purchase' =>'purchase',
+        'comments' => 'Comments',
+        'name' => 'Name',
+        'addedAt' => 'Added at',
+        'giveResponse' => 'Give response',
+        'addComment' => 'Add Comment',
+        'comment' => 'Comment',
+        'enterCaptcha' => 'Ener captcha',
+        'submit'=> 'Submit',
+        'captcha' => 'Put correct captcha',
+        'load' => 'Load',
+        'delete' => 'Delete',
+        'commentToResponde' => 'Comment to responde',
+        'commentAddedSuccessfuly' => 'Comment is added successfully!',
 
     ];

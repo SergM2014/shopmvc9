@@ -55,7 +55,7 @@
                 <p class="text-danger"><span class="bg-danger">@lang('messages.price'):</span> {{ $item->price }} $</p>
 
                 <div>
-                    <a href="/{{ App\Http\Middleware\LocaleMiddleware::getLocale().'/product/'. $item->id }}" class="pull-right">@lang('messages.showProduct')</a>
+                    <a href="/{{ App\Http\Middleware\LocaleMiddleware::printLink().'/product/'. $item->id }}" class="pull-right">@lang('messages.showProduct')</a>
                 </div>
 
             </article>
