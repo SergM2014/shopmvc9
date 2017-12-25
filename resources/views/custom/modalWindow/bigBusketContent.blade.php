@@ -1,6 +1,6 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title text-danger text-center" id="myModalLabel">Busket Content</h4>
+    <h4 class="modal-title text-danger text-center" id="myModalLabel">@lang('messages.busketContent')</h4>
 </div>
 
 @if($content)
@@ -14,7 +14,7 @@
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
                 <tr>
-                    <th>#</th><th>Title</th><th>Amount</th><th>Price</th>
+                    <th>#</th><th>@lang('messages.title')</th><th>@lang('messages.amount')</th><th>@lang('messages.price')</th>
                 </tr>
             @foreach($content as $product)
 
@@ -34,7 +34,7 @@
             @endforeach
 
                 <tr class="text-danger">
-                    <td colspan="2"></td><td>total amount: <?= session('totalAmount')?? 0 ?></td><td>Total Price: <?= session('totalSumma')?? 0 ?></td>
+                    <td colspan="2"></td><td>@lang('messages.totalAmount'): <?= session('totalAmount')?? 0 ?></td><td>@lang('messages.totalPrice'): <?= session('totalSumma')?? 0 ?></td>
                 </tr>
             </table>
         </div>
@@ -43,13 +43,13 @@
 
     </div>
     <div class="modal-footer" id="bigBusketFooter">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="updateBusketBtn">Update</button>
-        <button type="button" class="btn btn-danger" id="makeOrder">Make Order</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">@lang('messages.close')</button>
+        <button type="button" class="btn btn-primary" id="updateBusketBtn">@lang('messages.update')</button>
+        <button type="button" class="btn btn-danger" id="makeOrder">@lang('messages.makeOrder')</button>
     </div>
 
 @else
 
-    <h2 class="text-center text-danger"> Nothing is found</h2>
+    <h2 class="text-center text-danger">@lang('messages.busketEmpty')</h2>
 </div>
 @endif

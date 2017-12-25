@@ -3,5 +3,5 @@
         &times;
     </button>
 
-    Congratulations! You order is accepted!
+    @lang('messages.succeededOrder')
 </div>

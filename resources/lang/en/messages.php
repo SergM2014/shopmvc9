@@ -51,6 +51,18 @@
         'login' => 'Login',
         'forgetYourPassword' => 'Forget Your password?',
         'backToSite' => 'Back to Site',
+        'busketContent' => 'Busket Content',
+        'totalAmount' => 'Total Amount',
+        'totalPrice' => 'Total Price',
+        'close' => 'Close',
+        'update' => 'Update',
+        'makeOrder'=> 'make Order',
+        'busketEmpty' => 'Busket is empty',
+        'yourName' => 'Your Name',
+        'yourPhone' => 'Your Phone',
+        'yourEmail' => 'Your Email',
+        'cansel' => 'Cansel',
+        'succeededOrder'=> 'Congratulations! Order is succeeded!',
 
 
     ];
