@@ -1,5 +1,7 @@
 <?php
 
+namespace DataBase\Factories;
+
 /*
 |--------------------------------------------------------------------------
 | Model Factories
