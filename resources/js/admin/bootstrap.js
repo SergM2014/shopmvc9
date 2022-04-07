@@ -12,7 +12,7 @@ window.Errors = Errors;
 
 
 
-require('./../components/bootstrap-sass');
+require('../components/bootstrap-sass');
 
 
 
