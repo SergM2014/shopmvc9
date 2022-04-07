@@ -5,14 +5,14 @@
   "license": "MIT",
   "type": "project",
   "require": {
-    "php": ">=7.3.0",
+    "php": ">=8.1",
     "algolia/algoliasearch-client-php": "^1.18",
     "intervention/image": "^2.4",
-    "laravel/framework": "^8.0",
+    "laravel/framework": "^9.0",
 
-    "fideloper/proxy": "^4.0.0",
-    "nunomaduro/collision": "^5.0",
-    "facade/ignition": "^2.3.6",
+
+    "nunomaduro/collision": "^6.1",
+    "spatie/laravel-ignition": "^1.0",
     "guzzlehttp/guzzle": "^7.0.1",
     "laravel/ui": "^3.0",
 
