@@ -5,7 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Manufacturer;
 use App\Category;
-use Route;
+use Illuminate\Support\Arr;
+use \Route;
 
 class ViewComposerServiceProvider extends ServiceProvider
 {
@@ -17,8 +18,8 @@ class ViewComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer(['custom.partials.catalogDropdownMenu', 'custom.partials.header'], function($view){
-            $view->with('currentRoute', Route::currentRouteName());
-            $view->with('linkParametr',array_first(\Route::current()->parameters()));
+            $view->with('currentRoute', \Route::currentRouteName());
+            $view->with('linkParametr',Arr::first(\Route::current()->parameters()));
         });
 
         view()->composer('custom.partials.customLeftMenu', function($view){
