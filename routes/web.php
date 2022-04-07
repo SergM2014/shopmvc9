@@ -1,6 +1,18 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\BusketController;
+use App\Http\Controllers\ImagesController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\AdminUsersController;
+use App\Http\Controllers\AdminProductsController;
+use App\Http\Controllers\AdminCommentsController;
+use App\Http\Controllers\AdminCategoriesController;
+use App\Http\Controllers\AdminManufacturersController;
 
 if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
     error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
@@ -8,40 +20,40 @@ if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
 
 Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale()], function() {
 
-//    Route::get('/', 'IndexController@index')->name('index');
+
     Route::get('/', [IndexController::class , 'index'])->name('index');
-    Route::get('/catalog/all/{order?}', 'CatalogController@index')->name('catalog');
-    Route::get('/catalog/category/{category}/{order?}', 'CatalogController@showCategories')->name('catalogCategories');
-    Route::get('/catalog/manufacturer/{manufacturer}/{order?}', 'CatalogController@showManufacturers')->name('catalogManufacturers');
-    Route::get('/aboutus', 'IndexController@aboutus')->name('aboutus');
-    Route::get('/downloads', 'IndexController@downloads')->name('downloads');
-    Route::get('/contacts', 'IndexController@contacts')->name('contacts');
-    Route::get('/product/{product}', 'ProductController@show')->name('catalogShowProduct');
+    Route::get('/catalog/all/{order?}', [CatalogController::class, 'index'])->name('catalog');
+    Route::get('/catalog/category/{category}/{order?}', [CatalogController::class, 'showCategories'])->name('catalogCategories');
+    Route::get('/catalog/manufacturer/{manufacturer}/{order?}', [CatalogController::class, 'showManufacturers'])->name('catalogManufacturers');
+    Route::get('/aboutus', [IndexController::class, 'aboutus'])->name('aboutus');
+    Route::get('/downloads', [IndexController::class, 'downloads'])->name('downloads');
+    Route::get('/contacts', [IndexController::class, 'contacts'])->name('contacts');
+    Route::get('/product/{product}', [ProductController::class, 'show'])->name('catalogShowProduct');
 
-    Route::post('/busket/add', 'BusketController@add');
-    Route::post('/busket/show', 'BusketController@show');
-    Route::post('/busket/update', 'BusketController@update');
+    Route::post('/busket/add', [BusketController::class, 'add']);
+    Route::post('/busket/show', [BusketController::class, 'show']);
+    Route::post('/busket/update', [BusketController::class, 'update']);
 
-    Route::post('/updateSmallBusket', 'BusketController@updateHeader');
-    Route::post('/showOrderForm', 'BusketController@showOrderForm');
-    Route::post('/validateBusket', 'BusketController@validateBusketContent');
-    Route::post('/busket/makeOrder', 'BusketController@makeOrder');
-    Route::post('/succeededOrder', 'BusketController@succeededOrder');
-    Route::post('/sendSuccessMail', 'BusketController@sendSuccessEmail');
+    Route::post('/updateSmallBusket', [BusketController::class, 'updateHeader']);
+    Route::post('/showOrderForm', [BusketController::class,'showOrderForm']);
+    Route::post('/validateBusket', [BusketController::class, 'validateBusketContent']);
+    Route::post('/busket/makeOrder', [BusketController::class, 'makeOrder']);
+    Route::post('/succeededOrder', [BusketController::class, 'succeededOrder']);
+    Route::post('/sendSuccessMail', [BusketController::class, 'sendSuccessEmail']);
 
-    Route::post('/images/uploadAvatar', 'ImagesController@uploadAvatar');
-    Route::post('/images/deleteAvatar', 'ImagesController@deleteAvatar');
-    Route::post('/images/uploadProductImage', 'ImagesController@uploadProductImage');
-    Route::post('/images/deleteProductImage', 'ImagesController@deleteProductImage');
+    Route::post('/images/uploadAvatar', [ImagesController::class, 'uploadAvatar']);
+    Route::post('/images/deleteAvatar', [ImagesController::class, 'deleteAvatar']);
+    Route::post('/images/uploadProductImage', [ImagesController::class, 'uploadProductImage']);
+    Route::post('/images/deleteProductImage', [ImagesController::class, 'deleteProductImage']);
 
-    Route::post('/comment/add', 'CommentController@add');
+    Route::post('/comment/add', [CommentController::class, 'add']);
     Route::post('/refreshCaptcha', function () {
         return view('custom.partials.captcha');
     });
-    Route::post('/getCommentForResponse', 'CommentController@getCommentForResponse');
+    Route::post('/getCommentForResponse', [CommentController::class, 'getCommentForResponse']);
 
-    Route::post('/searchResults', 'SearchController@findResults');
-    Route::post('/showProductPreview', 'ProductController@showPreview');
+    Route::post('/searchResults', [SearchController::class, 'findResults']);
+    Route::post('/showProductPreview', [ProductController::class, 'showPreview']);
 
 
     Route::post('/getImage', function () {
@@ -61,57 +73,57 @@ Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale()], fu
             return view('admin.modal.deleteProduct');
         });
 
-        Route::resource('products', 'AdminProductsController');
+        Route::resource('products', [AdminProductsController::class]);
 
         Route::post('categories/popupMenu', function () {
             return view('admin.popUp.allCategories');
         });
-        Route::post('categories/confirmWindow', 'AdminCategoriesController@showConfirmWindow');
+        Route::post('categories/confirmWindow', [AdminCategoriesController::class, 'showConfirmWindow']);
         Route::get('categories/succeeded', function () {
             return view('admin.succeeded');
         });
 
-        Route::resource('categories', 'AdminCategoriesController');
+        Route::resource('categories', [AdminCategoriesController::class]);
 
         Route::post('comments/popupMenu', function () {
             return view('admin.popUp.allComments');
         });
-        Route::post('comments/{comment}/publish', 'AdminCommentsController@publish');
-        Route::post('comments/{comment}/unpublish', 'AdminCommentsController@unpublish');
+        Route::post('comments/{comment}/publish', [AdminCommentsController::class, 'publish']);
+        Route::post('comments/{comment}/unpublish', [AdminCommentsController::class, 'unpublish']);
         Route::get('comments/succeeded', function () {
             return view('admin.succeeded');
         });
-        Route::post('comments/confirmWindow', 'AdminCommentsController@showConfirmWindow');
+        Route::post('comments/confirmWindow', [AdminCommentsController::class, 'showConfirmWindow']);
 
-        Route::resource('comments', 'AdminCommentsController');
+        Route::resource('comments', [AdminCommentsController::class]);
 
         Route::post('manufacturers/popupMenu', function () {
             return view('admin.popUp.allManufacturers');
         });
-        Route::post('manufacturers/confirmWindow', 'AdminManufacturersController@showConfirmWindow');
+        Route::post('manufacturers/confirmWindow', [AdminManufacturersController::class, 'showConfirmWindow']);
         Route::get('manufacturers/succeeded', function () {
             return view('admin.succeeded');
         });
-        Route::resource('manufacturers', 'AdminManufacturersController');
+        Route::resource('manufacturers', [AdminManufacturersController::class]);
 
 
         Route::post('users/popupMenu', function () {
             return view('admin.popUp.allUsers');
         });
-        Route::post('users/confirmWindow', 'AdminUsersController@showConfirmWindow');
+        Route::post('users/confirmWindow', [AdminUsersController::class, 'showConfirmWindow']);
         Route::get('users/succeeded', function () {
             return view('admin.succeeded');
         });
-        Route::resource('users', 'AdminUsersController');
+        Route::resource('users', [AdminUsersController::class]);
 
 
-        Route::get('/', 'HomeController@index');
+        Route::get('/', [HomeController::class, 'index']);
     });
 
 
     Auth::routes();
 
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 }); //end language sector
 
