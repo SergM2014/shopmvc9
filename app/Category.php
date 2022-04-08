@@ -6,6 +6,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Middleware\LocaleMiddleware;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Category extends Model
 {
@@ -63,9 +64,9 @@ class Category extends Model
         return $print;
     }
 
-    public function products()
+    public function products(): BelongsToMany
     {
-        return $this->belongsToMany('App\Product');
+        return $this->belongsToMany(Product::class);
     }
 
 
