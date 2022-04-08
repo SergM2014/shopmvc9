@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -13,24 +15,19 @@ class Category extends Model
 
     private static $categories;
 
-    private static function getCategories()
+    private static function setCategories(): void
     {
         self::$categories = self::all();
     }
 
-    public static function getVerticalMenu()
+    public static function getVerticalMenu(): string
     {
-        self::getCategories();
-
+        self::setCategories();
 
         return self::printOutLeftMenu();
-
-
     }
 
-
-//для выпадающего меню в index
-    private static function printOutLeftMenu($parent = 0)
+    private static function printOutLeftMenu(int $parent = 0): string
     {
         static $suffix = 1;
         if(!isset($print)){$print=''; }
@@ -38,9 +35,11 @@ class Category extends Model
         foreach(self::$categories as $category){
             if($category->parent_id ==$parent ){
 
-                $print.='<li class="left-menu_li" data-category-id ='.$category->id.' data-parent-id='.$category->parent_id.'>
-                 <div class="left-menu__item  nested-'.$suffix.'"  >
-                 <a href="/'.LocaleMiddleware::printLink().'/catalog/category/'.$category->title.'" class="left-menu__link">'. $category->title .'</a>' ;
+                $print.='<li class="left-menu_li" data-category-id ='.$category->id.
+                        ' data-parent-id='.$category->parent_id.'>
+                         <div class="left-menu__item  nested-'.$suffix.'"  >
+                         <a href="/'.LocaleMiddleware::printLink().'/catalog/category/'.$category->title.
+                         '" class="left-menu__link">'. $category->title .'</a>' ;
 
                 foreach(self::$categories as $sub_cat){
                     if($sub_cat->parent_id == $category->id){ $flag = TRUE; break; }
@@ -48,7 +47,8 @@ class Category extends Model
 
                 if(isset($flag)){
                     $suffix=$suffix+1;
-                    $print.= "<img src='/img/arrow_down.png' alt='' title='' class='left-menu__contains-subcatetegories-sign'  > </div> <ul class='hidden'>";
+                    $print.= "<img src='/img/arrow_down.png' alt='' title='' 
+                                class='left-menu__contains-subcatetegories-sign'  > </div> <ul class='hidden'>";
                     $print.= self::printOutLeftMenu($category->id);
                     $print.= "</ul>";
                     $print.= "</li>";
@@ -59,12 +59,9 @@ class Category extends Model
                 }
             }
         }
+
         return $print;
     }
-
-
-
-
 
     public function products()
     {
@@ -72,10 +69,9 @@ class Category extends Model
     }
 
 
-    public static function getLeftCatalogMenu()
+    public static function getLeftCatalogMenu(): string
     {
-        self::getCategories();
-
+        self::setCategories();
 
         $leftMenu = self::printOutlLeftCatalogMenu();
 
@@ -83,13 +79,14 @@ class Category extends Model
     }
 
 // left category menu for catalog page
-    protected static function printOutlLeftCatalogMenu(  $parent = 0)
+    protected static function printOutlLeftCatalogMenu(int $parent = 0): string
     {
         if(!isset($print)){$print='';}
         foreach(self::$categories as $category){
             if($category->parent_id ==$parent ){
 
-                $print.='<li  class="left-catalog-menu__item"><a href="/'.LocaleMiddleware::printLink().'/catalog/category/'. $category->title .'" class="left-catalog-menu__link">'.$category->title.'</a>' ;
+                $print.='<li  class="left-catalog-menu__item"><a href="/'.LocaleMiddleware::printLink().
+                    '/catalog/category/'. $category->title .'" class="left-catalog-menu__link">'.$category->title.'</a>' ;
                 foreach(self::$categories as $sub_cat){
                     if($sub_cat->parent_id == $category->id){
                         $flag = TRUE; break;
@@ -106,23 +103,26 @@ class Category extends Model
                 }
             }
         }
+
         return $print;
     }
 
-    public static function getCategoryDropDownList($selectedArray)
+    public static function getCategoryDropDownList(array $selectedArray): string
     {
         self::getCategories();
+
         return self::printCategoryDropDownList($selectedArray);
     }
 
 
-    private  static function printCategoryDropDownList($selected = null,  $parent = 0, $prefix = '')
+    private  static function printCategoryDropDownList(
+        array $selected = null,
+        int $parent = 0,
+        string $prefix = ''
+    ): string
     {
-
         $print = "";
         foreach (self::$categories as $category){
-
-
 
             if($category->parent_id == $parent){
                 $print.= "<option value='{$category->id}'";
@@ -146,27 +146,22 @@ class Category extends Model
                     $flag = null; $prefix = substr($prefix,0,-1);
                 }
             }
-
-
         }
 
         return $print;
     }
 
-    public static function getAdminCategoriesList()
+    public static function getAdminCategoriesList(): string
     {
         self::getCategories();
-
-
         $leftMenu = self::printOutAdminCategoriesList();
 
         return $leftMenu;
     }
 
-
-    protected static function printOutAdminCategoriesList(  $parent = 0)
+    protected static function printOutAdminCategoriesList(int $parent = 0): string
     {
-        if(!isset($print)){$print='';}
+        if (!isset($print)) $print='';
         foreach(self::$categories as $category){
             if($category->parent_id ==$parent ){
 
@@ -188,22 +183,25 @@ class Category extends Model
                 }
             }
         }
+
         return $print;
     }
 
-
-
-
-    public static function getUpdateCategoryDropDownList($selectedArray, $currentCategory)
+    public static function getUpdateCategoryDropDownList(array $selectedArray, int $currentCategory): string
     {
-        self::getCategories();
+        self::setCategories();
+
         return self::printUpdateCategoryDropDownList($selectedArray, $currentCategory);
     }
 
 
-    private  static function printUpdateCategoryDropDownList($selected = null, $currentCategory, $parent = 0, $prefix = '')
+    private  static function printUpdateCategoryDropDownList(
+        array $selected = null,
+        int $currentCategory,
+        int $parent = 0,
+        string $prefix = ''
+    ): string
     {
-
         $print = "";
         foreach (self::$categories as $category){
 
@@ -223,7 +221,6 @@ class Category extends Model
                         $flag = true;
                     }
                 }
-
                 if(isset($flag)){
                     $prefix.='-';
                     $print.= self::printUpdateCategoryDropDownList( $selected, $currentCategory, $category->id, $prefix);
@@ -231,12 +228,8 @@ class Category extends Model
                     $flag = null; $prefix = substr($prefix,0,-1);
                 }
             }
-
-
         }
 
         return $print;
     }
-
-
 }
