@@ -1,9 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
@@ -11,22 +17,22 @@ class Product extends Model
 
     protected $fillable = ['author', 'title', 'description', 'body', 'price', 'manufacturer_id', 'category_id'];
 
-    public function manufacturer()
+    public function manufacturer(): BelongsTo
     {
-        return $this->belongsTo('App\Manufacturer');
+        return $this->belongsTo(Manufacturer::class);
     }
 
-    public function images(){
-
-        return $this->hasMany('App\Image');
-    }
-
-    public function categories()
+    public function images(): HasMany
     {
-        return $this->belongsToMany('App\Category');
+        return $this->hasMany(Image::class);
     }
 
-    public function toSearchableArray()
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function toSearchableArray(): array
     {
         return [
             'author' => $this->author,
@@ -35,36 +41,22 @@ class Product extends Model
              ];
     }
 
-
-    public static function getCreateProductImagesArray($imagesObj= null)
+    public static function getCreateProductImagesArray(Collection $imagesObj = null): array
     {
-
         if(old('_token')){
             if(!empty(old('imagesData'))) {
                 $imagesArray = explode(',', old('imagesData'));
                 return $imagesArray;
              }
 
-             return;
+             return [];
         }
 
-        if(!$imagesObj) return;
+        if(!$imagesObj) return [];
 
         if($imagesObj->get()->isNotEmpty()){
-                    return  $images = $imagesObj->pluck('path')->toArray();
+                    return  $imagesObj->pluck('path')->toArray();
                 }
-            return;
-
-
+            return [];
     }
-
-
-
-
-
-
-
-
-
-
 }
