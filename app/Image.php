@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Image extends Model
 {
@@ -11,9 +12,8 @@ class Image extends Model
         'path', 'order'
     ];
 
-    public function product(){
-
+    public function product(): BelongsTo
+    {
         return $this->belongsTo('App\Product');
     }
-
 }

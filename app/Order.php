@@ -8,8 +8,8 @@ class Order extends Model
 {
     protected $fillable = [
       'name',
-        'phone',
-        'email',
-        'order'
+      'phone',
+      'email',
+      'order'
     ];
 }

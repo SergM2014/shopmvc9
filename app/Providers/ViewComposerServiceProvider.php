@@ -6,20 +6,15 @@ use Illuminate\Support\ServiceProvider;
 use App\Manufacturer;
 use App\Category;
 use Illuminate\Support\Arr;
-use \Route;
+use Illuminate\Support\Facades\Route;
 
 class ViewComposerServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap the application services.
-     *
-     * @return void
-     */
     public function boot()
     {
         view()->composer(['custom.partials.catalogDropdownMenu', 'custom.partials.header'], function($view){
-            $view->with('currentRoute', \Route::currentRouteName());
-            $view->with('linkParametr',Arr::first(\Route::current()->parameters()));
+            $view->with('currentRoute', Route::currentRouteName());
+            $view->with('linkParametr',Arr::first(Route::current()->parameters()));
         });
 
         view()->composer('custom.partials.customLeftMenu', function($view){

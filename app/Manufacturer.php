@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Manufacturer extends Model
 {
@@ -12,7 +13,7 @@ class Manufacturer extends Model
         'url'
     ];
 
-    public function product()
+    public function product(): HasMany
     {
         return $this->hasMany('App\Product');
     }
