@@ -9,7 +9,6 @@ use Illuminate\View\View;
 
 class CatalogController extends Controller
 {
-
     private function findOutOrder(?string $order): array
     {
         switch ($order){
