@@ -25,7 +25,7 @@ Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale()], fu
     Route::get('/catalog/all/{order?}', [CatalogController::class, 'index'])->name('catalog');
     Route::get('/catalog/category/{category}/{order?}', [CatalogController::class, 'showCategories'])->name('catalogCategories');
     Route::get('/catalog/manufacturer/{manufacturer}/{order?}', [CatalogController::class, 'showManufacturers'])->name('catalogManufacturers');
-    Route::get('/aboutus', [IndexController::class, 'aboutus'])->name('aboutus');
+    Route::get('/aboutus', [IndexController::class, 'aboutUs'])->name('aboutUs');
     Route::get('/downloads', [IndexController::class, 'downloads'])->name('downloads');
     Route::get('/contacts', [IndexController::class, 'contacts'])->name('contacts');
     Route::get('/product/{product}', [ProductController::class, 'show'])->name('catalogShowProduct');

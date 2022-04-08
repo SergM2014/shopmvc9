@@ -2,36 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Slider;
 use App\Carousel;
 use App\Category;
 use App\Background;
-
-
+use Illuminate\View\View;
 
 class IndexController extends Controller
 {
-
-    public function index()
+    public function index(): View
     {
         $sliders = Slider::all();
-
         $carousels = Carousel::all();
-
         $categoriesVertMenu = Category::getVerticalMenu();
 
         return view('custom.index', compact('sliders', 'carousels', 'categoriesVertMenu') );
     }
 
-    public function aboutus()
+    public function aboutUs(): View
     {
         $aboutUs = Background::first()->aboutUs();
 
         return view('custom.aboutUs', compact( 'aboutUs') );
     }
 
-    public function downloads()
+    public function downloads(): View
     {
         $downloads = Background::first()->downloads();
 
@@ -39,7 +34,7 @@ class IndexController extends Controller
     }
 
 
-    public function contacts()
+    public function contacts(): View
     {
         $contacts = Background::first()->contacts();
 
