@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Product;
 use App\Comment;
-
+use Illuminate\View\View;
 
 class ProductController extends Controller
 {
-    public function show(Product $product )
+    public function show(Product $product): View
     {
         $id = $product->id;
 

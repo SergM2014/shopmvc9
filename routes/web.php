@@ -16,15 +16,18 @@ use App\Http\Controllers\AdminManufacturersController;
 
 Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale()], function() {
 
-
     Route::get('/', [IndexController::class , 'index'])->name('index');
     Route::get('/catalog/all/{order?}', [CatalogController::class, 'index'])->name('catalog');
     Route::get('/catalog/category/{category}/{order?}', [CatalogController::class, 'showCategories'])->name('catalogCategories');
     Route::get('/catalog/manufacturer/{manufacturer}/{order?}', [CatalogController::class, 'showManufacturers'])->name('catalogManufacturers');
-    Route::get('/aboutus', [IndexController::class, 'aboutUs'])->name('aboutUs');
+    Route::get('/aboutUs', [IndexController::class, 'aboutUs'])->name('aboutUs');
     Route::get('/downloads', [IndexController::class, 'downloads'])->name('downloads');
     Route::get('/contacts', [IndexController::class, 'contacts'])->name('contacts');
     Route::get('/product/{product}', [ProductController::class, 'show'])->name('catalogShowProduct');
+
+//    Route::get('/product/{product}', function () {
+//        return 'Hello World';
+//    });
 
     Route::post('/busket/add', [BusketController::class, 'add']);
     Route::post('/busket/show', [BusketController::class, 'show']);
@@ -69,7 +72,7 @@ Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale()], fu
             return view('admin.modal.deleteProduct');
         });
 
-        Route::resource('products', [AdminProductsController::class]);
+        Route::resource('products', AdminProductsController::class);
 
         Route::post('categories/popupMenu', function () {
             return view('admin.popUp.allCategories');
@@ -79,7 +82,7 @@ Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale()], fu
             return view('admin.succeeded');
         });
 
-        Route::resource('categories', [AdminCategoriesController::class]);
+        Route::resource('categories', AdminCategoriesController::class);
 
         Route::post('comments/popupMenu', function () {
             return view('admin.popUp.allComments');
@@ -91,7 +94,7 @@ Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale()], fu
         });
         Route::post('comments/confirmWindow', [AdminCommentsController::class, 'showConfirmWindow']);
 
-        Route::resource('comments', [AdminCommentsController::class]);
+        Route::resource('comments', AdminCommentsController::class);
 
         Route::post('manufacturers/popupMenu', function () {
             return view('admin.popUp.allManufacturers');
@@ -100,7 +103,7 @@ Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale()], fu
         Route::get('manufacturers/succeeded', function () {
             return view('admin.succeeded');
         });
-        Route::resource('manufacturers', [AdminManufacturersController::class]);
+        Route::resource('manufacturers', AdminManufacturersController::class);
 
 
         Route::post('users/popupMenu', function () {
@@ -110,7 +113,7 @@ Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale()], fu
         Route::get('users/succeeded', function () {
             return view('admin.succeeded');
         });
-        Route::resource('users', [AdminUsersController::class]);
+        Route::resource('users', AdminUsersController::class);
 
 
         Route::get('/', [HomeController::class, 'index']);
