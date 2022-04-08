@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Image;
-use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class ImagesController extends Controller
 {
-    public function uploadAvatar (Request $request)
+    public function uploadAvatar (Request $request): JsonResponse
     {
         $image = $request->file('file');
         $filename = time().'_'.strtolower($image->getClientOriginalName());
@@ -18,27 +19,20 @@ class ImagesController extends Controller
         $img = Image::make($image->getRealPath());
         $img->resize(110, 110)->save($destinationPath.'/'.$filename);
 
-
         return response()->json([
             'message' => 'file is uploaded',
             'success' => 'true',
             'filename' =>$filename
-
         ]);
     }
 
-    public function deleteAvatar ()
+    public function deleteAvatar(): JsonResponse
     {
-
-
-        return response()->json([
-            'message' => 'file is deleted',
-            'success' => 'true'
-        ]);
+        return response()->json(['message' => 'file is deleted', 'success' => 'true']);
     }
 
 
-    public function uploadProductImage (Request $request)
+    public function uploadProductImage (Request $request): JsonResponse
     {
         $image = $request->file('file');
         $filename =  time().'_'.strtolower($image->getClientOriginalName());
@@ -47,24 +41,19 @@ class ImagesController extends Controller
         $img = Image::make($image->getRealPath());
         $img->resize(250, 250)->save($destinationPath.'/tn_'.$filename);
 
-
-       $path = $image->storeAs(
+        $path = $image->storeAs(
            'productsImages', $filename );
-
-
 
         return response()->json([
             'message' => 'file is uploaded',
             'success' => 'true',
             'filename' => $filename,
             'path' => $path,
-
-
         ]);
     }
 
 
-    public function deleteProductImage ()
+    public function deleteProductImage(): JsonResponse
     {
         $image =request('image');
 
@@ -77,9 +66,4 @@ class ImagesController extends Controller
             'image' => $image
         ]);
     }
-
-
-
-
-
 }
