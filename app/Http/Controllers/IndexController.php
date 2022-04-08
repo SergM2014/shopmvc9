@@ -42,6 +42,4 @@ class IndexController extends Controller
 
         return view('custom.contacts', compact('contacts') );
     }
-
-
 }

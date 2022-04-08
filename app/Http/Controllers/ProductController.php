@@ -26,9 +26,7 @@ class ProductController extends Controller
         $product = Product::find(request('id'));
 
         return view('custom.partials.productPreview', compact('product'));
-
     }
-
 
     private function sortImages(Product $product)
     {
@@ -39,5 +37,4 @@ class ProductController extends Controller
         }
         return $product;
     }
-
 }

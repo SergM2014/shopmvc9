@@ -65,5 +65,4 @@ class CatalogController extends Controller
 
         return view('custom.catalog.manufacturers', compact('catalogResults') );
     }
-
 }

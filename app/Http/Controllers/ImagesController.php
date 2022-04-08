@@ -31,7 +31,6 @@ class ImagesController extends Controller
         return response()->json(['message' => 'file is deleted', 'success' => 'true']);
     }
 
-
     public function uploadProductImage (Request $request): JsonResponse
     {
         $image = $request->file('file');
@@ -51,7 +50,6 @@ class ImagesController extends Controller
             'path' => $path,
         ]);
     }
-
 
     public function deleteProductImage(): JsonResponse
     {
