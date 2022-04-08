@@ -13,12 +13,9 @@ class ProductController extends Controller
     public function show(Product $product): View
     {
         $id = $product->id;
-
         $product = $this->sortImages($product);
-
         $comments = Comment::where('product_id', $id)->get();
         $parentId = $comments->min('parent_id');
-
         $treeComments = Comment::getCommentsTreeStructure($parentId, $comments);
 
         return view('custom.product.show', compact('product', 'treeComments'));

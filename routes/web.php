@@ -25,10 +25,6 @@ Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale()], fu
     Route::get('/contacts', [IndexController::class, 'contacts'])->name('contacts');
     Route::get('/product/{product}', [ProductController::class, 'show'])->name('catalogShowProduct');
 
-//    Route::get('/product/{product}', function () {
-//        return 'Hello World';
-//    });
-
     Route::post('/busket/add', [BusketController::class, 'add']);
     Route::post('/busket/show', [BusketController::class, 'show']);
     Route::post('/busket/update', [BusketController::class, 'update']);
