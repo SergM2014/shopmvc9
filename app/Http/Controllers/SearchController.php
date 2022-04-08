@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Product;
+use Illuminate\View\View;
 
 class SearchController extends Controller
 {
-    public function findResults()
+    public function findResults(): View
     {
        $searchResults =  Product::search(request('search'))->paginate(5);
+
        return view('custom.partials.searchResultsContent', compact('searchResults'));
     }
 }
