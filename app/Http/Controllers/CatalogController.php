@@ -1,16 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Category;
 use App\Product;
-use App\Manufacturer;
+use Illuminate\View\View;
 
 class CatalogController extends Controller
 {
 
-    private function findOutOrder($order)
+    private function findOutOrder(?string $order): array
     {
         switch ($order){
             case 'AZ':
@@ -34,39 +34,32 @@ class CatalogController extends Controller
             default:
                 $field = 'title'; $order = 'DESC';
         }
+
         return [$field, $order];
     }
 
-    public function index($order = null )
+    public function index(string $order = null): View
     {
         $orderVariables = $this->findOutOrder($order);
-
         $catalogResults = Product::orderBy(...$orderVariables)->paginate(10);
-
 
         return view('custom.catalog.index', compact( 'catalogResults'));
     }
 
 
-    public function showCategories($category, $order = 'default' )
+    public function showCategories($category, string $order = 'default' ): View
     {
-
         $orderVariables = $this->findOutOrder($order);
-
         $catalogResults = Product::orderBy(...$orderVariables)->whereHas('categories', function($query)use($category){
                      $query->where('title', $category);
               })->paginate(10);
 
-
         return view('custom.catalog.categories', compact( 'catalogResults') );
     }
 
-
-    public function showManufacturers($manufacturer, $order = null )
+    public function showManufacturers($manufacturer, $order = null ): View
     {
-
         $orderVariables = $this->findOutOrder($order);
-
         $catalogResults = Product::orderBy(...$orderVariables)->whereHas('manufacturer', function($query) use ($manufacturer){
                           $query->where('title', $manufacturer);
                      })->paginate(10);
