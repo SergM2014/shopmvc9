@@ -22,14 +22,12 @@ class CommentController extends Controller
             ['captcha' => trans('messages.captcha')]
         );
 
-
         Comment::create(['product_id'=> $request->product_id, 'avatar'=>$request->avatar, 'name'=> $request->name,
             'parent_id'=>$request->parent_id, 'email'=>$request->email, 'comment'=>$request->comment, 'published'=>'0',
             'changed' =>'0']);
 
         return response()->json(['message' => trans('messages.commentAddedSuccessfuly'), 'success' => 'true']);
     }
-
 
     public function getCommentForResponse(): View
     {
