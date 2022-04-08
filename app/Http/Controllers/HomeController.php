@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+
 class HomeController extends Controller
 {
     public function __construct()
@@ -9,7 +11,7 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(): View
     {
         return view('home');
     }
