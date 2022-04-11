@@ -67,6 +67,18 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        'mysql_testing' => [
+            'driver' => 'mysql',
+            'host' => env('TESTING_DB_HOST'),
+            'database' => env('TESTING_DB_DATABASE'),
+            'username' => env('TESTING_DB_USERNAME'),
+            'password' => env('TESTING_DB_PASSWORD'),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+        ],
+
     ],
 
     /*
