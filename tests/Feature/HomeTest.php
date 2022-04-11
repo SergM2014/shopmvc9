@@ -9,10 +9,10 @@ use Tests\TestCase;
 class HomeTest extends TestCase
 {
 
-    public function test_test()
-    {
-        $response = $this->get('/home');
-
-        $response->assertStatus(302);
-    }
+//    public function test_test()
+//    {
+//        $response = $this->get('/home');
+//
+//        $response->assertStatus(302);
+//    }
 }
