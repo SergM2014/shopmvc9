@@ -4,19 +4,23 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Slider;
-use App\Carousel;
-use App\Category;
 use App\Background;
 use Illuminate\View\View;
+use App\Repositories\SliderRepo;
+use App\Repositories\CarouselRepo;
+use App\Repositories\CategoryRepo;
 
 class IndexController extends Controller
 {
-    public function index(): View
+    public function index(
+        SliderRepo $slider,
+        CarouselRepo $carousel,
+        CategoryRepo $category
+    ): View
     {
-        $sliders = Slider::all();
-        $carousels = Carousel::all();
-        $categoriesVertMenu = Category::getVerticalMenu();
+        $sliders = $slider->getAll();
+        $carousels = $carousel->getAll();
+        $categoriesVertMenu = $category->getVerticalMenu();
 
         return view('custom.index', compact('sliders', 'carousels', 'categoriesVertMenu') );
     }
