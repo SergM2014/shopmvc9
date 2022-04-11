@@ -35,7 +35,6 @@ class IndexController extends Controller
         return view('custom.downloads', compact( 'downloads') );
     }
 
-
     public function contacts(): View
     {
         $contacts = Background::first()->contacts();

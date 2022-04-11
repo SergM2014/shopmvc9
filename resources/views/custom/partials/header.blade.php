@@ -14,7 +14,7 @@
             <ul class="nav navbar-nav">
                 <li class="{{ $currentRoute == 'index'? 'active':'' }}"><a href="/{{ App\Http\Middleware\LocaleMiddleware::printLink() }}">@lang('messages.main')</a></li>
                 <li class="{{ preg_match('/^catalog/', $currentRoute )? 'active':'' }}"><a href="/{{ App\Http\Middleware\LocaleMiddleware::printLink()}}/catalog/all">@lang('messages.catalog')</a></li>
-                <li class="{{ $currentRoute == 'aboutus'? 'active':'' }}"><a href="/{{ App\Http\Middleware\LocaleMiddleware::printLink().'/aboutus' }}">@lang('messages.aboutUs')</a></li>
+                <li class="{{ $currentRoute == 'aboutUs'? 'active':'' }}"><a href="/{{ App\Http\Middleware\LocaleMiddleware::printLink().'/aboutUs' }}">@lang('messages.aboutUs')</a></li>
                 <li class="{{ $currentRoute == 'downloads'? 'active':'' }}"><a href="/{{ App\Http\Middleware\LocaleMiddleware::printLink().'/downloads' }}">@lang('messages.downloads')</a></li>
                 <li class="{{ $currentRoute == 'contacts'? 'active':'' }}"><a href="/{{ App\Http\Middleware\LocaleMiddleware::printLink().'/contacts' }}">@lang('messages.contacts')</a></li>
             </ul>
