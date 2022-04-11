@@ -5,8 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use App;
 //use Illuminate\Support\Facades\App;
-use Request;
-//use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 
 class LocaleMiddleware
 {
@@ -19,7 +18,7 @@ class LocaleMiddleware
      */
     public static function getLocale()
     {
-        $uri = Request::path(); //получаем URI
+        $uri = (new Request())->path(); //получаем URI
         $segmentsURI = explode('/',$uri); //делим на части по разделителю "/"
         //Проверяем метку языка  - есть ли она среди доступных языков
         if (!empty($segmentsURI[0]) && in_array($segmentsURI[0], self::$languages)) {
