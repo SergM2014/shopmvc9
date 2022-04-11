@@ -1,7 +1,9 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\BusketController;
 use App\Http\Controllers\ImagesController;
