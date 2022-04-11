@@ -31,7 +31,7 @@
                         <ul class="nav navbar-nav">
                             <li><a href="/">@lang('messages.main')</a></li>
                             <li><a href="{{ route('catalog') }}">@lang('messages.catalog')</a></li>
-                            <li><a href="{{ route('aboutus') }}">@lang('messages.aboutUs')</a></li>
+                            <li><a href="{{ route('aboutUs') }}">@lang('messages.aboutUs')</a></li>
                             <li><a href="/downloads">@lang('messages.downloads')</a></li>
                             <li><a href="/contacts">@lang('messages.contacts')</a></li>
                         </ul>
