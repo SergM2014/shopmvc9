@@ -6,6 +6,7 @@ namespace App\Interfaces;
 
 use App\Product;
 use Illuminate\Http\Request;
+use App\Repositories\ProductRepo;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -23,5 +24,7 @@ interface ProductRepositoryInterface
 
     public function paginate(array $orderVariables, int $number): LengthAwarePaginator;
 
-    public function getCategories(array $orderVariables, string $category): LengthAwarePaginator;
+    public function getCategories(array $orderVariables, string $category, int $number): LengthAwarePaginator;
+
+    public function getManufacturers(array $orderVariables, string $manufacturer, int $number): LengthAwarePaginator;
 }

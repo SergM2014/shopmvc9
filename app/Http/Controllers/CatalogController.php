@@ -49,17 +49,15 @@ class CatalogController extends Controller
     public function showCategories(ProductRepo $productRepo, string $category, string $order = 'default' ): View
     {
         $orderVariables = $this->findOutOrder($order);
-        $catalogResults = $productRepo->getCategories($orderVariables, $category);
+        $catalogResults = $productRepo->getCategories($orderVariables, $category, 10);
 
         return view('custom.catalog.categories', compact( 'catalogResults') );
     }
 
-    public function showManufacturers($manufacturer, $order = null ): View
+    public function showManufacturers(ProductRepo $productRepo, $manufacturer, $order = null ): View
     {
         $orderVariables = $this->findOutOrder($order);
-        $catalogResults = Product::orderBy(...$orderVariables)->whereHas('manufacturer', function($query) use ($manufacturer){
-                          $query->where('title', $manufacturer);
-                     })->paginate(10);
+        $catalogResults = $productRepo->getManufacturers($orderVariables, $manufacturer, 10);
 
         return view('custom.catalog.manufacturers', compact('catalogResults') );
     }
