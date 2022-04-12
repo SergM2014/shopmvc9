@@ -16,24 +16,16 @@ class IndexControllerTest extends TestCase
 {
     protected function setUp(): void
     {
-
-//        $this->background = $this->getMockBuilder(BackgroundRepo::class)
-//            ->onlyMethods(['aboutUs'])
-//            ->getMock();
-//        $this->background->expects($this->once())
-//            ->method('aboutUs');
-
+        $this->mockFactory = $this->createMock(Factory::class);
+        app()->instance(Factory::class, $this->mockFactory);
     }
 
     public function testIndex(): void
     {
-        $view = $this->createMock(View::class);
-        $mockFactory = $this->createMock(Factory::class);
-        app()->instance(Factory::class, $mockFactory);
-        $mockFactory->expects($this->any())
+        $this->mockFactory->expects($this->any())
             ->method('make')
             ->with('custom.index')
-            ->willReturn($view);
+            ->willReturn($this->createMock(View::class));
 
         $slider = $this->getMockBuilder(SliderRepo::class)
             ->onlyMethods(['getAll'])
@@ -58,13 +50,10 @@ class IndexControllerTest extends TestCase
 
     public function testAboutUs(): void
     {
-        $view = $this->createMock(View::class);
-        $mockFactory = $this->createMock(Factory::class);
-        app()->instance(Factory::class, $mockFactory);
-        $mockFactory->expects($this->any())
+        $this->mockFactory->expects($this->any())
             ->method('make')
             ->with('custom.aboutUs')
-            ->willReturn($view);
+            ->willReturn($this->createMock(View::class));
 
         $background = $this->getMockBuilder(BackgroundRepo::class)
             ->onlyMethods(['aboutUs'])
