@@ -46,12 +46,10 @@ class CatalogController extends Controller
         return view('custom.catalog.index', compact( 'catalogResults'));
     }
 
-    public function showCategories($category, string $order = 'default' ): View
+    public function showCategories(ProductRepo $productRepo, string $category, string $order = 'default' ): View
     {
         $orderVariables = $this->findOutOrder($order);
-        $catalogResults = Product::orderBy(...$orderVariables)->whereHas('categories', function($query)use($category){
-                     $query->where('title', $category);
-              })->paginate(10);
+        $catalogResults = $productRepo->getCategories($orderVariables, $category);
 
         return view('custom.catalog.categories', compact( 'catalogResults') );
     }

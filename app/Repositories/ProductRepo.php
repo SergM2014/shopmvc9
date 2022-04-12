@@ -47,4 +47,11 @@ class ProductRepo implements ProductRepositoryInterface
     {
        return Product::orderBy(...$orderVariables)->paginate(10);
     }
+
+    public function getCategories(array $orderVariables, string $category): LengthAwarePaginator
+    {
+        return Product::orderBy(...$orderVariables)->whereHas('categories', function($query)use($category){
+            $query->where('title', $category);
+        })->paginate(10);
+    }
 }

@@ -22,4 +22,6 @@ interface ProductRepositoryInterface
     public function getPrice(int $id): int;
 
     public function paginate(array $orderVariables, int $number): LengthAwarePaginator;
+
+    public function getCategories(array $orderVariables, string $category): LengthAwarePaginator;
 }
