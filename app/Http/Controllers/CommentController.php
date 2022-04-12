@@ -8,10 +8,11 @@ use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Comment;
 use Illuminate\Http\JsonResponse;
+use App\Repositories\CommentRepo;
 
 class CommentController extends Controller
 {
-    public function add(Request $request): JsonResponse
+    public function add(CommentRepo $commentRepo, Request $request): JsonResponse
     {
         $this->validate($request, [
             'name'=>'required',
@@ -22,9 +23,7 @@ class CommentController extends Controller
             ['captcha' => trans('messages.captcha')]
         );
 
-        Comment::create(['product_id'=> $request->product_id, 'avatar'=>$request->avatar, 'name'=> $request->name,
-            'parent_id'=>$request->parent_id, 'email'=>$request->email, 'comment'=>$request->comment, 'published'=>'0',
-            'changed' =>'0']);
+        $commentRepo->create($request);
 
         return response()->json(['message' => trans('messages.commentAddedSuccessfuly'), 'success' => 'true']);
     }
