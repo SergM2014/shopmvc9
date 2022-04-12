@@ -43,7 +43,7 @@ class BusketController extends Controller
         return view('custom.modalWindow.bigBusketContent')->with('content', $content );
     }
 
-    public function update()
+    public function update(ProductRepo $productRepo): View
     {
         $busketContent = [];
         $products = request('busketContent');
@@ -58,12 +58,12 @@ class BusketController extends Controller
         session()->put('totalAmount', array_sum($busketContent));
         $totalSumma = 0;
         foreach ($busketContent as $key => $amount){
-            $price = Product::find($key)->price;
+            $price = $productRepo->getPrice($key);
             $totalSumma+= $price*$amount;
         }
         session()->put('totalSumma', $totalSumma);
 
-        return $this->show();
+        return $this->show($productRepo);
     }
 
     public function updateHeader(): JsonResponse

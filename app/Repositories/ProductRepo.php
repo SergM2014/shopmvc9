@@ -36,4 +36,9 @@ class ProductRepo implements ProductRepositoryInterface
     {
         return Product::find($keys);
     }
+
+    public function getPrice(int $id): int
+    {
+        return Product::find($id)->price;
+    }
 }

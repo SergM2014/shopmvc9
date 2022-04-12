@@ -17,4 +17,6 @@ interface ProductRepositoryInterface
     public function getComments(int $productId): Collection;
 
     public function findItems(array $keys): Collection;
+
+    public function getPrice(int $id): int;
 }
