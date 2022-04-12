@@ -28,10 +28,11 @@ class CommentController extends Controller
         return response()->json(['message' => trans('messages.commentAddedSuccessfuly'), 'success' => 'true']);
     }
 
-    public function getCommentForResponse(): View
+    public function getCommentForResponse(CommentRepo $commentRepo): View
     {
-        $commentId = \request('commentId');
-        $comment= Comment::find($commentId);
+        $commentId = (int) \request('commentId');
+        $comment = $commentRepo->getComment($commentId);
+
         return view('custom.partials.showParentComment', compact('comment'));
     }
 }

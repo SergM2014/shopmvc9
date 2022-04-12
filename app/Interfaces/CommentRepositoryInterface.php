@@ -13,4 +13,6 @@ interface CommentRepositoryInterface
     public function getCommentTreeStructure(int $parentId, Collection $comments): string;
 
     public function create(Request $request): Comment;
+
+    public function getComment(int $id): Comment;
 }

@@ -22,4 +22,9 @@ class CommentRepo implements CommentRepositoryInterface
             'parent_id'=>$request->parent_id, 'email'=>$request->email, 'comment'=>$request->comment, 'published'=>'0',
             'changed' =>'0']);
     }
+
+    public function getComment(int $id): Comment
+    {
+        return Comment::find($id);
+    }
 }
