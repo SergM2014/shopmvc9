@@ -11,10 +11,10 @@ use App\Repositories\ProductRepo;
 
 class ProductController extends Controller
 {
-    public function show(Product $product): View
+    public function show(Product $product, ProductRepo $productRepo): View
     {
         $id = $product->id;
-        $product = $this->sortImages($product);
+        $product = $productRepo->sortImages($product);
         $comments = Comment::where('product_id', $id)->get();
         $parentId = $comments->min('parent_id');
         $treeComments = Comment::getCommentsTreeStructure($parentId, $comments);
@@ -28,13 +28,4 @@ class ProductController extends Controller
         return view('custom.partials.productPreview', compact('product'));
     }
 
-    private function sortImages(Product $product)
-    {
-        if($product->images->isNotEmpty()){
-            $images =   $product->images->sortBy('order');
-            $images->values()->all();
-            $product->images= $images;
-        }
-        return $product;
-    }
 }

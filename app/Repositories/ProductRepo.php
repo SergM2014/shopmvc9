@@ -15,4 +15,14 @@ class ProductRepo implements ProductRepositoryInterface
     {
         return Product::find(request('id'));
     }
+
+    public function sortImages(Product $product): Product
+    {
+        if($product->images->isNotEmpty()){
+            $images =   $product->images->sortBy('order');
+            $images->values()->all();
+            $product->images= $images;
+        }
+        return $product;
+    }
 }
