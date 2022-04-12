@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
-use Illuminate\Http\Request;
-use App\Product;
-use App\Mail\OrderSucceded;
 use App\Order;
+use App\Product;
+use Illuminate\View\View;
+use App\Mail\OrderSucceded;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use App\Repositories\ProductRepo;
 
 class BusketController extends Controller
 {
@@ -33,10 +34,11 @@ class BusketController extends Controller
         ]);
     }
 
-    public function show(): View
+    public function show(ProductRepo $productRepo): View
     {
         $keys = @array_keys(session('busketContent'));
-        $content = Product::find($keys);
+
+        $content = $productRepo->findItems($keys);
 
         return view('custom.modalWindow.bigBusketContent')->with('content', $content );
     }

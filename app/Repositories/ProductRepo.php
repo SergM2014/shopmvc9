@@ -31,4 +31,9 @@ class ProductRepo implements ProductRepositoryInterface
     {
         return Comment::where('product_id', $productId)->get();
     }
+
+    public function findItems(?array $keys): Collection
+    {
+        return Product::find($keys);
+    }
 }
