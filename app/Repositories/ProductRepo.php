@@ -9,6 +9,7 @@ use App\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
 use App\Interfaces\ProductRepositoryInterface;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductRepo implements ProductRepositoryInterface
 {
@@ -40,5 +41,10 @@ class ProductRepo implements ProductRepositoryInterface
     public function getPrice(int $id): int
     {
         return Product::find($id)->price;
+    }
+
+    public function paginate(array $orderVariables,int $number,): LengthAwarePaginator
+    {
+       return Product::orderBy(...$orderVariables)->paginate(10);
     }
 }

@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\View\View;
+use App\Repositories\ProductRepo;
 
 class CatalogController extends Controller
 {
@@ -37,14 +38,13 @@ class CatalogController extends Controller
         return [$field, $order];
     }
 
-    public function index(string $order = null): View
+    public function index(ProductRepo $productRepo, string $order = null): View
     {
         $orderVariables = $this->findOutOrder($order);
-        $catalogResults = Product::orderBy(...$orderVariables)->paginate(10);
+        $catalogResults = $productRepo->paginate($orderVariables, 10);
 
         return view('custom.catalog.index', compact( 'catalogResults'));
     }
-
 
     public function showCategories($category, string $order = 'default' ): View
     {
