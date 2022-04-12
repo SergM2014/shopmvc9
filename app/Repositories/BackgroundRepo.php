@@ -14,4 +14,14 @@ class BackgroundRepo implements BackgroundRepositoryInterface
     {
         return Background::first()->aboutUs();
     }
+
+    public function downloads(): string
+    {
+        return Background::first()->downloads();
+    }
+
+    public function contacts(): string
+    {
+        return Background::first()->contacts();
+    }
 }

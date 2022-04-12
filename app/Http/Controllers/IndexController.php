@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Background;
 use Illuminate\View\View;
 use App\Repositories\SliderRepo;
 use App\Repositories\CarouselRepo;
@@ -33,16 +32,16 @@ class IndexController extends Controller
         return view('custom.aboutUs', compact( 'aboutUs') );
     }
 
-    public function downloads(): View
+    public function downloads(BackgroundRepo $background): View
     {
-        $downloads = Background::first()->downloads();
+        $downloads = $background->downloads();
 
         return view('custom.downloads', compact( 'downloads') );
     }
 
-    public function contacts(): View
+    public function contacts(BackgroundRepo $background): View
     {
-        $contacts = Background::first()->contacts();
+        $contacts = $background->contacts();
 
         return view('custom.contacts', compact('contacts') );
     }
