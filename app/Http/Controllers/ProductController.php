@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Product;
-use App\Comment;
 use Illuminate\View\View;
 use App\Repositories\ProductRepo;
+use App\Repositories\CommentRepo;
 
 class ProductController extends Controller
 {
-    public function show(Product $product, ProductRepo $productRepo): View
+    public function show(Product $product, ProductRepo $productRepo, CommentRepo $commentRepo): View
     {
-        $id = $product->id;
+        $productId = $product->id;
         $product = $productRepo->sortImages($product);
-        $comments = Comment::where('product_id', $id)->get();
+        $comments = $productRepo->getComments($productId);
         $parentId = $comments->min('parent_id');
-        $treeComments = Comment::getCommentsTreeStructure($parentId, $comments);
+        $treeComments = $commentRepo->getCommentTreeStructure($parentId, $comments);
 
         return view('custom.product.show', compact('product', 'treeComments'));
     }
@@ -25,6 +25,7 @@ class ProductController extends Controller
     public function showPreview(ProductRepo $productRepo)
     {
         $product = $productRepo->getProduct(request('id'));
+
         return view('custom.partials.productPreview', compact('product'));
     }
 

@@ -13,4 +13,6 @@ interface ProductRepositoryInterface
     public function getProduct(Request $id): Collection;
 
     public function sortImages(Product $product): Product;
+
+    public function getComments(int $productId): Collection;
 }

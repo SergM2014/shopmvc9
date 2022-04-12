@@ -17,14 +17,8 @@ class Comment extends Model
         'changed'
     ];
 
-
-
-
-
-
     public static function getCommentsTreeStructure($parent, $comments)
     {
-
         $nameL = trans('messages.name');
         $addedAtL = trans('messages.addedAt');
         $giveResponseL = trans('messages.giveResponse');
@@ -47,10 +41,7 @@ class Comment extends Model
                            <span class='text-warning'> $addedAtL : </span> $comment->created_at ";
 
             $print.="</div>
-                    
-    
-    
-    
+ 
             <div class='text_comment-block'>
                  $comment->comment 
             </div>
