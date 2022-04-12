@@ -9,6 +9,7 @@ use Illuminate\View\View;
 use App\Repositories\SliderRepo;
 use App\Repositories\CarouselRepo;
 use App\Repositories\CategoryRepo;
+use App\Repositories\BackgroundRepo;
 
 class IndexController extends Controller
 {
@@ -25,9 +26,9 @@ class IndexController extends Controller
         return view('custom.index', compact('sliders', 'carousels', 'categoriesVertMenu') );
     }
 
-    public function aboutUs(): View
+    public function aboutUs(BackgroundRepo $background): View
     {
-        $aboutUs = Background::first()->aboutUs();
+        $aboutUs = $background->aboutUs();
 
         return view('custom.aboutUs', compact( 'aboutUs') );
     }
