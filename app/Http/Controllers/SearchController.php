@@ -6,12 +6,13 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\View\View;
+use App\Repositories\ProductRepo;
 
 class SearchController extends Controller
 {
-    public function findResults(): View
+    public function findResults(ProductRepo $productRepo): View
     {
-       $searchResults =  Product::search(request('search'))->paginate(5);
+        $searchResults = $productRepo->search(5);
 
        return view('custom.partials.searchResultsContent', compact('searchResults'));
     }

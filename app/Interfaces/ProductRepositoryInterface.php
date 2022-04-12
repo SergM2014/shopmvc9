@@ -27,4 +27,6 @@ interface ProductRepositoryInterface
     public function getCategories(array $orderVariables, string $category, int $number): LengthAwarePaginator;
 
     public function getManufacturers(array $orderVariables, string $manufacturer, int $number): LengthAwarePaginator;
+
+    public function search(int $number): LengthAwarePaginator;
 }

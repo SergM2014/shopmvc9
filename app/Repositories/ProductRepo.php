@@ -61,4 +61,9 @@ class ProductRepo implements ProductRepositoryInterface
             $query->where('title', $manufacturer);
         })->paginate($number);
     }
+
+    public function search(int $number): LengthAwarePaginator
+    {
+        return Product::search(request('search'))->paginate($number);
+    }
 }
