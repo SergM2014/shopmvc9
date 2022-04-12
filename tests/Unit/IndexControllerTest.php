@@ -2,7 +2,8 @@
 
 namespace Tests\Unit;
 
-use Illuminate\View\Factory;
+use Illuminate\View\View;
+use Illuminate\Contracts\View\Factory;
 use PHPUnit\Framework\TestCase;
 use App\Repositories\SliderRepo;
 use App\Repositories\CarouselRepo;
@@ -31,15 +32,19 @@ class IndexControllerTest extends TestCase
             ->getMock();
         $this->category->expects($this->once())
             ->method('getVerticalMenu');
+
+
+        $view = $this->createMock(View::class);
+        $mockFactory = $this->createMock(Factory::class);
+        app()->instance(Factory::class, $mockFactory);
+        $mockFactory->expects($this->any())
+            ->method('make')
+            ->with('custom.index')
+            ->willReturn($view);
     }
 
-    public function test_index(): void
+    public function testIndex(): void
     {
-      $index = new IndexController();
-
-      $index->index($this->slider, $this->carousel, $this->category);
-
-
+        (new IndexController())->index($this->slider, $this->carousel, $this->category);
     }
-
 }
