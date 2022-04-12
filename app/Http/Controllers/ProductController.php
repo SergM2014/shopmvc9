@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use App\Comment;
 use Illuminate\View\View;
+use App\Repositories\ProductRepo;
 
 class ProductController extends Controller
 {
@@ -21,10 +22,9 @@ class ProductController extends Controller
         return view('custom.product.show', compact('product', 'treeComments'));
     }
 
-    public function showPreview()
+    public function showPreview(ProductRepo $productRepo)
     {
-        $product = Product::find(request('id'));
-
+        $product = $productRepo->getProduct(request('id'));
         return view('custom.partials.productPreview', compact('product'));
     }
 
