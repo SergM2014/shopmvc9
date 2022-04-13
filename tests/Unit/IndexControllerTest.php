@@ -22,7 +22,7 @@ class IndexControllerTest extends TestCase
 
     public function testIndex(): void
     {
-        $this->mockFactory->expects($this->any())
+        $this->mockFactory->expects($this->once())
             ->method('make')
             ->with('custom.index')
             ->willReturn($this->createMock(View::class));
@@ -50,7 +50,7 @@ class IndexControllerTest extends TestCase
 
     public function testAboutUs(): void
     {
-        $this->mockFactory->expects($this->any())
+        $this->mockFactory->expects($this->once())
             ->method('make')
             ->with('custom.aboutUs')
             ->willReturn($this->createMock(View::class));
@@ -62,5 +62,37 @@ class IndexControllerTest extends TestCase
             ->method('aboutUs');
 
         (new IndexController())->aboutUs($background);
+    }
+
+    public function testDownloads(): void
+    {
+        $this->mockFactory->expects($this->once())
+            ->method('make')
+            ->with('custom.downloads')
+            ->willReturn($this->createMock(View::class));
+
+        $background = $this->getMockBuilder(BackgroundRepo::class)
+            ->onlyMethods(['downloads'])
+            ->getMock();
+        $background->expects($this->once())
+            ->method('downloads');
+
+        (new IndexController())->downloads($background);
+    }
+
+    public function testContacts(): void
+    {
+        $this->mockFactory->expects($this->once())
+            ->method('make')
+            ->with('custom.contacts')
+            ->willReturn($this->createMock(View::class));
+
+        $background = $this->getMockBuilder(BackgroundRepo::class)
+            ->onlyMethods(['contacts'])
+            ->getMock();
+        $background->expects($this->once())
+            ->method('contacts');
+
+        (new IndexController())->contacts($background);
     }
 }
