@@ -8,13 +8,13 @@ use Tests\TestCase;
 
 class IndexControllerTest extends TestCase
 {
-    public function testIndex(): void
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-        $response->assertViewIs('custom.index');
-    }
+//    public function testIndex(): void
+//    {
+//        $response = $this->get('/');
+//
+//        $response->assertStatus(200);
+//        $response->assertViewIs('custom.index');
+//    }
 
 //    public function testAboutUs(): void
 //    {
