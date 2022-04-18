@@ -5,12 +5,13 @@ namespace Tests\Unit;
 use App\Product;
 use Illuminate\View\View;
 use phpmock\phpunit\PHPMock;
+use Illuminate\Http\Request;
 use PHPUnit\Framework\TestCase;
 use App\Repositories\ProductRepo;
-use Illuminate\Http\Request;
 use App\Repositories\CommentRepo;
 use Illuminate\Contracts\View\Factory;
 use App\Http\Controllers\ProductController;
+use Illuminate\Database\Eloquent\Collection;
 
 class ProductControllerTest extends TestCase
 {
@@ -20,6 +21,10 @@ class ProductControllerTest extends TestCase
     {
         $this->mockFactory = $this->createMock(Factory::class);
         app()->instance(Factory::class, $this->mockFactory);
+
+        $this->DbCollection = $this->createMock(Collection::class);
+
+        parent::setUp();
     }
 
     public function testShow()
@@ -40,10 +45,9 @@ class ProductControllerTest extends TestCase
             ->with($product)
             ->willReturn($product);
 
-        $DbCollection = $this->createMock(\Illuminate\Database\Eloquent\Collection::class);
         $productRepo->expects($this->once())
             ->method('getComments')
-            ->willReturn($DbCollection);;
+            ->willReturn($this->DbCollection);;
 
         $commentRepo = $this->getMockBuilder(CommentRepo::class)
             ->onlyMethods(['getCommentTreeStructure'])
@@ -62,17 +66,18 @@ class ProductControllerTest extends TestCase
             ->willReturn($this->createMock(View::class));
 
         $request = $this->createMock(Request::class);
-        $request->expects($this->any())->method('__get')->with('id')->willReturn($this->createMock(Request::class));
+        $request->expects($this->any())
+            ->method('__get')
+            ->with('id')
+            ->willReturn($this->createMock(Request::class));
         app()->instance('request', $request);
-
-        $DbCollection = $this->createMock(\Illuminate\Database\Eloquent\Collection::class);
 
         $productRepo = $this->getMockBuilder(ProductRepo::class)
             ->onlyMethods(['getProduct'])
             ->getMock();
         $productRepo->expects($this->once())
             ->method('getProduct')
-            ->willReturn($DbCollection);
+            ->willReturn($this->DbCollection);
 
 
         (new ProductController())->showPreview( $productRepo);
