@@ -33,4 +33,20 @@ class CatalogControllerTest extends TestCase
 
        (new CatalogController())->index($productRepo);
    }
+
+   public function testShowCategories()
+    {
+        $this->mockFactory->expects($this->once())
+            ->method('make')
+            ->with('custom.catalog.categories')
+            ->willReturn($this->createMock(View::class));
+
+        $productRepo = $this->getMockBuilder(ProductRepo::class)
+            ->onlyMethods(['getCategories'])
+            ->getMock();
+        $productRepo->expects($this->once())
+            ->method('getCategories');
+
+        (new CatalogController())->showCategories($productRepo, 'category1');
+    }
 }
