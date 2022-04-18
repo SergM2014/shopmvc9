@@ -49,4 +49,20 @@ class CatalogControllerTest extends TestCase
 
         (new CatalogController())->showCategories($productRepo, 'category1');
     }
+
+    public function showManufacturers()
+    {
+        $this->mockFactory->expects($this->once())
+            ->method('make')
+            ->with('custom.catalog.manufacturers')
+            ->willReturn($this->createMock(View::class));
+
+        $productRepo = $this->getMockBuilder(ProductRepo::class)
+            ->onlyMethods(['getManufacturers'])
+            ->getMock();
+        $productRepo->expects($this->once())
+            ->method('getManufacturers');
+
+        (new CatalogController())->getManufacturers($productRepo, 'siemens');
+    }
 }
