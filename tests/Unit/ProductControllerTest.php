@@ -5,7 +5,6 @@ namespace Tests\Unit;
 use App\Product;
 use Illuminate\View\View;
 use PHPUnit\Framework\TestCase;
-use App\Repositories\SliderRepo;
 use App\Repositories\ProductRepo;
 use App\Repositories\CommentRepo;
 use Illuminate\Contracts\View\Factory;
@@ -27,17 +26,20 @@ class ProductControllerTest extends TestCase
             ->willReturn($this->createMock(View::class));
 
         $product = $this->createMock(Product::class);
+        $product->method('__get')->with('id')->willReturn(1);
 
         $productRepo = $this->getMockBuilder(ProductRepo::class)
-            ->onlyMethods(['sortImages', 'getComments'])
+            ->onlyMethods(['getComments', 'sortImages'])
             ->getMock();
         $productRepo->expects($this->once())
             ->method('sortImages')
             ->with($product)
             ->willReturn($product);
 
+        $DbCollection = $this->createMock(\Illuminate\Database\Eloquent\Collection::class);
         $productRepo->expects($this->once())
-            ->method('getComments');
+            ->method('getComments')
+            ->willReturn($DbCollection);;
 
         $commentRepo = $this->getMockBuilder(CommentRepo::class)
             ->onlyMethods(['getCommentTreeStructure'])

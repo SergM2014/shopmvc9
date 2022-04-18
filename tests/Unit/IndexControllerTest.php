@@ -3,14 +3,13 @@
 namespace Tests\Unit;
 
 use Illuminate\View\View;
-use App\Repositories\BackgroundRepo;
-use Illuminate\Contracts\View\Factory;
 use PHPUnit\Framework\TestCase;
 use App\Repositories\SliderRepo;
 use App\Repositories\CarouselRepo;
 use App\Repositories\CategoryRepo;
+use App\Repositories\BackgroundRepo;
+use Illuminate\Contracts\View\Factory;
 use App\Http\Controllers\IndexController;
-use Mockery\MockInterface;
 
 class IndexControllerTest extends TestCase
 {
