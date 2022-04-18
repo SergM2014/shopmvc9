@@ -18,7 +18,7 @@ class CatalogControllerTest extends TestCase
        parent::setUp();
    }
 
-   public function testIndex()
+   public function testIndex(): void
    {
        $this->mockFactory->expects($this->once())
            ->method('make')
@@ -34,7 +34,7 @@ class CatalogControllerTest extends TestCase
        (new CatalogController())->index($productRepo);
    }
 
-   public function testShowCategories()
+   public function testShowCategories(): void
     {
         $this->mockFactory->expects($this->once())
             ->method('make')
@@ -50,7 +50,7 @@ class CatalogControllerTest extends TestCase
         (new CatalogController())->showCategories($productRepo, 'category1');
     }
 
-    public function showManufacturers()
+    public function showManufacturers(): void
     {
         $this->mockFactory->expects($this->once())
             ->method('make')

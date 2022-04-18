@@ -27,7 +27,7 @@ class ProductControllerTest extends TestCase
         parent::setUp();
     }
 
-    public function testShow()
+    public function testShow(): void
     {
         $this->mockFactory->expects($this->once())
             ->method('make')
@@ -58,7 +58,7 @@ class ProductControllerTest extends TestCase
         (new ProductController())->show($product, $productRepo, $commentRepo);
     }
 
-    public function testShowPreview()
+    public function testShowPreview(): void
     {
         $this->mockFactory->expects($this->once())
             ->method('make')
