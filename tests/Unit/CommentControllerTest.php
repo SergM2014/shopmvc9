@@ -6,8 +6,10 @@ use Illuminate\View\View;
 use Illuminate\Http\Request;
 use PHPUnit\Framework\TestCase;
 use App\Repositories\CommentRepo;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\Factory;
 use App\Http\Controllers\CommentController;
+use Illuminate\Contracts\Translation\Translator;
 
 class CommentControllerTest extends TestCase
 {
@@ -40,4 +42,31 @@ class CommentControllerTest extends TestCase
 
         (new CommentController())->getCommentForResponse($commentRepo);
     }
+
+    public function testAdd()
+    {
+        $this->mockFactory->expects($this->once())
+            ->method('make')
+           // ->with('custom.partials.showParentComment')
+            ->willReturn($this->createMock(JsonResponse::class));
+
+        $commentRepo = $this->getMockBuilder(CommentRepo::class)
+            ->onlyMethods(['create'])
+            ->getMock();
+        $commentRepo->expects($this->once())
+            ->method('create');
+
+        $request = $this->createMock(Request::class);
+
+        $translator = $this->createMock(Translator::class);
+//        $translator->expects($this->any())
+//            ->method('__get')
+//            ->with('messages.captcha')
+//        ->willReturn($this->createMock(App()));
+        app()->instance('trans', $translator);
+
+        (new CommentController())->add($commentRepo, $request);
+    }
+
+
 }

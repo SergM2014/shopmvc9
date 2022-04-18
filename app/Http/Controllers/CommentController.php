@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\View\View;
 use Illuminate\Http\Request;
-use App\Comment;
 use Illuminate\Http\JsonResponse;
 use App\Repositories\CommentRepo;
 
