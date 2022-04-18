@@ -4,14 +4,18 @@ namespace Tests\Unit;
 
 use App\Product;
 use Illuminate\View\View;
+use phpmock\phpunit\PHPMock;
 use PHPUnit\Framework\TestCase;
 use App\Repositories\ProductRepo;
+use Illuminate\Http\Request;
 use App\Repositories\CommentRepo;
 use Illuminate\Contracts\View\Factory;
 use App\Http\Controllers\ProductController;
 
 class ProductControllerTest extends TestCase
 {
+    use PHPMock;
+
     protected function setUp(): void
     {
         $this->mockFactory = $this->createMock(Factory::class);
@@ -48,5 +52,29 @@ class ProductControllerTest extends TestCase
             ->method('getCommentTreeStructure');
 
         (new ProductController())->show($product, $productRepo, $commentRepo);
+    }
+
+    public function testShowPreview()
+    {
+        $this->mockFactory->expects($this->once())
+            ->method('make')
+            ->with('custom.partials.productPreview')
+            ->willReturn($this->createMock(View::class));
+
+        $request = $this->createMock(Request::class);
+        $request->expects($this->any())->method('__get')->with('id')->willReturn($this->createMock(Request::class));
+        app()->instance('request', $request);
+
+        $DbCollection = $this->createMock(\Illuminate\Database\Eloquent\Collection::class);
+
+        $productRepo = $this->getMockBuilder(ProductRepo::class)
+            ->onlyMethods(['getProduct'])
+            ->getMock();
+        $productRepo->expects($this->once())
+            ->method('getProduct')
+            ->willReturn($DbCollection);
+
+
+        (new ProductController())->showPreview( $productRepo);
     }
 }
