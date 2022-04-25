@@ -9,8 +9,11 @@ use App\Repositories\CommentRepo;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\Factory;
 
+use App\Http\Requests\StoreCommentRequest;
 use App\Http\Controllers\CommentController;
 use Illuminate\Contracts\Translation\Translator;
+use Illuminate\Contracts\Routing\ResponseFactory;
+
 //use Illuminate\Translation\Translator;
 
 class CommentControllerTest extends TestCase
@@ -47,27 +50,31 @@ class CommentControllerTest extends TestCase
 
     public function testAdd()
     {
-        $this->mockFactory->expects($this->once())
-            ->method('make')
-           // ->with('custom.partials.showParentComment')
-            ->willReturn($this->createMock(JsonResponse::class));
+        $jsonMockFactory = $this->createMock(ResponseFactory::class);
+        app()->instance(ResponseFactory::class, $jsonMockFactory);
+            $jsonMockFactory->expects($this->once())
+            ->method('json')
+            ->willReturn( $this->createMock(JsonResponse::class));
+
+        $request = $this->createMock(Request::class);
+        $storeCommentRequest = $this->getMockBuilder(StoreCommentRequest::class)
+            ->onlyMethods(['validated'])
+            ->getMock();
+        $storeCommentRequest->expects($this->once())
+            ->method('validated')
+            ->willReturn($request)
+        ;
 
         $commentRepo = $this->getMockBuilder(CommentRepo::class)
             ->onlyMethods(['create'])
             ->getMock();
         $commentRepo->expects($this->once())
-            ->method('create');
+            ->method('create')
+            ->with($request)
+        ;
 
-        $request = $this->createMock(Request::class);
 
-        $translator = $this->createMock(Translator::class);
-        $translator->expects($this->any())
-//            ->method('__get')
-            ->with('messages.captcha');
-//        ->willReturn($this->createMock(App()));
-        app()->instance('trans', $translator);
-
-        (new CommentController())->add($commentRepo, $request);
+        (new CommentController())->add($commentRepo, $storeCommentRequest);
     }
 
 
