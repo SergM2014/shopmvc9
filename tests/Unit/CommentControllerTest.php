@@ -8,8 +8,10 @@ use PHPUnit\Framework\TestCase;
 use App\Repositories\CommentRepo;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\Factory;
+
 use App\Http\Controllers\CommentController;
 use Illuminate\Contracts\Translation\Translator;
+//use Illuminate\Translation\Translator;
 
 class CommentControllerTest extends TestCase
 {
@@ -59,9 +61,9 @@ class CommentControllerTest extends TestCase
         $request = $this->createMock(Request::class);
 
         $translator = $this->createMock(Translator::class);
-//        $translator->expects($this->any())
+        $translator->expects($this->any())
 //            ->method('__get')
-//            ->with('messages.captcha')
+            ->with('messages.captcha');
 //        ->willReturn($this->createMock(App()));
         app()->instance('trans', $translator);
 

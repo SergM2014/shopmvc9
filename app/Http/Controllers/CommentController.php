@@ -5,24 +5,17 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use Illuminate\View\View;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Repositories\CommentRepo;
+use App\Http\Requests\StoreCommentRequest;
 
 class CommentController extends Controller
 {
-    public function add(CommentRepo $commentRepo, Request $request): JsonResponse
+    public function add(CommentRepo $commentRepo, StoreCommentRequest $request): JsonResponse
     {
-        $this->validate($request, [
-            'name'=>'required',
-            'email'=>'required|email',
-            'comment'=>'required',
-            'captcha' => 'required|captcha'
-            ],
-            ['captcha' => trans('messages.captcha')]
-        );
+        $validated = $request->validated();
 
-        $commentRepo->create($request);
+        $commentRepo->create($validated);
 
         return response()->json(['message' => trans('messages.commentAddedSuccessfuly'), 'success' => 'true']);
     }
