@@ -13,6 +13,7 @@ use App\Http\Requests\StoreCommentRequest;
 use App\Http\Controllers\CommentController;
 use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Translation\TranslationServiceProvider;
 
 //use Illuminate\Translation\Translator;
 
@@ -62,20 +63,18 @@ class CommentControllerTest extends TestCase
             ->getMock();
         $storeCommentRequest->expects($this->once())
             ->method('validated')
-            ->willReturn($request)
-        ;
+            ->willReturn($request);
 
         $commentRepo = $this->getMockBuilder(CommentRepo::class)
             ->onlyMethods(['create'])
             ->getMock();
         $commentRepo->expects($this->once())
             ->method('create')
-            ->with($request)
-        ;
+            ->with($request);
 
+        $translator = $this->createMock(Translator::class);
+        app()->instance('translator', $translator);
 
         (new CommentController())->add($commentRepo, $storeCommentRequest);
     }
-
-
 }

@@ -17,8 +17,8 @@ class CommentController extends Controller
 
         $commentRepo->create($validated);
 
-   //     return response()->json(['message' => trans('messages.commentAddedSuccessfuly'), 'success' => 'true']);
-        return response()->json(['message' => '11', 'success' => 'true']);
+        return response()->json(['message' => trans('messages.commentAddedSuccessfuly'), 'success' => 'true']);
+ //       return response()->json(['message' => '11', 'success' => 'true']);
     }
 
     public function getCommentForResponse(CommentRepo $commentRepo): View

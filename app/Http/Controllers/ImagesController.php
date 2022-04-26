@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use Image;
 use Illuminate\Http\Request;
+//use Intervention\Image\Image;
 use Illuminate\Http\JsonResponse;
 
 class ImagesController extends Controller
