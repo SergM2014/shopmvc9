@@ -20,7 +20,7 @@
   },
   "require-dev": {
     "filp/whoops": "~2.0",
-    "fzaninotto/faker": "~1.4",
+    "fzaninotto/faker": "^1.4",
     "mockery/mockery": "0.9.*",
     "php-mock/php-mock-phpunit": "^2.6",
     "phpunit/phpunit": "^9.0"

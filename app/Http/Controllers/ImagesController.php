@@ -5,19 +5,20 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use Image;
+
 use Illuminate\Http\Request;
-//use Intervention\Image\Image;
+
 use Illuminate\Http\JsonResponse;
 
 class ImagesController extends Controller
 {
+
     public function uploadAvatar (Request $request): JsonResponse
     {
         $image = $request->file('file');
         $filename = time().'_'.strtolower($image->getClientOriginalName());
-
         $destinationPath = public_path('uploads/avatars');
-        $img = Image::make($image->getRealPath());
+        $img = $this->getImage($image);
         $img->resize(110, 110)->save($destinationPath.'/'.$filename);
 
         return response()->json([
@@ -64,5 +65,10 @@ class ImagesController extends Controller
             'success' => 'true',
             'image' => $image
         ]);
+    }
+
+    protected function getImage($image)
+    {
+        return Image::make($image->getRealPath());
     }
 }

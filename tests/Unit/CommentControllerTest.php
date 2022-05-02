@@ -8,14 +8,10 @@ use PHPUnit\Framework\TestCase;
 use App\Repositories\CommentRepo;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\Factory;
-
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Controllers\CommentController;
 use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Translation\TranslationServiceProvider;
-
-//use Illuminate\Translation\Translator;
 
 class CommentControllerTest extends TestCase
 {
