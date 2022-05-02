@@ -37,7 +37,7 @@ class ImagesController extends Controller
         $filename =  time().'_'.strtolower($image->getClientOriginalName());
 
         $destinationPath = public_path('uploads/productsImages');
-        $img = Image::make($image->getRealPath());
+        $img = $this->getImage($image);
         $img->resize(250, 250)->save($destinationPath.'/tn_'.$filename);
 
         $path = $image->storeAs(
