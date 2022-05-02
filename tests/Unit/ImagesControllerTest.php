@@ -9,14 +9,9 @@ use Intervention\Image\Facades\Image;
 use App\Http\Controllers\ImagesController;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use phpmock\phpunit\PHPMock;
 
 class ImagesControllerTest extends TestCase
 {
-    use PHPMock;
-
-    public static $functions;
-
     public function setUp(): void
     {
         $this->jsonMockFactory = $this->createMock(ResponseFactory::class);
@@ -28,7 +23,7 @@ class ImagesControllerTest extends TestCase
         parent::setUp();
     }
 
-    public function testUploadAvatar()
+    public function testUploadAvatar(): void
     {
         $uploadedImage = $this->createMock(UploadedFile::class);
         $uploadedImage->expects($this->once())
@@ -72,7 +67,7 @@ class ImagesControllerTest extends TestCase
         (new ImagesController())->uploadAvatar($request);;
     }
 
-    public function testDeleteAvatar()
+    public function testDeleteAvatar(): void
     {
         (new ImagesController())->deleteAvatar();
     }
@@ -127,7 +122,7 @@ class ImagesControllerTest extends TestCase
         (new ImagesController())->uploadProductImage($request);;
     }
 
-    public function testDeleteProductImage()
+    public function testDeleteProductImage(): void
     {
         $request = $this->createMock(Request::class);
         $request->expects($this->once())
