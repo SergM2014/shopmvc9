@@ -71,4 +71,9 @@ class ImagesControllerTest extends TestCase
 
         (new ImagesController())->uploadAvatar($request);;
     }
+
+    public function testDeleteAvatar()
+    {
+        (new ImagesController())->deleteAvatar();
+    }
 }
