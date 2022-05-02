@@ -126,4 +126,16 @@ class ImagesControllerTest extends TestCase
 
         (new ImagesController())->uploadProductImage($request);;
     }
+
+    public function testDeleteProductImage()
+    {
+        $request = $this->createMock(Request::class);
+        $request->expects($this->once())
+            ->method('__get')
+            ->with('image');
+
+        app()->instance('request', $request);
+
+        (new ImagesController())->deleteProductImage();
+    }
 }

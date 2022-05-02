@@ -53,7 +53,7 @@ class ImagesController extends Controller
 
     public function deleteProductImage(): JsonResponse
     {
-        $image =request('image');
+        $image = request('image');
 
         @unlink (public_path('uploads/productsImages/'.$image));
         @unlink (public_path('uploads/productsImages/tn_'.$image));
