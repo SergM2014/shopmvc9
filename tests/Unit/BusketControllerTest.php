@@ -6,10 +6,12 @@ use App\Product;
 use Illuminate\View\View;
 use PHPUnit\Framework\TestCase;
 use App\Repositories\ProductRepo;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Session\SessionManager;
 use App\Http\Controllers\BusketController;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Routing\ResponseFactory;
 
 class BusketControllerTest extends TestCase
 {
@@ -76,9 +78,19 @@ class BusketControllerTest extends TestCase
             ->method('get')
             ->willReturn([]);
 
-
         app()->instance('session', $session);
 
         (new BusketController())->show($productRepo);
+    }
+
+    public function testUpdateHeader(): void
+    {
+        $jsonMockFactory = $this->createMock(ResponseFactory::class);
+        app()->instance(ResponseFactory::class, $jsonMockFactory);
+        $jsonMockFactory->expects($this->once())
+            ->method('json')
+            ->willReturn( $this->createMock(JsonResponse::class));
+
+        (new BusketController())->updateHeader();
     }
 }
