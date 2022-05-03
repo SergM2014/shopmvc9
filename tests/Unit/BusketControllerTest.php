@@ -2,8 +2,10 @@
 
 namespace Tests\Unit;
 
-use App\Product;
 use Illuminate\View\View;
+use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
+use Illuminate\Session\Store;
 use PHPUnit\Framework\TestCase;
 use App\Repositories\ProductRepo;
 use Illuminate\Http\JsonResponse;
@@ -15,13 +17,6 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 
 class BusketControllerTest extends TestCase
 {
-    protected function setUp(): void
-    {
-
-
-        parent::setUp();
-    }
-
     public function testShowOrderForm(): void
     {
         $mockFactory = $this->createMock(Factory::class);
@@ -92,5 +87,28 @@ class BusketControllerTest extends TestCase
             ->willReturn( $this->createMock(JsonResponse::class));
 
         (new BusketController())->updateHeader();
+    }
+
+    public function testAdd(): void
+    {
+        $request = $this->createMock(Request::class);
+
+        $session = $this->getMockBuilder(Store::class)
+            ->onlyMethods(['get','put'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $session->expects($this->any())
+            ->method('get');
+        $session->expects($this->exactly(3))
+            ->method('put');
+        app()->instance('session', $session);
+
+        $jsonMockFactory = $this->createMock(ResponseFactory::class);
+        $jsonMockFactory->expects($this->once())
+            ->method('json')
+            ->willReturn( $this->createMock(JsonResponse::class));
+        app()->instance(ResponseFactory::class, $jsonMockFactory);
+
+         (new BusketController())->add($request);
     }
 }

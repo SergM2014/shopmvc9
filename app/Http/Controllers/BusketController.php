@@ -22,7 +22,7 @@ class BusketController extends Controller
         $totalSumma = session()->get('totalSumma');
         $totalSumma? session()->put('totalSumma', $totalSumma+ $request->price): session()->put('totalSumma', $request->price);
         $busketContent = session('busketContent')?? [];
-        $itemAmount = Arr::get($busketContent, $request->id, 0);
+        $itemAmount = Arr::get($busketContent, (int)$request->id, 0);
         Arr::set($busketContent, $request->id, ++$itemAmount);
         session()->put('busketContent', $busketContent);
 
