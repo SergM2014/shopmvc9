@@ -10,6 +10,7 @@ class Order extends Model
       'name',
       'phone',
       'email',
-      'order'
+      'order',
+      'delivered'
     ];
 }

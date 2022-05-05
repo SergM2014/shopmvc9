@@ -10,8 +10,11 @@ use Illuminate\View\View;
 use App\Mail\OrderSucceded;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use App\Repositories\OrderRepo;
 use Illuminate\Http\JsonResponse;
 use App\Repositories\ProductRepo;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\OrderFormRequest;
 
 class BusketController extends Controller
 {
@@ -97,18 +100,15 @@ class BusketController extends Controller
         return response()->json(["success"=> true, ]);
     }
 
-    public function makeOrder(): JsonResponse
+    public function makeOrder(OrderFormRequest $orderFormRequest, OrderRepo $orderRepo): JsonResponse
     {
-        $this->validate(request(), [
-            'name' => 'min:6',
-           // 'phone'=>'required',
-            'email' => 'email'
-        ]);
-
+        $validated = $orderFormRequest->validated();
         $order['totalAmount'] = session()->get('totalAmount');
         $order['totalSumma'] = session()->get('totalSumma');
-        $order['busketContent'] =[];
-        foreach (session('busketContent') as $key => $value) {
+        $order['busketContent'] = [];
+        $content = session('busketContent');
+
+        foreach ($content as $key => $value) {
             $product = Product::find($key);
             $order['busketContent'][$product->title] = $value;
         }
@@ -117,24 +117,16 @@ class BusketController extends Controller
         session()->put('totalSumma', 0);
         session()->put('busketContent', []);
 
-        $saveOrder = new Order;
+        $orderRepo->create($validated, $order);
 
-        $saveOrder->name = request('name');
-        $saveOrder->phone = request('phone');
-        $saveOrder->email = request('email');
-        $saveOrder->order = json_encode($order);
-        $saveOrder->delivered = "0";
-
-        $saveOrder->save();
-
-        \Mail::to(request()->email)->send(new OrderSucceded($order));
+        Mail::to(request()->email)->send(new OrderSucceded($order));
 
         return response()->json([
             "totalAmount" => session('totalAmount'),
             "totalSumma" => session('totalSumma'),
             "success" => true,
             "busket" => session('busketContent'),
-            "email" => request()->email,
+            "email" => $validated['email'],
             "order" => $order
         ]);
     }
