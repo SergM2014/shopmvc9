@@ -21,23 +21,16 @@ class BusketControllerTest extends TestCase
 {
     protected static $response;
     protected static $responseOk;
-    protected static $orderResponse;
 
     public static function setUpBeforeClass(): void
     {
         self::$response = [
-            'totalAmount' => 100,
-            'totalSumma' => 100,
-            'success'=> true,
-            'busket' =>100
-        ];
-        self::$responseOk = ['success'=> true];
-        self::$orderResponse = [
             'totalAmount' => 1,
             'totalSumma' => 100,
-            'success' => true,
+            'success'=> true,
             'busket' => []
         ];
+        self::$responseOk = ['success'=> true];
 
         parent::setUpBeforeClass();
     }
@@ -122,9 +115,23 @@ class BusketControllerTest extends TestCase
             ->onlyMethods(['get','put'])
             ->disableOriginalConstructor()
             ->getMock();
-        $session->expects($this->any())
+
+        $session->expects( $this->any())
             ->method('get')
-            ->willReturn(100);
+            ->with($this->logicalOr(
+                $this->equalTo('totalAmount'),
+                $this->equalTo('totalSumma'),
+                $this->equalTo('busketContent')
+            ))
+            ->will($this->returnCallback(
+                fn($param) =>
+                match($param) {
+                    'totalAmount' => 1,
+                    'totalSumma' => 100,
+                    'busketContent' => []
+                }
+            ));
+
         $session->expects($this->exactly(3))
             ->method('put');
         app()->instance('session', $session);
@@ -243,6 +250,6 @@ class BusketControllerTest extends TestCase
         $this->assertInstanceOf(JsonResponse::class, $expected);
         $response = $expected->getData();
         $this->assertIsArray($response);
-        $this->assertSame($response, self::$orderResponse);
+        $this->assertSame($response, self::$response);
     }
 }
