@@ -107,13 +107,48 @@ class BusketControllerTest extends TestCase
 
     public function testUpdateHeader(): void
     {
-        $jsonMockFactory = $this->createMock(ResponseFactory::class);
-        app()->instance(ResponseFactory::class, $jsonMockFactory);
-        $jsonMockFactory->expects($this->once())
-            ->method('json')
-            ->willReturn( $this->createMock(JsonResponse::class));
+        $session = $this->getMockBuilder(Store::class)
+            ->onlyMethods(['get'])
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        (new BusketController())->updateHeader();
+        $session->expects( $this->any())
+            ->method('get')
+            ->with($this->logicalOr(
+                $this->equalTo('totalAmount'),
+                $this->equalTo('totalSumma'),
+                $this->equalTo('busketContent')
+            ))
+            ->will($this->returnCallback(
+                fn($param) =>
+                match($param) {
+                    'totalAmount' => 1,
+                    'totalSumma' => 100,
+                    'busketContent' => []
+                }
+            ));
+        app()->instance('session', $session);
+
+        $jsonResponse = $this->createMock(JsonResponse::class);
+        $jsonResponse->method('getData')
+            ->willReturn([
+                "totalAmount" => session('totalAmount'),
+                "totalSumma" => session('totalSumma'),
+                "success"=> true,
+                "busket" => session('busketContent')
+            ]);
+
+        $jsonMockFactory = $this->createMock(ResponseFactory::class);
+        $jsonMockFactory->method('json')
+            ->willReturn( $jsonResponse);
+        app()->instance(ResponseFactory::class, $jsonMockFactory);
+
+        $expected = (new BusketController())->updateHeader();
+        $this->assertInstanceOf(JsonResponse::class, $expected);
+        $response = $expected->getData();
+        $this->assertIsArray($response);
+        $this->assertSame($response, self::$response);
+
     }
 
     public function testAdd(): void
