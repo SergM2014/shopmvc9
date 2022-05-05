@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Order;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Session\Store;
@@ -21,6 +22,7 @@ class BusketControllerTest extends TestCase
 {
     protected static $response;
     protected static $responseOk;
+    protected static $orderResponse;
 
     public static function setUpBeforeClass(): void
     {
@@ -31,6 +33,13 @@ class BusketControllerTest extends TestCase
             'busket' => []
         ];
         self::$responseOk = ['success'=> true];
+        self::$orderResponse = [
+            'totalAmount' => 1,
+            'totalSumma' => 100,
+            'success'=> true,
+            'busket' => [],
+            'email' => 'qqq@qq.qq'
+        ];
 
         parent::setUpBeforeClass();
     }
@@ -191,13 +200,14 @@ class BusketControllerTest extends TestCase
         $orderFormRequest = $this->getMockBuilder(OrderFormRequest::class)
             ->onlyMethods(['validated'])
             ->getMock();
-        $orderFormRequest->expects($this->once())
+        $orderFormRequest->expects($this->any())
             ->method('validated')
             ->willReturn([
                 'name' => 'Name',
                 'phone' => '08000393848',
                 'email' => 'qqq@qq.qq'
             ]);
+        $validated = $orderFormRequest->validated();
 
         $session = $this->getMockBuilder(Store::class)
             ->onlyMethods(['get','put'])
@@ -228,7 +238,7 @@ class BusketControllerTest extends TestCase
             ->onlyMethods(['create'])
             ->getMock();
         $orderRepo->expects($this->once())
-            ->method('create');
+             ->method('create');
 
         Mail::fake();
 
@@ -238,7 +248,8 @@ class BusketControllerTest extends TestCase
                     'totalAmount' => session('totalAmount'),
                     'totalSumma' => session('totalSumma'),
                     'success' => true,
-                    'busket' => session('busketContent')
+                    'busket' => session('busketContent'),
+                    'email' => $validated['email']
             ]);
 
         $jsonMockFactory = $this->createMock(ResponseFactory::class);
@@ -250,6 +261,6 @@ class BusketControllerTest extends TestCase
         $this->assertInstanceOf(JsonResponse::class, $expected);
         $response = $expected->getData();
         $this->assertIsArray($response);
-        $this->assertSame($response, self::$response);
+        $this->assertSame($response, self::$orderResponse);
     }
 }
