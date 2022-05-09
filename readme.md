@@ -1,0 +1,1 @@
+It`s a LAMP based laravel application. Laravel based shop
